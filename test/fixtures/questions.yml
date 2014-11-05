@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: MyText
+  template_id: 1
+  required: false
+  format_type: MyString
+
+two:
+  text: MyText
+  template_id: 1
+  required: false
+  format_type: MyString

@@ -1,15 +1,15 @@
-  <%= bootstrap_form_for @template do |f| %>
-
-  <div>
-    <%= f.text_field :name %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Question #1</h3>
   </div>
-
-  <div>
-    <%= f.text_area :description %>
+  <div class="panel-body">
+    <%= bootstrap_form_for @template do |f| %>
+      <div>
+        <%= f.text_field :name %>
+      </div>
+      <div>
+        <%= f.submit 'Continue' %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= f.submit 'Save' %>
-  </div>
-
-  <% end %>
+</div>

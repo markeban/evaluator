@@ -11,26 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102230019) do
+ActiveRecord::Schema.define(version: 20141105030115) do
 
-  create_table "form_answers", force: true do |t|
-    t.integer  "form_question_id"
-    t.integer  "form_id"
+  create_table "answers", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "evaluation_id"
     t.text     "answer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "form_questions", force: true do |t|
+  create_table "questions", force: true do |t|
+    t.text     "text"
     t.integer  "template_id"
-    t.text     "question"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "forms", force: true do |t|
-    t.integer  "student_id"
-    t.integer  "template_id"
+    t.boolean  "required"
+    t.string   "format_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

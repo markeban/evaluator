@@ -10,7 +10,7 @@ class TemplatesController < ApplicationController
 
 
   def index
-     @template = Template.all
+    @templates = Template.all
   end
 
   def show
