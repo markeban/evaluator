@@ -1,18 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'templates/new'
-
-  get 'templates/create'
-
-  get 'templates/update'
-
-  get 'templates/edit'
-
-  get 'templates/destroy'
-
-  get 'templates/' => 'templates#index'
-
-  get 'templates/show'
+  resources :templates
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
