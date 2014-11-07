@@ -3,12 +3,517 @@
 <head>
   <title>Evaluator</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="page page-starter">
 
-<%= yield %>
+<!-- ======== @Region: #navigation ======== -->
+    <div id="navigation" class="wrapper">
+      <!--Branding & Navigation Region-->
+      <div class="navbar-static-top">
+        
+        <!--Hidden Header Region-->
+        <div class="header-hidden">
+          <div class="header-hidden-inner container">
+            <div class="row">
+              <div class="col-sm-4 col-md-4">
+                <h3>
+                  About Us
+                </h3>
+                <p>Making the web a prettier place one template at a time! We make beautiful, quality, responsive Drupal & web templates!</p>
+                <a href="about.htm" class="btn btn-sm btn-primary">Find out more</a> 
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <!--@todo: replace with company contact details-->
+                <h3>
+                  Contact Us
+                </h3>
+                <address>
+                  <p>
+                    <abbr title="Phone"><i class="fa fa-phone"></i></abbr>
+                    019223 8092344
+                  </p>
+                  <p>
+                    <abbr title="Email"><i class="fa fa-envelope"></i></abbr>
+                    info@themelize.me
+                  </p>
+                  <p>
+                    <abbr title="Address"><i class="fa fa-home"></i></abbr>
+                    Sunshine House, Sunville. SUN12 8LU.
+                  </p>
+                </address>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <!--Colour Switch for demo - @todo: remove in production-->
+                <div class="colour-switcher">
+                  <h3>
+                    Theme Colours
+                  </h3>
+                  <a href="#green" class="green active" data-toggle="tooltip" data-placement="bottom" data-original-title="Green (Default)">Green</a> <a href="#red" class="red" data-toggle="tooltip" data-placement="bottom" data-original-title="Red">Red</a> <a href="#blue" class="blue" data-toggle="tooltip" data-placement="bottom" data-original-title="Blue">Blue</a> 
+                  <p>Cookies are NOT enabled so colour selection is not persistent.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!--Header upper region-->
+        <div class="header-upper">
+          <div class="header-upper-inner container">
+            <div class="row">
+              <div class="col-xs-8 col-xs-push-4">
+                
+                <!--Show/hide trigger for #hidden-header -->
+                <div id="header-hidden-link">
+                  <a href="#" title="Click me you'll get a surprise" class="show-hide" data-toggle="show-hide" data-target=".header-hidden" data-callback="searchFormFocus"><i></i>Open</a>
+                </div>
+                
+                <!--social media icons-->
+                <div class="social-media">
+                  <!--@todo: replace with company social media details-->
+                  <a href="#"> <i class="fa fa-twitter-square"></i> </a>
+                  <a href="#"> <i class="fa fa-facebook-square"></i> </a>
+                  <a href="#"> <i class="fa fa-linkedin-square"></i> </a>
+                  <a href="#"> <i class="fa fa-google-plus-square"></i> </a>
+                </div>
+              </div>
+              <div class="col-xs-4 col-xs-pull-8">
+                
+                <!--user menu-->
+                <div class="btn-group user-menu">
+                  <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
+                  <a href="#signup-modal" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
+                </li>
+                <a href="#login-modal" class="btn btn-link login" data-toggle="modal">Login</a> 
+                <div class="btn-group language-menu">
+                  <!--language menu-->
+                  <a href="#en" class="btn btn-link dropdown-toggle" data-toggle="dropdown"><span class="flag-icon flag-icon-gb"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-mini dropdown-menu-primary">
+                    <li>
+                      <a href="#es" class="lang-es"><span class="flag-icon flag-icon-es"></span> Spanish</a>
+                    </li>
+                    <li>
+                      <a href="#pt" class="lang-pt"><span class="flag-icon flag-icon-pt"></span> Portguese</a>
+                    </li>
+                    <li>
+                      <a href="#cn" class="lang-cn"><span class="flag-icon flag-icon-cn"></span> Chinese</a>
+                    </li>
+                    <li>
+                      <a href="#se" class="lang-se"><span class="flag-icon flag-icon-se"></span> Swedish</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!--Header search region - hidden by default -->
+      <div class="header-search">
+        <form class="search-form container">
+          <input type="text" name="search" class="form-control search" value="" placeholder="Search">
+          <button type="button" class="btn btn-link"><span class="sr-only">Search </span><i class="fa fa-search fa-flip-horizontal search-icon"></i></button>
+          <button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span class="sr-only">Close </span><i class="fa fa-times search-icon"></i></button>
+        </form>
+      </div>
+      
+      <!--Header & Branding region-->
+      <div class="header" data-toggle="clingify">
+        <div class="header-inner container">
+          <div class="navbar">
+            <div class="pull-left">
+              <!--branding/logo-->
+              <a class="navbar-brand" href="index.htm" title="Home">
+                <h1>
+                  <span>App</span>Strap<span>.</span>
+                </h1>
+              </a>
+              <div class="slogan">Responsive HTML Theme</div>
+            </div>
+            
+            <!--Search trigger -->
+            <a href="#search" class="search-form-tigger" data-toggle="search-form" data-target=".header-search">
+            </span>
+            <i class="fa fa-search fa-flip-horizontal search-icon"></i>
+          </a>
+          
+          <!-- mobile collapse menu button - data-toggle="toggle" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu -->
+          <a href="#top" class="navbar-btn" data-toggle="jpanel-menu" data-target=".navbar-collapse" data-direction="right"><i class="fa fa-bars"></i></a>
+          
+          <!--everything within this div is collapsed on mobile-->
+          <div class="navbar-collapse collapse">
+            <!--main navigation-->
+            <ul class="nav navbar-nav">
+              <li class="home-link">
+                <a href="index.htm"><i class="fa fa-home"></i><span class="hidden">Home</span></a>
+              </li>
+              
+              <li class="dropdown active">
+                <a href="#" class="dropdown-toggle" id="pages-drop" data-toggle="dropdown" data-hover="dropdown">Pages +</a> 
+                <!-- Menu -->
+                <ul class="dropdown-menu" role="menu" aria-labelledby="pages-drop">
+                  <li class="dropdown dropdown-submenu">
+                    <a href="about.htm" class="dropdown-toggle" id="about-drop" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">About</a> 
+                    <!-- Dropdown Menu -->
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="about-drop">
+                      <li role="presentation">
+                        <a role="menuitem" href="about.htm" tabindex="-1" class="menu-item">About Us Basic <i class="new-tag">Updated!</i></a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" href="about-extended.htm" tabindex="-1" class="menu-item">About Us Extended <i class="new-tag">New!</i></a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" href="about-me.htm" tabindex="-1" class="menu-item">About Me <i class="new-tag">New!</i></a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" href="team.htm" tabindex="-1" class="menu-item">Team List <i class="new-tag">Updated!</i></a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" href="team-grid.htm" tabindex="-1" class="menu-item">Team Grid <i class="new-tag">New!</i></a>
+                      </li>
+                      <li role="presentation">
+                        <a role="menuitem" href="team-member.htm" tabindex="-1" class="menu-item">Team Member <i class="new-tag">New!</i></a>
+                      </li>
+                      <li role="presentation"><a role="menuitem" href="contact.htm" tabindex="-1" class="menu-item">Contact</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown dropdown-submenu">
+                    <a href="pricing.htm" class="dropdown-toggle" id="pricing-drop" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">Pricing</a> 
+                    <!-- pricing pages -->
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="pricing-drop">
+                      <li role="presentation"><a role="menuitem" href="pricing.htm" tabindex="-1" class="menu-item">Pricing Plans</a></li>
+                      <li role="presentation"><a role="menuitem" href="pricing-tables.htm" tabindex="-1" class="menu-item">Comparison Tables</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown dropdown-submenu">
+                    <a href="timeline.htm" class="dropdown-toggle" id="timeline-drop" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">Timeline</a> 
+                    <!-- timelines -->
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="timeline-drop">
+                      <li role="presentation"><a role="menuitem" href="timeline.htm" tabindex="-1" class="menu-item">Timeline Default</a></li>
+                      <li role="presentation"><a role="menuitem" href="timeline-left.htm" tabindex="-1" class="menu-item">Timeline Left</a></li>
+                      <li role="presentation"><a role="menuitem" href="timeline-right.htm" tabindex="-1" class="menu-item">Timeline Right</a></li>
+                      <li role="presentation"><a role="menuitem" href="timeline-stacked.htm" tabindex="-1" class="menu-item">Timeline Stacked</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="customers.htm" class="menu-item">Customers</a></li>
+                  <li><a href="features.htm" class="menu-item">Features/Services</a></li>
+                  <li role="presentation"><a role="menuitem" href="login.htm" tabindex="-1" class="menu-item">Login</a></li>
+                  <li role="presentation"><a role="menuitem" href="signup.htm" tabindex="-1" class="menu-item">Sign Up</a></li>
+                  <li class="active" role="presentation"><a role="menuitem" href="starter.htm" tabindex="-1" class="menu-item">Starter Snippets</a></li>
+                  <li role="presentation"><a role="menuitem" href="index-static.htm" tabindex="-1" class="menu-item">Homepage Static Banner</a></li>
+                  <li role="presentation"><a role="menuitem" href="index-boxed.htm" tabindex="-1" class="menu-item">Homepage Boxed</a></li>
+                  <li role="presentation"><a role="menuitem" href="404.htm" tabindex="-1" class="menu-item">404 Error</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown">
+                <a href="blog.htm" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Blog +</a> 
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu" role="menu" aria-labelledby="blog-drop">
+                  <li role="presentation">
+                    <a role="menuitem" href="blog.htm" tabindex="-1" class="menu-item">Blog List Right Sidebar <i class="new-tag">Updated!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-leftbar.htm" tabindex="-1" class="menu-item">Blog List Left Sidebar <i class="new-tag">Updated!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-timeline.htm" tabindex="-1" class="menu-item">Blog List Timeline <i class="new-tag">New!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-grid.htm" tabindex="-1" class="menu-item">Blog List Grid <i class="new-tag">New!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-post.htm" tabindex="-1" class="menu-item">Blog Post <i class="new-tag">Updated!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-post-video.htm" tabindex="-1" class="menu-item">Blog Post With Video <i class="new-tag">New!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-post-slideshow.htm" tabindex="-1" class="menu-item">Blog Post With Slideshow <i class="new-tag">New!</i></a>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="blog-post-audio.htm" tabindex="-1" class="menu-item">Blog Post With Audio Clip <i class="new-tag">New!</i></a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="dropdown dropdown-full">
+                <a href="#" class="dropdown-toggle menu-item" id="megamenu-drop" data-toggle="dropdown" data-hover="dropdown">Mega Menu +</a> 
+                <!-- Dropdown Menu - Mega Menu -->
+                <ul class="dropdown-menu mega-menu" role="menu" aria-labelledby="megamenu-drop">
+                  <li role="presentation" class="dropdown-header">Mega Menu with links & text items</li>
+                  <li role="presentation">
+                    <ul class="row list-unstyled" role="menu">
+                      <li class="col-md-3" role="presentation">
+                        <a role="menuitem" href="features.htm" class="img-link">
+                          <img src="img/features/feature-1.png" alt="Feature 1" />
+                        </a>
+                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>Mobile Friendly</strong></a>
+                        <span>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio!</span> 
+                      </li>
+                      <li class="col-md-3" role="presentation">
+                        <a role="menuitem" href="features.htm" class="img-link">
+                          <img src="img/features/feature-2.png" alt="Feature 2" />
+                        </a>
+                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>24/7 Support</strong></a>
+                        <span>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio!</span> 
+                      </li>
+                      <li class="col-md-3" role="presentation">
+                        <a role="menuitem" href="features.htm" class="img-link">
+                          <img src="img/features/feature-3.png" alt="Feature 3" />
+                        </a>
+                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>99% Uptime</strong></a>
+                        <span>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio!</span> 
+                      </li>
+                      <li class="col-md-3" role="presentation">
+                        <a role="menuitem" href="features.htm" class="img-link">
+                          <img src="img/features/feature-4.png" alt="Feature 4" />
+                        </a>
+                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>Upgrade Assistance</strong></a>
+                        <span>Rhoncus adipiscing, magna integer cursus augue eros lacus porttitor magna. Dictumst, odio!</span> 
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" id="more-drop" data-toggle="dropdown" data-hover="dropdown">More +</a> 
+                <!-- Mega Menu -->
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="more-drop">
+                  <li class="dropdown dropdown-submenu dropdown-menu-left">
+                    <a href="headers.htm" class="dropdown-toggle" id="headers-drop" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">Header Variations</a> 
+                    <!-- Header variations -->
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="headers-drop">
+                      <li role="presentation"><a role="menuitem" href="header-old.htm" tabindex="-1" class="menu-item">Header Old</a></li>
+                      <li role="presentation"><a role="menuitem" href="header-old-full.htm" tabindex="-1" class="menu-item">Header Old Full Width</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown dropdown-submenu dropdown-menu-left">
+                    <a href="sliders.htm" class="dropdown-toggle" id="slider-drop" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">Sliders</a> 
+                    <!-- Sliders -->
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="slider-drop">
+                      <!--Slider Revolution -->
+                      <li role="presentation" class="dropdown-header">Slider Revolution</li>
+                      <li role="presentation"><a role="menuitem" href="slider-revolution-default.htm" tabindex="-1" class="menu-item">Default</a></li>
+                      <li role="presentation"><a role="menuitem" href="slider-revolution-full.htm" tabindex="-1" class="menu-item">Full Width</a></li>
+                      <li role="presentation"><a role="menuitem" href="slider-revolution-behind.htm" tabindex="-1" class="menu-item">Behind Navbar</a></li>
+                      <li role="presentation"><a role="menuitem" href="slider-revolution-boxed.htm" tabindex="-1" class="menu-item">Boxed</a></li>
+                      <!--Backstretch Slider-->
+                      <li role="presentation" class="dropdown-header">Backstretch</li>
+                      <li role="presentation"><a role="menuitem" href="backstretch.htm" tabindex="-1" class="menu-item">Background Slideshow</a></li>
+                      <li role="presentation"><a role="menuitem" href="backstretch-boxed.htm" tabindex="-1" class="menu-item">Boxed Background Slideshow</a></li>
+                      <!--Flexslider-->
+                      <li role="presentation" class="dropdown-header">Flexslider</li>
+                      <li role="presentation"><a role="menuitem" href="flexslider-default.htm" tabindex="-1" class="menu-item">Default</a></li>
+                      <li role="presentation"><a role="menuitem" href="flexslider-full.htm" tabindex="-1" class="menu-item">Full Width</a></li>
+                      <li role="presentation"><a role="menuitem" href="flexslider-behind.htm" tabindex="-1" class="menu-item">Behind Navbar</a></li>
+                      <li role="presentation"><a role="menuitem" href="flexslider-boxed.htm" tabindex="-1" class="menu-item">Boxed</a></li>
+                    </ul>
+                  </li>
+                  <li role="presentation">
+                    <a role="menuitem" href="elements.htm" tabindex="-1" class="menu-item">Theme Elements <i class="new-tag">Updated!</i></a>
+                  </li>
+                  <li role="presentation"><a role="menuitem" href="colours.htm" tabindex="-1" class="menu-item">Theme Colours</a></li>
+                  <li role="presentation"><a role="menuitem" href="bs-mobile-menu.htm" tabindex="-1" class="menu-item">Bootstrap Mobile Menu</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!--/.navbar-collapse -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div id="content">
+  <div class="container">
+    <%= yield %>
+  </div>
+</div>
+<!-- ======== @Region: #footer ======== -->
+<footer id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col">
+        <div class="block contact-block">
+          <!--@todo: replace with company contact details-->
+          <h3>
+            Contact Us
+          </h3>
+          <address>
+            <ul class="fa-ul">
+              <li>
+                <abbr title="Phone"><i class="fa fa-li fa-phone"></i></abbr>
+                019223 8092344
+              </li>
+              <li>
+                <abbr title="Email"><i class="fa fa-li fa-envelope"></i></abbr>
+                info@appstraptheme.com
+              </li>
+              <li>
+                <abbr title="Address"><i class="fa fa-li fa-home"></i></abbr>
+                Sunshine House, Sunville. SUN12 8LU.
+              </li>
+            </ul>
+          </address>
+        </div>
+      </div>
+      
+      <div class="col-md-5 col">
+        <div class="block">
+          <h3>
+            About Us
+          </h3>
+          <p>Making the web a prettier place one template at a time! We make beautiful, quality, responsive Drupal & web templates!</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 col">
+        <div class="block newsletter">
+          <h3>
+            Newsletter
+          </h3>
+          <p>Stay up to date with our latest news and product releases by signing up to our newsletter.</p>
+          <!--@todo: replace with mailchimp code-->
+          <form role="form">
+            <div class="input-group input-group-sm">
+              <label class="sr-only" for="email-field">Email</label>
+              <input type="text" class="form-control" id="email-field" placeholder="Email">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">Go!</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div id="toplink">
+        <a href="#top" class="top-link" title="Back to top">Back To Top <i class="fa fa-chevron-up"></i></a>
+      </div>
+      <!--@todo: replace with company copyright details-->
+      <div class="subfooter">
+        <div class="col-md-6">
+          <p>Site template by <a href="appstraptheme.com">AppStrap</a> | Copyright 2012 &copy; AppStrap</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-inline footer-menu">
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--Hidden elements - excluded from jPanel Menu on mobile-->
+<div class="hidden-elements jpanel-menu-exclude">
+  <!--@modal - signup modal-->
+  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">
+            Sign Up
+          </h4>
+        </div>
+        <div class="modal-body">
+          <form action="signup.htm" role="form">
+            <h5>
+              Price Plan
+            </h5>
+            <select class="form-control">
+              <option>Basic</option>
+              <option>Pro</option>
+              <option>Pro +</option>
+            </select>
+            
+            <h5>
+              Account Information
+            </h5>
+            <div class="form-group">
+              <label class="sr-only" for="signup-first-name">First Name</label>
+              <input type="text" class="form-control" id="signup-first-name" placeholder="First name">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="signup-last-name">Last Name</label>
+              <input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="signup-username">Userame</label>
+              <input type="text" class="form-control" id="signup-username" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="signup-email">Email address</label>
+              <input type="email" class="form-control" id="signup-email" placeholder="Email address">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="signup-password">Password</label>
+              <input type="password" class="form-control" id="signup-password" placeholder="Password">
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="term">
+                I agree with the Terms and Conditions. 
+              </label>
+            </div>
+            <button class="btn btn-primary" type="submit">Sign up</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <small>Already signed up? <a href="login.htm">Login here</a>.</small>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+  
+  <!--@modal - login modal-->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">
+            Login
+          </h4>
+        </div>
+        <div class="modal-body">
+          <form action="login.htm" role="form">
+            <div class="form-group">
+              <label class="sr-only" for="login-email">Email</label>
+              <input type="email" id="login-email" class="form-control email" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="login-password">Password</label>
+              <input type="password" id="login-password" class="form-control password" placeholder="Password">
+            </div>
+            <button type="button" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <small>Not a member? <a href="#" class="signup">Sign up now!</a></small>
+          <br />
+          <small><a href="#">Forgotten password?</a></small>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
 </body>
 </html>

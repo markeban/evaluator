@@ -10,8 +10,11 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require app_strap/jquery.min
 //= require jquery_ujs
-//= require bootstrap-sprockets
+//= require app_strap/bootstrap.min
+//= require app_strap/bootstrap-hover-dropdown.min
+//= require app_strap/jquery.jpanelmenu.min
+//= require app_strap/script.min
 //= require turbolinks
 //= require_tree .
