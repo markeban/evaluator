@@ -1,8 +1,12 @@
-<h1>Created Templates</h1>
-
-<h2>Create an evaluation template to use for your instructor(s). Be general in order to use the template more than once.</h2>
-<%= link_to "Create Template", new_template_path %>
-
+<div class="template-heading">
+  <h2>Evaluation Templates</h2>
+<% if @templates.nil? %>
+  <p> Let's get started and create your first template for your instructor(s). Be general in order to use the template more than once.</p>
+<% else %>
+  <p> Choose one of your existing templates or create a new one: 
+<% end %> 
+<a href="<%=new_template_path %>"><button type="button" class="btn btn-primary">Create Template</button></a></p>
+</div>
 
 <table class="table table-hover">
   <tr>

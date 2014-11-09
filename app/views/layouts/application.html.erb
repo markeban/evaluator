@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Evaluator</title>
+  <title>Teacher tracker</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
@@ -85,10 +85,14 @@
                 
                 <!--user menu-->
                 <div class="btn-group user-menu">
-                  <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
-                  <a href="#signup-modal" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
-                </li>
-                <a href="#login-modal" class="btn btn-link login" data-toggle="modal">Login</a> 
+                  <% if user_signed_in? %>
+                    <li><a href="/users/sign_out" data-method="delete" rel="nofollow"><button type="button" class="btn btn-primary">Signout</button></a></li>
+                    <% else %>
+                      <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
+                      <a href="#signup-modal" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
+                    </li>
+                    <a href="#login-modal" class="btn btn-link login" data-toggle="modal">Login</a> 
+                <% end %>
                 <div class="btn-group language-menu">
                   <!--language menu-->
                   <a href="#en" class="btn btn-link dropdown-toggle" data-toggle="dropdown"><span class="flag-icon flag-icon-gb"></span></a>
@@ -130,10 +134,10 @@
               <!--branding/logo-->
               <a class="navbar-brand" href="index.htm" title="Home">
                 <h1>
-                  <span>App</span>Strap<span>.</span>
+                  <span>Teacher </span>tracker<span></span>
                 </h1>
               </a>
-              <div class="slogan">Responsive HTML Theme</div>
+              <div class="slogan">Track Teachers. Track Results.</div>
             </div>
             
             <!--Search trigger -->
