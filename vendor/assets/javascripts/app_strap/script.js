@@ -82,7 +82,7 @@ jQuery(document).ready(function() {
   // @see: https://github.com/CWSpear/bootstrap-hover-dropdown
   // ----------------------------------------------------------------
   if (jQuery('[data-hover="dropdown"]').length > 0) {
-    jQuery().themeLoadPlugin(["bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"], [], null, 'append');
+    jQuery().themeLoadPlugin(["../../assets/app_strap/bootstrap-hover-dropdown.min.js"], [], null, 'append');
   }  
   
   // ----------------------------------------------------------------
@@ -222,7 +222,7 @@ jQuery(document).ready(function() {
           }
       });
     };
-    jQuery().themeLoadPlugin(["jPanelMenu/jquery.jpanelmenu.min.js", "jRespond/js/jRespond.js"], [], initjPMenu);
+    jQuery().themeLoadPlugin(["../../assets/app_strap/jquery.jpanelmenu.min.js", "../../assets/app_strap/jRespond.js"], [], initjPMenu);
   }
   
   // ----------------------------------------------------------------
@@ -235,7 +235,7 @@ jQuery(document).ready(function() {
         breakpoint: 1010,
       });
     };
-    jQuery().themeLoadPlugin(["clingify/jquery.clingify.min.js"], ["clingify/clingify.css"], initClingify);
+    jQuery().themeLoadPlugin(["../../assets/app_strap/jquery.clingify.min.js"], ["../../assets/app_strap/clingify.css"], initClingify);
   }
   
   // ----------------------------------------------------------------
