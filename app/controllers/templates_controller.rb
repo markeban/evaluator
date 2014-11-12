@@ -4,10 +4,14 @@ class TemplatesController < ApplicationController
   end
 
   def create
-    Template.create(params[:template])
+    @template = Template.new(template_params)
+    if @template.save
+      flash[:success] = "Template added successfully"
+      redirect_to template_path(@template.id)
+    else
+      render 'new'
+    end
   end
-
-
 
   def index
     @templates = Template.all
@@ -15,5 +19,14 @@ class TemplatesController < ApplicationController
 
   def show
     @template = Template.find_by(:id => params[:id])
+    @question = Question.new
   end
+
+
+  private
+
+  def template_params
+    params.require(:template).permit(:name)
+  end
+
 end
