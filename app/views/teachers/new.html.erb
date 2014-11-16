@@ -1,0 +1,24 @@
+<h1>Select Teachers</h1>
+<p>or <a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p></p>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Teacher</h3>
+  </div>
+  <div class="panel-body">
+    <%= bootstrap_form_for @teacher do |f| %>
+      <div>
+        <%= f.text_field :first_name %>
+      </div>
+      <div>
+        <%= f.text_field :last_name %>
+      </div>
+      <div>
+        <%= f.text_field :email %>
+      </div>
+      <div>
+        <%= f.submit 'Continue' %>
+      </div>
+    <% end %>
+  </div>
+</div>

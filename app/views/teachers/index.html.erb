@@ -1,0 +1,24 @@
+<div class="template-heading">
+  <h2>Select Instuctors</h2>
+<% if @teachers.nil? %>
+  <p> You'll need to begin by adding an instructor, that students will evaluate.</p>
+<% else %>
+  <p> Choose one of your existing instructors, or add a new one: 
+<% end %> 
+<a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p>
+</div>
+
+<table class="table table-hover">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email Address</th> 
+  </tr>
+  <% @teachers.each do |teacher| %>
+  <tr>
+    <td> <%= teacher.first_name %></td>
+    <td> <%= teacher.last_name %></td>
+    <td> <%= teacher.email %></td>
+  </tr>
+  <% end %>
+</table>
