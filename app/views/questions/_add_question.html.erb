@@ -1,0 +1,23 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Add Question</h3>
+  </div>
+  <div class="panel-body">
+   <%= bootstrap_form_for @question do |f| %> 
+     <div>
+       <%= f.text_field :text %>
+      </div>
+     <div>        <%= f.select :format_type, [['text', 'text'], ['multiple choice', 'multiple_choice'], ['true or false (yes or no)', 'multiple_choice'], ['ranking', 'ranking']] %>      </div> 
+      <div>
+       <%= f.check_box :required %>
+       </div>
+     <div>
+       <%= f.hidden_field :template_id, value: @template.id %>
+     </div>
+     <div>
+       <%= f.submit 'Add' %>
+     </div>
+  <% end %>
+ </div>
+</div>

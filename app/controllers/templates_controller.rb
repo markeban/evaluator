@@ -7,7 +7,7 @@ class TemplatesController < ApplicationController
     @template = Template.new(template_params)
     if @template.save
       flash[:success] = "Template added successfully"
-      redirect_to template_path(@template.id)
+      redirect_to new_question_path+"?template_id="+@template.id.to_s
     else
       render 'new'
     end

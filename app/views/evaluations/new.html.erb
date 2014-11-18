@@ -1,23 +1,20 @@
-<h1>Setup: Send Out Evaluation</h1>
+<h1>Send Evaluation to Students</h1>
+
 
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Evaluation</h3>
+    <h3 class="panel-title">Create Evaluation</h3>
   </div>
   <div class="panel-body">
-    <%= bootstrap_form_for @template do |f| %>
-      <div>
-        <%= f.text_field :teacher %>
-      </div>
-      <div>
-        <%= f.text_field :teacher %>
-      </div>
-
-      
-      <div>
-        <%= f.submit 'Continue' %>
-      </div>
-    <% end %>
-  </div>
+   <%= bootstrap_form_for @evaluation do |f| %> 
+     <div><%= f.select :teacher, @teacher_select %>
+     </div> 
+     <div><%= f.select :template, @template_select %>
+     </div> 
+     <div>
+       <%= f.submit 'Create Evaluation Link' %>
+     </div>
+  <% end %>
+ </div>
 </div>

@@ -1,18 +1,6 @@
 <h1>Create a Template</h1>
 <p>Create an evaluation template to use for your instructor(s). Be general in order to use the template more than once.</p>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Template</h3>
-  </div>
-  <div class="panel-body">
-    <%= bootstrap_form_for @template do |f| %>
-      <div>
-        <%= f.text_field :name %>
-      </div>
-      <div>
-        <%= f.submit 'Continue' %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render "form" %>
+
+
