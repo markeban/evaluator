@@ -1,7 +1,7 @@
 <% @questions.each do |question| %>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"> <%= question.text %> </h3>
+    <h3 class="panel-title"> <%= question.text %> <a href="<%= edit_template_question_path(@template, question) %>"> <button type="button" class="btn btn-warning">Edit</button></a> <a data-confirm="Are you sure?" data-method="delete" href="<%= template_question_path(@template, question) %>" rel="nofollow"><button type="button" class="btn btn-danger">Delete</button></a></h3>
   </div>
   <div class="panel-body">
     <p><%= question.format_type_text %></p>
@@ -9,3 +9,5 @@
   </div>
 </div>
 <% end %>
+
+<div><a href="<%= templates_path %>"><button type="button" class="btn btn-primary">Complete Template</button></a></div>
