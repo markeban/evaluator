@@ -2,10 +2,10 @@
 
 one:
   question_id: 1
-  evaluation_id: 1
+  submission_id: 1
   answer: MyText
 
 two:
   question_id: 1
-  evaluation_id: 1
+  submission_id: 1
   answer: MyText

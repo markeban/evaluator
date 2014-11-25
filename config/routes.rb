@@ -5,6 +5,17 @@ Rails.application.routes.draw do
   resources :templates do
     resources :questions
   end
+  resources :answers
+ 
+  get    '/submissions/new' => 'submissions#new'
+  get    '/submissions' => 'submissions#index'
+  post    '/submissions' =>  'submissions#create', :as => :submissions_path            #RESTful route
+  get    '/submissions/:id/edit' => 'submissions#edit'
+  get    '/submissions/:id/new' => 'submissions#new'            #unRESTful route
+  patch  '/submissions/:id' => 'submissions#update'
+  put    '/submissions/:id' =>  'submissions#update'
+  delete '/submissions/:id' =>  'submissions#destroy'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

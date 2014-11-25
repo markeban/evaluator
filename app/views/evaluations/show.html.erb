@@ -1,0 +1,18 @@
+<h2>Evaluation Created</h2>
+<p>Copy and give this link to students, in order to fill out the survey:</p>
+<h3><%= ENV["BASE_URL"] %>submissions/<%= @evaluation.url %>/new</h3>
+
+<p>An evaluation has been created for Instructor: <%= @evaluation.teacher.full_name %></p>
+<p>Using the template: <%= @evaluation.template.name %></p>
+
+<% @evaluation.template.questions.each do |question| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"> <%= question.text %> </h3>
+  </div>
+  <div class="panel-body">
+    <p><%= question.format_type_text %></p>
+    <p><%= question.required_text %></p>
+  </div>
+</div>
+<% end %>

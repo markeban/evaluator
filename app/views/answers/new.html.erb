@@ -1,0 +1,46 @@
+
+<%= bootstrap_form_for @answer do |f| %> 
+  <% @questions.each do |question| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"> <%= question.text %> </h3>
+      </div>
+      <div class="panel-body">
+        <div>
+         <%= f.text_field :text %>
+        </div>
+      </div>
+    </div>
+    <div>
+      <%= f.hidden_field :question_id, value: @question.id %>
+    </div>    
+  <% end %>
+  <div>
+    <%= f.hidden_field :submission_id, value: @submission.id %>
+  </div>
+  <%= f.submit 'Continue' %>
+<% end %>
+
+
+<!-- <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Add Question</h3>
+  </div>
+  <div class="panel-body">
+   <%= bootstrap_form_for [@template, @question] do |f| %> 
+     <div>
+       <%= f.text_field :text %>
+      </div>
+     <div>        <%= f.select :format_type, [['text', 'text'], ['multiple choice', 'multiple_choice'], ['true or false (yes or no)', 'multiple_choice'], ['ranking', 'ranking']] %>      </div> 
+      <div>
+       <%= f.check_box :required %>
+       </div>
+     <div>
+       <%= f.hidden_field :template_id, value: @template.id %>
+     </div>
+     <div>
+       <%= f.submit 'Continue' %>
+     </div>
+  <% end %>
+ </div>
+</div> -->

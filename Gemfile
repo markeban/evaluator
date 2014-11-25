@@ -47,3 +47,4 @@ gem 'devise'
 
 gem 'pg', group: :production
 gem 'rails_12factor', group: :production
+gem 'dotenv-rails', :groups => [:development, :test]

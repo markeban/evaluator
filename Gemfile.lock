@@ -44,6 +44,9 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    dotenv (1.0.2)
+    dotenv-rails (1.0.2)
+      dotenv (= 1.0.2)
     erubis (2.7.0)
     execjs (2.2.2)
     hike (1.2.3)
@@ -133,6 +136,7 @@ DEPENDENCIES
   bootstrap_form
   coffee-rails (~> 4.0.0)
   devise
+  dotenv-rails
   jbuilder (~> 2.0)
   jquery-rails
   mysql2

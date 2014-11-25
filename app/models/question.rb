@@ -1,5 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :template
+  has_many :answers
+
 
     def format_type_text
     if self.format_type == "text"
