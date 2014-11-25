@@ -12,7 +12,7 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new(teacher_params)
     if @teacher.save
       flash[:success] = "Teacher added successfully"
-      redirect_to teachers_path
+      redirect_to new_evaluation_path
     else
       render 'new'
     end

@@ -9,9 +9,11 @@
   <div class="panel-body">
    <%= bootstrap_form_for @evaluation do |f| %> 
      <div><%= f.select :teacher_id, @teacher_select %>
-     </div> 
+     </div>
+        <p><a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p>
      <div><%= f.select :template_id, @template_select %>
-     </div> 
+     </div>
+        <p><a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Add Template</button></a></p>
      <div>
        <%= f.submit 'Create Evaluation Link' %>
      </div>

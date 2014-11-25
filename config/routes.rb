@@ -1,15 +1,16 @@
 Rails.application.routes.draw do
+  root 'pages#index'
   devise_for :users
   resources :evaluations
   resources :teachers
+  resources :answers
   resources :templates do
     resources :questions
   end
-  resources :answers
  
   get    '/submissions/new' => 'submissions#new'
   get    '/submissions' => 'submissions#index'
-  post    '/submissions' =>  'submissions#create', :as => :submissions_path            #RESTful route
+  post    '/submissions' =>  'submissions#create', :as => :submissions_path         
   get    '/submissions/:id/edit' => 'submissions#edit'
   get    '/submissions/:id/new' => 'submissions#new'            #unRESTful route
   patch  '/submissions/:id' => 'submissions#update'
