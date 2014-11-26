@@ -1,21 +1,24 @@
 class TemplatesController < ApplicationController
+
+  before_action :authenticate_user!
+
   def new
     @template = Template.new
   end
 
+
   def create
-    @template = Template.new(template_params)
+    @template = current_user.templates.new(template_params)
     if @template.save
       flash[:success] = "Template added successfully"
       redirect_to new_template_question_path(@template)
-      #redirect_to new_question_path+"?template_id="+@template.id.to_s
     else
       render 'new'
     end
   end
 
   def index
-    @templates = Template.all
+    @templates = current_user.templates.all
   end
 
   def show
@@ -27,7 +30,7 @@ class TemplatesController < ApplicationController
   private
 
   def template_params
-    params.require(:template).permit(:name)
+    params.require(:template).permit(:name, :description)
   end
 
 end

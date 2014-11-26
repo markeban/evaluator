@@ -86,7 +86,7 @@
                 <!--user menu-->
                 <div class="btn-group user-menu">
                   <% if user_signed_in? %>
-                    <li><a href="/users/sign_out" data-method="delete" rel="nofollow"><button type="button" class="btn btn-primary">Signout</button></a></li>
+                    <a href="/users/sign_out" class="btn btn-link signout" data-toggle="modal" data-method="delete" rel="nofollow">Sign Out</a>
                     <% else %>
                       <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
                       <a href="#signup-modal" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
