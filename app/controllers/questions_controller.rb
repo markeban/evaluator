@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def new
     @template = Template.find_by(:id => params[:template_id])
     @question = Question.new

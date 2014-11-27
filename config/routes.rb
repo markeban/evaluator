@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :evaluations
   resources :teachers
   resources :answers
+  resources :analysis, :only => [:index]
   resources :templates do
     resources :questions
   end

@@ -1,5 +1,6 @@
 class EvaluationsController < ApplicationController
 
+  before_action :authenticate_user!
 
   def new
     @teacher_select = []

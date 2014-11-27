@@ -1,0 +1,16 @@
+<h1>Analysis</h1>
+
+<p>Choose specific instructor:</p>
+
+  <div class="panel-body">
+   <%= bootstrap_form_for @analysis do |f| %> 
+     <div><%= f.select :teacher_id, @teacher_select %>
+     </div>
+
+     <div>
+       <%= f.submit 'Create Evaluation Link' %>
+     </div>
+  <% end %>
+ </div>
+
+ #Use form_for!!!!!
