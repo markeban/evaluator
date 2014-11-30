@@ -3,14 +3,50 @@
 <p>Choose specific instructor:</p>
 
   <div class="panel-body">
-   <%= bootstrap_form_for @analysis do |f| %> 
+<%= bootstrap_form_tag do |f| %> 
      <div><%= f.select :teacher_id, @teacher_select %>
      </div>
-
      <div>
-       <%= f.submit 'Create Evaluation Link' %>
+       <%= f.submit 'Select by Instructor' %>
      </div>
   <% end %>
  </div>
 
- #Use form_for!!!!!
+
+<div id="chart-teacher"></div>
+
+<script>
+$(function () {
+    $('#chart-teacher').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Individual Results by Student'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array %>
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5]
+        }]
+    });
+});
+</script>
