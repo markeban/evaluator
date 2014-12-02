@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :evaluations
   resources :teachers
   resources :answers
-  resources :analysis, :only => [:index]
   resources :templates do
     resources :questions
   end
@@ -18,8 +17,14 @@ Rails.application.routes.draw do
   put    '/submissions/:id' =>  'submissions#update'
   delete '/submissions/:id' =>  'submissions#destroy'
 
+  get '/analysis' => 'analysis#index'
+  post '/analysis/instructor_only' => 'analysis#instructor_only'
+  get '/analysis/instructor_only' => 'analysis#instructor_only'
+
+
   get '/chart' => 'pages#chart'
   get '/chart' => 'analysis#index'
+  get '/chart' => 'analysis#instructor_only'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

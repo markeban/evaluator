@@ -1,9 +1,6 @@
 class AnalysisController < ApplicationController
 
   def index
-    @teacher = Teacher.find_by(:id => params[:teacher_id])
-    @template = current_user.templates.find_by(:id => params[:template_id])
-
     @teacher_select = []
       Teacher.all.each do |teacher|
       @teacher_select << [teacher.full_name, teacher.id]
@@ -13,13 +10,43 @@ class AnalysisController < ApplicationController
       @template_select << [template.name, template.id]
     end
 
-    # questions = current_user.templates.find_by(:id => 15).questions
-    questions = @template.questions
-    @questions_array = [] 
-    questions.each do |question|
-      @questions_array << question.text
+  end
+
+  def instructor_only
+    @teacher = Teacher.find_by(:id => params[:teacher_id])
+    @recent_evaluation = @teacher.evaluations.last
+    @submissions = @recent_evaluation.submissions
+    @submissions_avg = []
+    average = 0
+    @submissions.each do |submission|
+      submission.answers.each do |answer|
+        average += answer.answer.to_i
+      end
+      @submissions_avg << (average / submission.answers.length )
     end
+
+
+    @questions_array = @recent_evaluation.template.questions.map(&:text)  
+
+  end
+  
+
+  def template_only
+    @template = current_user.templates.find_by(:id => params[:template_id])
+
 
 
   end
 end
+
+    # submissions.each do |submission|
+    #   ind_submissions << submission.id
+    # end
+
+
+
+     #redirect_to /instructor_only
+    # @questions_array = [] 
+    # questions.each do |question|
+    #   @questions_array << question.text
+    # end

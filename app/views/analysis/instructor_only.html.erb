@@ -1,0 +1,91 @@
+<h1>All Results for <%= @teacher.full_name %></h1>
+
+<div id="chart-avg"></div>
+<div id="chart-teacher"></div>
+
+
+
+
+<script>
+$(function () {
+    $('#chart-avg').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Average Scores from Evaluation'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array %>
+        },
+        yAxis: {
+            title: {
+                text: 'Scale of 1 to 10'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+        <% @submissions.each do |submission| %>
+            { 
+                name: '<%= submission.id %>',
+                data: <%= raw @submissions_avg %>
+            },
+        <% end %>
+        ]
+    });
+    $('#chart-teacher').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Scores by Individual Student'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array %>
+        },
+        yAxis: {
+            title: {
+                text: 'Scale of 1 to 10'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+        <% @submissions.each do |submission| %>
+            { 
+                name: '<%= submission.id %>',
+                data: <%= raw submission.answers.map { |answer| answer.answer.to_i } %>
+            },
+        <% end %>
+        ]
+    });  
+});
+
+// {
+//             name: 'Student 1',
+//             data: <%= raw @first_person_submission_array %>
+//         }, {
+//             name: 'Student 2',
+//             data: <%= raw @second_person_submission_array %>
+//         }, {
+//             name: 'Student 3',
+//             data: <%= raw @third_person_submission_array %>
+//         }, {
+//             name: 'Student 4',
+//             data: <%= raw @forth_person_submission_array %>
+
+//         }
+</script>
