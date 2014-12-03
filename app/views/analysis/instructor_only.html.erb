@@ -32,12 +32,10 @@ $(function () {
             }
         },
         series: [
-        <% @submissions.each do |submission| %>
             { 
-                name: '<%= submission.id %>',
-                data: <%= raw @submissions_avg %>
-            },
-        <% end %>
+                name: 'Hello',
+                data: <%= raw @averages_for_questions %>
+            }
         ]
     });
     $('#chart-teacher').highcharts({
@@ -66,7 +64,7 @@ $(function () {
         series: [
         <% @submissions.each do |submission| %>
             { 
-                name: '<%= submission.id %>',
+                name: 'Student <%= submission.id %>',
                 data: <%= raw submission.answers.map { |answer| answer.answer.to_i } %>
             },
         <% end %>
@@ -74,18 +72,5 @@ $(function () {
     });  
 });
 
-// {
-//             name: 'Student 1',
-//             data: <%= raw @first_person_submission_array %>
-//         }, {
-//             name: 'Student 2',
-//             data: <%= raw @second_person_submission_array %>
-//         }, {
-//             name: 'Student 3',
-//             data: <%= raw @third_person_submission_array %>
-//         }, {
-//             name: 'Student 4',
-//             data: <%= raw @forth_person_submission_array %>
 
-//         }
 </script>
