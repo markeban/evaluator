@@ -1,0 +1,1 @@
+json.partial! @question, partial: 'add_question', as: :question

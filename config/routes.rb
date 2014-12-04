@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   resources :templates do
     resources :questions
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :questions
+    end
+  end
  
   get    '/submissions/new' => 'submissions#new'
   get    '/submissions' => 'submissions#index'

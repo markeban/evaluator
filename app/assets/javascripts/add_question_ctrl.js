@@ -1,6 +1,10 @@
+(function() {
+  "use strict";
 
+  angular.module("app").controller("addQuestionCtrl", function($scope) {
 
-      <div class="panel panel-default">
+    $scope.addQuestion = function() {
+      return '<div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Add Question</h3>
         </div>
@@ -9,7 +13,7 @@
              <div>
                <%= f.text_field :text %>
               </div>
-             <div>        <%= f.select :format_type, [['text', 'text'], ['multiple choice', 'multiple_choice'], ['true or false (yes or no)', 'multiple_choice'], ['ranking', 'ranking']] %>      </div> 
+             <div>        <%= f.select :format_type, [["text", "text"], ["multiple choice", "multiple_choice"], ["true or false (yes or no)", "multiple_choice"], ["ranking", "ranking"]] %>      </div> 
               <div>
                <%= f.check_box :required %>
                </div>
@@ -18,4 +22,13 @@
              </div>
           <% end %>
        </div>
-      </div>
+      </div>'
+    };
+
+   
+
+    window.scope = $scope;
+
+
+  });
+}());

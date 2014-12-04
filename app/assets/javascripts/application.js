@@ -29,5 +29,6 @@
 //= require highcharts/modules/funnel
 //= require highcharts/modules/heatmap
 //= require highcharts/modules/no-data-to-display
-//= require turbolinks
+//= require angular
+//= require app
 //= require_tree .
