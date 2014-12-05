@@ -8,18 +8,16 @@ def new
 
   def create
     @question = Question.new(question_params)
-    @template = @question.template
     if @question.save
-      flash[:success] = "Question added successfully"
-      redirect_to template_questions_path(@template)
+      # render json: @question
+      # redirect_to template_questions_path(@template)
     else
-      render 'new'
+      puts "ASDFASFDFSDF"
     end
   end
 
   def index
-    @template = Template.find_by(:id => params[:template_id])
-    @questions = @template.questions.all
+    @questions = Question.all
   end
 
   def edit

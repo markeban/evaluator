@@ -1,12 +1,22 @@
 <div ng-app="app">
 
-    <div ng-controller="addQuestionCtrl">
-
+    <div ng-controller="addQuestionCtrl" ng-init="templateId = <%= @template.id %>">
+{{1+1}}
 <h1><%= @template.name %> </h1>
 
-<div ng-click="addQuestion()">Add Question
+<button ng-click="addQuestion()">Add Question
+</button>
+
+<div ng-repeat="question in questions">
+  <label>Question:</label>
+  <input ng-model="question.text">
+  <label>Required:</label>
+  <input type="checkbox" ng-model="question.required">
+  <label>Format Type:</label>
+  <input ng-model="question.format_type">
 </div>
 
+<button ng-click="save()">Save</button>
 
 
 

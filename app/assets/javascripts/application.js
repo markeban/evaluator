@@ -31,4 +31,6 @@
 //= require highcharts/modules/no-data-to-display
 //= require angular
 //= require app
+//= require angular_animate
+//= require highcharts-ng
 //= require_tree .
