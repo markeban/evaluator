@@ -32,5 +32,4 @@
 //= require angular
 //= require app
 //= require angular_animate
-//= require highcharts-ng
 //= require_tree .

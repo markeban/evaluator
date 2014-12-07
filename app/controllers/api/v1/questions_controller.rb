@@ -9,10 +9,8 @@ def new
   def create
     @question = Question.new(question_params)
     if @question.save
-      # render json: @question
-      # redirect_to template_questions_path(@template)
     else
-      puts "ASDFASFDFSDF"
+      render json: { errors: @question.questionErrors.full_messages }, status: 422
     end
   end
 

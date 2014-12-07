@@ -1,30 +1,56 @@
 <div ng-app="app">
 
-    <div ng-controller="addQuestionCtrl" ng-init="templateId = <%= @template.id %>">
-{{1+1}}
-<h1><%= @template.name %> </h1>
+  <div ng-controller="addQuestionCtrl" ng-init="templateId = <%= @template.id %>">
 
-<button ng-click="addQuestion()">Add Question
-</button>
+    <h1><%= @template.name %> </h1>
 
-<div ng-repeat="question in questions">
-  <label>Question:</label>
-  <input ng-model="question.text">
-  <label>Required:</label>
-  <input type="checkbox" ng-model="question.required">
-  <label>Format Type:</label>
-  <input ng-model="question.format_type">
-</div>
-
-<button ng-click="save()">Save</button>
+    <button ng-click="addQuestion(templateId)">Add Question
+    </button>
 
 
 
 
+    <div ng-repeat="question in questions">
+      <form role="form">
+        <div class="form-group">
+          <label for="format_type_input">Format Type:</label>
+          <select ng-model="question.format_type" class="form-control">
+            <option value="multipleChoice">Multiple Choice</option>
+            <option value="boolean">Yes or No</option>
+            <option value="scale1To10">Scale from 1 to 10</option>
+            <option value="text">Text (non-quantitative)</option>       
+          </select>
+        </div>
+        <div class="form-group" ng-if="question.format_type">
+          <label for="question_input">Question:</label>
+          <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here">
+        </div>
+        <div class="form-group" ng-repeat="option in question.options track by $index" ng-if="question.format_type.indexOf('multipleChoice') !== -1">
+          <label for="option_input">Add an option:</label>
+          <input ng-model="option.text" type="text" class="form-control" id="option_input">
+        </div>
+        <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1">Add Options</button>
+        <div class="checkbox">
+          <label>
+            <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required:
+          </label>
+        </div>
+      </form>
+    </div>
+
+    <div ng-repeat="questionErrors in errors"> {{ error }}
+    </div>
+    <div ng-repeat="optionErrors in errors"> {{ error }}
+    </div>
 
 
 
 
-   </div>
- 
+    <button ng-click="save(templateId)">Preview</button>
+    <p class="help-block">You will have an ability to preview the finished evaluation before confirming the template.</p>
+
+
+
+  </div>
+
 </div>

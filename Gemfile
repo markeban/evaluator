@@ -49,4 +49,4 @@ gem 'pg', group: :production
 gem 'rails_12factor', group: :production
 gem 'dotenv-rails', :groups => [:development, :test]
 gem "highcharts-rails", "~> 3.0.0"
-gem "highcharts-ng-rails", "~> 0.0.3"
+#gem "highcharts-ng-rails", "~> 0.0.3"
