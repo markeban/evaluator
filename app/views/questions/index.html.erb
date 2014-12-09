@@ -1,4 +1,11 @@
+
+
+
+
+
 <% @questions.each do |question| %>
+
+
   <div class="row">
     <div class="col-md-8">
       <div class="panel panel-default">
@@ -39,7 +46,6 @@
     <div class="col-md-4">
       <p><%= question.format_type_text %></p>
       <p><%= question.required_text %></p>
-      <a href="/templates/<%= @template.id %>/questions/edit"> <button type="button" class="btn btn-warning">Edit</button></a> <a data-confirm="Are you sure?" data-method="delete" href="<%= template_question_path(@template, question) %>" rel="nofollow"><button type="button" class="btn btn-danger">Delete</button></a>
     </div>
   </div>
 <% end %>

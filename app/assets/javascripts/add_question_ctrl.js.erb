@@ -23,6 +23,14 @@
       $scope.questions.push(question);
     };
 
+    $scope.deleteQuestion = function(question) {
+      var questionIndex = $scope.questions.indexOf(question);
+      $scope.questions.splice(questionIndex, 1);
+    }
+
+
+
+
     $scope.addOption = function(question) {
       if (!question.options) {
         question.options = [];
@@ -30,12 +38,17 @@
       question.options.push({text: ""});
     };
 
+    $scope.removeOption = function(question) {
+      question.options.pop();
+    };
+
+
     $scope.save = function(templateId) {
       $http.delete("/api/v1/questions/" + $scope.templateId + ".json").then(function (response) {
       });
       for(var m = 0; m < $scope.questions.length; m++) {
         $scope.saveQuestion(m);
-        // window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
+         window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
 
         
       }
