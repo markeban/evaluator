@@ -27,5 +27,31 @@
        </div>
      </div>
 
+ADD Question
 
+<h1>Edit <%= @template.name %> </h1>
+
+
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Add Question</h3>
+        </div>
+        <div class="panel-body">
+          <%= bootstrap_form_for [@template, @question] do |f| %> 
+            <div>        <%= f.select :format_type, [['Multiple Choice', 'multipleChoice'], ['Yes or No', 'boolean'], ['Scale from 1 to 10', 'scale1To10'], ['Text (non-quantitative)', 'text']] %>      </div> 
+             <div>
+               <%= f.text_field :text %>
+              </div>
+
+              <div>
+               <%= f.check_box :required %>
+               </div>
+             <div>
+               <%= f.hidden_field :template_id, value: @template.id %>
+             </div>
+          <% end %>
+       </div>
+      </div>
 

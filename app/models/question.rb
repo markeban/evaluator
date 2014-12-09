@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :template
   has_many :answers
-  has_many :question_options
+  has_many :question_options, :dependent => :destroy
 
 
     def format_type_text

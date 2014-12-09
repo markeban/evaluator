@@ -1,6 +1,6 @@
 <div ng-app="app">
 
-  <div ng-controller="addQuestionCtrl" ng-init="templateId = <%= @template.id %>">
+  <div ng-controller="addQuestionCtrl" ng-init="setTemplateId(<%= @template.id %>)">
 
     <h1><%= @template.name %> </h1>
 

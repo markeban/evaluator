@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :templates do
     resources :questions
   end
+  
 
   namespace :api do
     namespace :v1 do

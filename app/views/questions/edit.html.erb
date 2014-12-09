@@ -1,6 +1,106 @@
-<h1>Edit <%= @template.name %> </h1>
+<% @questions.each do |question| %>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"> <%= question.text %> </h3>
+        </div>
+        <div class="panel-body">
+          <% if question.format_type === "multipleChoice" %>
+            <% question.question_options.each do |option| %>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
+                       <%= option.text %>
+                    </label>
+                  </div>
+            <% end %>
+          <% elsif question.format_type === "boolean" %>
+            <div class="radio">
+              <label>
+                <input type="radio" name="yesNo" id="yes" value="yes" checked>
+                 Yes
+              </label>
+              <label>
+                <input type="radio" name="yesNo" id="no" value="no" checked>
+                 No
+              </label>
+            </div>
+          <% elsif question.format_type === "scale1To10" %>
+            <% 10.times do |count| %>
+              <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+              </label>
+            <% end %>
+          <% end %>      
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <p><%= question.format_type_text %></p>
+      <p><%= question.required_text %></p>
+      <a href="<%= edit_template_question_path(@template, question) %>"> <button type="button" class="btn btn-warning">Edit</button></a> <a data-confirm="Are you sure?" data-method="delete" href="<%= template_question_path(@template, question) %>" rel="nofollow"><button type="button" class="btn btn-danger">Delete</button></a>
+    </div>
+  </div>
+<% end %>
+
+<div ng-app="app">
+
+  <div ng-controller="addQuestionCtrl" ng-init="templateId = <%= @template.id %>">
+
+    <h1><%= @template.name %> </h1>
+
+    <button ng-click="addQuestion(templateId)">Add Question
+    </button>
 
 
 
 
-<%= render "add_question_text" %>
+    <div ng-repeat="question in questions">
+      <form role="form">
+        <div class="form-group">
+          <label for="format_type_input">Format Type:</label>
+          <select ng-model="question.format_type" class="form-control">
+            <option value="multipleChoice">Multiple Choice</option>
+            <option value="boolean">Yes or No</option>
+            <option value="scale1To10">Scale from 1 to 10</option>
+            <option value="text">Text (non-quantitative)</option>       
+          </select>
+        </div>
+        <div class="form-group" ng-if="question.format_type">
+          <label for="question_input">Question:</label>
+          <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here">
+        </div>
+        <div class="form-group" ng-repeat="option in question.options track by $index" ng-if="question.format_type.indexOf('multipleChoice') !== -1">
+          <label for="option_input">Add an option:</label>
+          <input ng-model="option.text" type="text" class="form-control" id="option_input">
+        </div>
+        <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1">Add Options</button>
+        <div class="checkbox">
+          <label>
+            <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required:
+          </label>
+        </div>
+      </form>
+    </div>
+
+    <div ng-repeat="questionErrors in errors"> {{ error }}
+    </div>
+    <div ng-repeat="optionErrors in errors"> {{ error }}
+    </div>
+
+
+
+
+    <button ng-click="save(templateId)">Preview</button>
+    <p class="help-block">You will have an ability to preview the finished evaluation before confirming the template.</p>
+
+
+
+  </div>
+
+</div>
+
+
+
+

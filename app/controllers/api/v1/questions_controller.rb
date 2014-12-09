@@ -15,28 +15,14 @@ def new
   end
 
   def index
-    @questions = Question.all
+    template_id = params[:template_id]
+    @questions = Question.where(:template_id => template_id)
   end
 
-  def edit
-    @template = Template.find_by(:id => params[:template_id])
-    @question = @template.questions.find_by(:id => params[:id])
-  end
-
-  def update
-    @template = Template.find_by(:id => params[:template_id])
-    @question = @template.questions.find_by(:id => params[:id])
-    @question.update(question_params)
-    flash[:success] = "Template successfully updated"
-    redirect_to template_questions_path(@template)
-  end
-
+  
   def destroy
-    @template = Template.find_by(:id => params[:template_id])
-    @question = @template.questions.find_by(:id => params[:id])
-    @question.destroy
-    flash[:danger] = "Template deleted"
-    redirect_to template_questions_path(@template)
+    template = Template.find_by(:id => params[:id])
+    template.questions.destroy_all
   end
 
 
