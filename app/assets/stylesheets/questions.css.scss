@@ -4,12 +4,17 @@
 
 
 fieldset {
-    border: 1px solid #DDD;
+    border: 2px solid #DDD;
     padding: 0 1.4em 1.4em 1.4em;
     margin: 0 0 1.5em 0;
+    border-radius: 8px;
 }
 
 legend {
+    border: none;
     font-size: 1.2em;
     font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 19.5px;
+    line-height: 0px;
 }

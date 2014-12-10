@@ -33,6 +33,8 @@
                  No
               </label>
             </div>
+          <% elsif question.format_type === "text" %>
+            <input class="form-control" type="text" placeholder="Students will write answer here">
           <% elsif question.format_type === "scale1To10" %>
             <% 10.times do |count| %>
               <label class="radio-inline">

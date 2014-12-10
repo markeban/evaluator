@@ -48,10 +48,8 @@
       });
       for(var m = 0; m < $scope.questions.length; m++) {
         $scope.saveQuestion(m);
-         window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
-
-        
       }
+      
     };
 
     $scope.saveQuestion = function(id) {
@@ -62,18 +60,30 @@
             for (var j = 0; j < question.options.length; j++) {
               $scope.saveOption(j, question, questionId);
             }
-          }}, function (error) {
+          } else {
+            if(id === $scope.questions.length - 1) {
+              $scope.loadIndex($scope.templateId);
+            }
+          }
+
+        }, function (error) {
           $scope.optionErrors = error.data.errors;
         });
     }
 
     $scope.saveOption = function(id, question, questionId) {
       $http.post('/api/v1/question_options.json', {question_option: { text: question.options[id].text, question_id: questionId }}).then(function(response) {
+        if(id === question.options.length - 1 && questionId === $scope.questions.length - 1) {
+          $scope.loadIndex($scope.templateId);
+        }
               }, function (error) {
               $scope.questionErrors = error.data.errors;
               });
     };
    
+    $scope.loadIndex = function(templateId) {
+      window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
+    };
 
     window.scope = $scope;
 

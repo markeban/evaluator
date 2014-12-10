@@ -12,9 +12,29 @@
         <h3 class="panel-title"> <%= answer.object.question.text %> </h3>
       </div>
       <div class="panel-body">
+      <% if answer.object.question.format_type== "text" %>  
         <div>
          <%= answer.text_field :answer %>
         </div>
+      <% elsif answer.object.question.format_type == "scale1To10" %>
+        <%= answer.form_group :answer do %>
+          <% 10.times do |count| %>
+            <%= answer.radio_button :answer, (count+1).to_s, label: (count+1).to_s, inline: true %>
+          <% end %>  
+        <% end %> 
+      <% elsif answer.object.question.format_type == "multipleChoice" %>
+        <%= answer.form_group :answer do %>
+          <% answer.object.question.question_options.each do |option| %>
+            <%= answer.radio_button :answer, option.text, label: option.text, inline: true %>
+          <% end %>
+        <% end %> 
+      <% elsif answer.object.question.format_type == "boolean" %>
+        <%= answer.form_group :answer do %>
+          <%= answer.radio_button :answer, 1, label: "yes", inline: true %>
+          <%= answer.radio_button :answer, 0, label: "no", inline: true %>
+        <% end %>
+      <% end %>
+
       </div>
     </div>
     <div>
