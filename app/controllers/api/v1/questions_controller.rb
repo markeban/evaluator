@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < ApplicationController
 
-def new
+  def new
     @template = Template.find_by(:id => params[:template_id])
     @question = Question.new
   end
@@ -14,16 +14,46 @@ def new
     end
   end
 
+  def batch_create
+    @questions = []
+    params[:questions].each do |question|
+      if question[:id]
+        new_question = Question.find_by(:id => question[:id])
+        new_question.update(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+      else
+        new_question = Question.create(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+      end
+      if question[:options]
+        question[:options].each do |option|
+          if option[:id]
+            existing_option = QuestionOption.find_by(:id => option[:id])
+            existing_option.update(:text => option[:text])
+          else
+            new_question.question_options.create(:text => option[:text])
+          end
+        end
+      end
+      @questions << new_question
+    end
+  end
+
+  def batch_destroy
+    params[:questions].each do |question|
+      question_delete = Question.find_by(:id => question[:id])
+      question_delete.destroy
+    end
+  end
+
   def index
     template_id = params[:template_id]
     @questions = Question.where(:template_id => template_id)
   end
 
   
-  def destroy
-    template = Template.find_by(:id => params[:id])
-    template.questions.destroy_all
-  end
+  # def destroy
+  #   template = Template.find_by(:id => params[:id])
+  #   template.questions.destroy_all
+  # end
 
 
   private

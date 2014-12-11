@@ -14,6 +14,9 @@ class AnalysisController < ApplicationController
 
   def instructor_only
     @teacher = Teacher.find_by(:id => params[:teacher_id])
+    @evaluations = @teacher.evaluations
+    # @templates = @teacher.templates
+
     @recent_evaluation = @teacher.evaluations.last
     @submissions = @recent_evaluation.submissions
     @questions_array = []
