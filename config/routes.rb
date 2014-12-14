@@ -11,10 +11,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      delete '/questions/batch' => 'questions#batch_destroy'
       resources :questions
       resources :question_options
       post '/questions/batch' => 'questions#batch_create'
+      post '/questions/batch_destroy' => 'questions#batch_destroy'
+      post '/question_options/batch_destroy' => 'question_options#batch_destroy'
     end
   end
  
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   get '/analysis' => 'analysis#index'
   post '/analysis/instructor_only' => 'analysis#instructor_only'
   get '/analysis/instructor_only' => 'analysis#instructor_only'
+  get '/analysis/instructor_only/:id' => 'analysis#instructor_only_show'
 
 
   get '/chart' => 'pages#chart'

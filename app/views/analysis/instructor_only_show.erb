@@ -1,0 +1,179 @@
+<h2>Results from "1 to 10" Scale Questions</h2>
+<div id="chart-scale-avg"></div>
+<div id="chart-scale-ind"></div>
+<h2>Results to "Yes or No" Questions</h2>
+<div id="chart-boolean"></div>
+<h2>Results to Multiple Choice Questions</h2>
+<div id="pie-multiple-choice"></div>
+
+<script>
+$(function () {
+
+    $('#chart-scale-avg').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Scale of 1 to 10 Questions (Average)'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array_scale %>
+        },
+        yAxis: {
+            min: 0,     
+            max: 10,
+            title: {
+                text: 'Scale of 1 to 10'
+            }
+        },
+        plotOptions: {
+                column: {
+                colorByPoint: true
+            },
+            line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+            }
+        },
+        colors: <%= raw @percentage_colors_scale %>,
+        series: [
+            { 
+                showInLegend: false,
+                data: <%= raw @averages_for_questions_scale %>
+            }
+        ]
+    });
+    $('#chart-scale-ind').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Scale of 1 to 10 Questions (Each Student)'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array_scale %>
+        },
+        yAxis: {
+            min: 0,     
+            max: 10,
+            title: {
+                text: 'Scale of 1 to 10'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+        <% @submissions.each do |submission| %>
+            { 
+                name: 'Student <%= submission.id %>',
+                data: <%= raw submission.scale_answers %>
+            },
+        <% end %>
+        ]
+    });
+    $('#chart-boolean').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '"Yes or No" Questions'
+        },
+        xAxis: {
+            categories: <%= raw @questions_array_boolean %>
+        },
+        yAxis: {
+            min: 0,     
+            max: 1,
+            title: {
+                text: 'Percent'
+            },
+            labels: {
+                formatter:function() {
+                    return (this.value * 100) + '%';
+                }
+            }
+        },
+        tooltip: {
+
+            
+            formatter: function() {
+                var pcnt = this * 100;
+                return '<b>' + this.x +
+                    '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+            }
+            
+        },
+        plotOptions: {
+            column: {
+            colorByPoint: true
+        },
+            series: {
+                dataLabels:{
+                    enabled:true,
+                    formatter:function() {
+                        return (this.y * 100) + '%';
+                    }
+                }
+            },
+            enableMouseTracking: false
+            
+        },
+        colors: <%= raw @percentage_colors_boolean %>,
+        series: [
+            { 
+                showInLegend: false,  
+                data: <%= raw @percentages_for_questions_boolean %>
+            }
+        ]
+    });
+    <% choice_count = 0 %>
+    <% @questions_array_multiple_choice.each do |pie_chart| %>
+        document.getElementById("pie-multiple-choice").innerHTML = '<div id="pie-multiple-choice-' + <%=choice_count %> + '"></div>';
+        $('#pie-multiple-choice-'+<%= choice_count %>).highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 1,//null,
+                plotShadow: false
+            },
+            title: {
+                text: '<%= pie_chart %>'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: <%= raw @percentages_for_questions_multiple_choice %>
+            }]
+        });
+    <% choice_count += choice_count %>
+    <% end %>
+
+
+
+});
+
+
+</script>

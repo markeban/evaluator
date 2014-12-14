@@ -5,6 +5,8 @@
 
     $scope.questions = [];
     $scope.questionsToDelete = [];
+    $scope.questionOptionsToDelete = [];
+
 
 
     $scope.setTemplateId = function(id) {
@@ -26,10 +28,6 @@
     };
 
     $scope.deleteQuestion = function(question) {
-      // if (!question.deleteQuestions) {
-      //   question.deleteQuestions = [];
-      // }
-      // question.deleteQuestions.push(question);
       $scope.questionsToDelete.push(question);
       var questionIndex = $scope.questions.indexOf(question);
       $scope.questions.splice(questionIndex, 1);
@@ -46,20 +44,37 @@
     };
 
     $scope.removeOption = function(question) {
+      $scope.questionOptionsToDelete.push(question);
       question.options.pop();
     };
 
-    $scope.save = function() {
+    $scope.save = function(templateId) {
       $http.post('/api/v1/questions/batch.json', {questions: $scope.questions }).then(function(response) {
-        $http.delete('/api/v1/questions/batch.json', {questions: $scope.questionsToDelete }).then(function(response) {
+        if ($scope.questionsToDelete[0] || $scope.questionOptionsToDelete[0]) {
+          $http.post('/api/v1/questions/batch_destroy.json', {questions: $scope.questionsToDelete }).then(function(response) {
+            if ($scope.questionOptionsToDelete[0]) {
+              $http.post('/api/v1/question_options/batch_destroy.json', {questions: $scope.questionOptionsToDelete }).then(function(response) {
+                //window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
+              }, function (error) {
+                $scope.deleteOptionErrors = error.data.errors;
+              });
+            }
+            //window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
           }, function (error) {
             $scope.deleteErrors = error.data.errors;
-          });
-        }, function (error) {
-          $scope.questionErrors = error.data.errors;
-        });
+          }); 
+        }
+      }, function (error) {
+        $scope.questionErrors = error.data.errors;
+      });
 
     };
+
+    $scope.loadIndex = function(templateId) {
+
+    };
+
+    window.scope = $scope;
 
     //      $scope.questionsDelete << $scope.questionsDelete.push(question)
     // $scope.save = function(templateId) {
@@ -68,7 +83,7 @@
     //   for(var m = 0; m < $scope.questions.length; m++) {
     //     $scope.saveQuestion(m);
     //   }
-      
+
     // };
 
     // $scope.saveQuestion = function(id) {
@@ -99,12 +114,10 @@
     //           $scope.questionErrors = error.data.errors;
     //           });
     // };
-   
-    $scope.loadIndex = function(templateId) {
-      window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
-    };
 
-    window.scope = $scope;
+
+
+
 
 
   });

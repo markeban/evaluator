@@ -32,8 +32,8 @@
                       <input ng-model="option.text" type="text" class="form-control" id="option_input">
                     </div>
 
-                  <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-default">Add Option</button>
-                  <button ng-click="removeOption(question)" ng-if="question.options" type="button" class="btn btn-warning">Remove Option</button>
+                  <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-default btn-sm">Add Option</button>
+                  <button ng-click="removeOption(question)" ng-if="question.options" type="button" class="btn btn-warning btn-sm">Remove Option</button>
 
 
                   <div class="checkbox">
@@ -60,9 +60,10 @@
 
       <button ng-click="addQuestion(templateId)" class="btn btn-primary">Add Question
       </button>
-
-      <button ng-click="save(templateId)" type="button" class="btn btn-success">Preview</button>
-      <p class="help-block">You will have an ability to preview the finished evaluation before confirming the template.</p>
+      <div class="preview-template">
+        <button ng-click="save(templateId)" type="button" class="btn btn-success btn-lg center-block">Preview Template</button>
+        <p class="help-block preview-center">You will have an ability to preview the finished evaluation before confirming the template.</p>
+      </div>
 
     </div>
 

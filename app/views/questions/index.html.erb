@@ -1,7 +1,7 @@
 
 
 
-
+    <h1>Template: <%= @template.name %> </h1>
 
 <% @questions.each do |question| %>
 
@@ -46,10 +46,16 @@
       </div>
     </div>
     <div class="col-md-4">
-      <p><%= question.format_type_text %></p>
-      <p><%= question.required_text %></p>
+      <table class="table table-bordered">
+        <tr>
+          <td><%= question.format_type_text %></td>
+        </tr>
+        <tr>
+          <td class="<%= question.label %>"><%= question.required_text %></td>
+        </tr>
+      </table>
     </div>
   </div>
 <% end %>
 
-<div><a href="<%= templates_path %>"><button type="button" class="btn btn-primary">Complete Template</button></a></div>
+<div><a href="<%= templates_path %>"><button type="button" class="btn btn-success btn-lg center-block">Complete Template</button></a></div>

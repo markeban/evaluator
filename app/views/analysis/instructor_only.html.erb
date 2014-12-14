@@ -1,21 +1,22 @@
-<h1>All Results for <%= @teacher.full_name %></h1>
+<h1>All Evaluations for <%= @teacher.full_name %></h1>
 
 
+<h2>View Recent Evaluations by instructor</h2>
 
 <table class="table table-hover">
    <tr> 
+      <th>Date Evaluation Created</th>
       <th>Template Used</th>
-      <th>Date Created</th>
       <th>First Student Submission</th>
       <th>Last Student Submission</th>
   </tr>
     <% @evaluations.each do |evaluation| %>
       <tr>
+          <td><a href="/analysis/instructor_only/<%= evaluation.id %>"><%= evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
           <td><%= evaluation.template.name %></td>
-          <td><%= evaluation.created_at %></td>
           <% if evaluation.submissions.first %>
-            <td><%= evaluation.submissions.first.created_at %></td>
-            <td><%= evaluation.submissions.last.created_at %></td>
+            <td><%= evaluation.submissions.first.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
+            <td><%= evaluation.submissions.last.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
           <% else %>
             <td>none submitted</td> 
             <td>none submitted</td> 
@@ -24,75 +25,3 @@
   <% end %>
 </table>
 
-
-<div id="chart-avg"></div>
-<div id="chart-teacher"></div>
-
-<script>
-$(function () {
-    $('#chart-avg').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Average Scores from Evaluation'
-        },
-        xAxis: {
-            categories: <%= raw @questions_array %>
-        },
-        yAxis: {
-            title: {
-                text: 'Scale of 1 to 10'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-            { 
-                name: 'Hello',
-                data: <%= raw @averages_for_questions %>
-            }
-        ]
-    });
-    $('#chart-teacher').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Scores by Individual Student'
-        },
-        xAxis: {
-            categories: <%= raw @questions_array %>
-        },
-        yAxis: {
-            title: {
-                text: 'Scale of 1 to 10'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-        <% @submissions.each do |submission| %>
-            { 
-                name: 'Student <%= submission.id %>',
-                data: <%= raw submission.answers.map { |answer| answer.answer.to_i } %>
-            },
-        <% end %>
-        ]
-    });  
-});
-
-
-</script>

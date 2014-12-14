@@ -1,0 +1,1 @@
+batch_destroy.json.jbuilder

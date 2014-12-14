@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :template
   has_many :answers
+  has_many :submissions, :through => :answers
   has_many :question_options, :dependent => :destroy
 
 
@@ -24,6 +25,13 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def label
+    if required
+      return "required"
+    else
+      return "optional"
+    end
+  end
 
 
 end

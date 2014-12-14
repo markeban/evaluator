@@ -38,9 +38,11 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def batch_destroy
-    params[:questions].each do |question|
-      question_delete = Question.find_by(:id => question[:id])
-      question_delete.destroy
+    if params[:questions]
+      params[:questions].each do |question|
+        question = Question.find_by(:id => question[:id])
+        question.destroy
+      end
     end
   end
 
