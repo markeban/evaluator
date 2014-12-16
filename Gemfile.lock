@@ -49,6 +49,8 @@ GEM
       dotenv (= 1.0.2)
     erubis (2.7.0)
     execjs (2.2.2)
+    font-awesome-rails (4.2.0.0)
+      railties (>= 3.2, < 5.0)
     highcharts-rails (3.0.10)
       railties (>= 3.1)
     hike (1.2.3)
@@ -139,6 +141,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
   dotenv-rails
+  font-awesome-rails
   highcharts-rails (~> 3.0.0)
   jbuilder (~> 2.0)
   jquery-rails
