@@ -91,7 +91,46 @@ class AnalysisController < ApplicationController
   end
 
 
+  def instructor_only_show_template
+    @specific_template = Template.find_by(:id => params[:id])
+    @evaluations = @specific_template.evaluations
 
+    # @questions_array_scale << question.text
+    # @questions_array_scale = []
+    @averages_of_all_questions_array_scale = []
+    @evaluations.each do |evaluation|
+      averages_for_questions_scale = []
+      evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
+          answers_scale = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)
+          averages_for_questions_scale << (answers_scale.sum / answers_scale.count.to_f).round(1)
+      end
+      @averages_of_all_questions_array_scale << [evaluation.created_at, averages_for_questions_scale]
+    end
+
+
+
+    # @percentage_colors_scale =[]
+    # @averages_for_questions_scale.each do |average|
+    #   case 
+    #     when average > 9
+    #       @percentage_colors_scale << "#009900"
+    #     when average > 8
+    #       @percentage_colors_scale << "#39aa00"
+    #     when average > 7
+    #       @percentage_colors_scale << "#a3c400"
+    #     when average > 5
+    #       @percentage_colors_scale << "#d4b100"
+    #     when average > 3
+    #       @percentage_colors_scale << "#e67300"            
+    #     else
+    #       @percentage_colors_scale << "#ff0000"
+    #   end
+    # end
+
+
+
+
+  end
 
 
   def template_only
