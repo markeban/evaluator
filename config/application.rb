@@ -21,6 +21,7 @@ module Evaluator
     # config.i18n.default_locale = :de
     # add app/assets/fonts to the asset path
     config.assets.precompile += %w(.svg .eot .woff .ttf)
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
     config.assets.paths << Rails.root.join("vendor", "assets", "images")
   end
 end
