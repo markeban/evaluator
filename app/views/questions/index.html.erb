@@ -1,61 +1,63 @@
 
 
 
-    <h1>Template: <%= @template.name %> </h1>
+<h1>Template: <%= @template.name %> </h1>
 
 <% @questions.each do |question| %>
 
 
-  <div class="row">
-    <div class="col-md-8">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"> <%= question.text %> </h3>
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"> <%= question.text %> </h3>
+      </div>
+      <div class="panel-body">
+        <% if question.format_type === "multipleChoice" %>
+        <% question.question_options.each do |option| %>
+        <div class="radio">
+          <label>
+            <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
+            <%= option.text %>
+          </label>
         </div>
-        <div class="panel-body">
-          <% if question.format_type === "multipleChoice" %>
-            <% question.question_options.each do |option| %>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
-                       <%= option.text %>
-                    </label>
-                  </div>
-            <% end %>
-          <% elsif question.format_type === "boolean" %>
-            <div class="radio">
-              <label>
-                <input type="radio" name="yesNo" id="yes" value="yes" checked>
-                 Yes
-              </label>
-              <label>
-                <input type="radio" name="yesNo" id="no" value="no" checked>
-                 No
-              </label>
-            </div>
-          <% elsif question.format_type === "text" %>
-            <input class="form-control" type="text" placeholder="Students will write answer here">
-          <% elsif question.format_type === "scale1To10" %>
-            <% 10.times do |count| %>
-              <label class="radio-inline">
-              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
-              </label>
-            <% end %>
-          <% end %>      
+        <% end %>
+        <% elsif question.format_type === "boolean" %>
+        <div class="radio">
+          <label>
+            <input type="radio" name="yesNo" id="yes" value="yes" checked>
+            Yes
+          </label>
+          <label>
+            <input type="radio" name="yesNo" id="no" value="no" checked>
+            No
+          </label>
         </div>
+        <% elsif question.format_type === "text" %>
+        <input class="form-control" type="text" placeholder="Students will write answer here">
+        <% elsif question.format_type === "scale1To10" %>
+        <% 10.times do |count| %>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+        </label>
+        <% end %>
+        <% end %>      
       </div>
     </div>
-    <div class="col-md-4">
-      <table class="table table-bordered">
-        <tr>
-          <td><%= question.format_type_text %></td>
-        </tr>
-        <tr>
-          <td class="<%= question.label %>"><%= question.required_text %></td>
-        </tr>
-      </table>
-    </div>
   </div>
+  <div class="col-md-4">
+    <table class="table table-bordered">
+      <tr>
+        <td><%= question.format_type_text %></td>
+      </tr>
+      <tr>
+        <td class="<%= question.label %>"><%= question.required_text %></td>
+      </tr>
+    </table>
+  </div>
+</div>
 <% end %>
+<div><a href="<%= new_template_question_path(@template) %>"><button type="button" class="btn btn-warning btn-lg">Modify Template</button></a></div>
 
-<div><a href="<%= templates_path %>"><button type="button" class="btn btn-success btn-lg center-block">Complete Template</button></a></div>
+  <div><a href="<%= templates_path %>"><button type="button" class="btn btn-success btn-lg center-block" >Complete Template</button></a></div>
+  <p class="help-block preview-center"><span class ="important">Make Sure this is exactly how you want the template to look.</span><br> After clicking "Modify Template" you will not beable to change it, so you will be able to use it for multiple evaluations.</p>

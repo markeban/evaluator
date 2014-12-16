@@ -20,8 +20,8 @@ class Api::V1::QuestionOptionsController < ApplicationController
   end
 
   def batch_destroy
-    params[:questions].each do |question|
-      question = Question.find_by(:id => question[:id])
+    params[:options].each do |option|
+      option = QuestionOption.find_by(:id => question[:id])
       question.destroy
     end
   end

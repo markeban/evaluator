@@ -19,7 +19,9 @@
  *= require_self
  */
 
-
+h1, h2 {
+  text-shadow: 1px 1px ;
+}
 
 .ng-enter, .ng-move{
   -webkit-animation: fadeIn 1s;
@@ -33,4 +35,9 @@
   -moz-animation: fadeOut 1s;
   -o-animation: fadeOut 1s;
   animation: fadeOut 1s;
+}
+
+
+.panel, table {
+  box-shadow:0 0 10px #666;
 }
