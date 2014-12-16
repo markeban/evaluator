@@ -48,7 +48,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: evaluator_production
-  username: evaluator
-  password: <%= ENV['EVALUATOR_DATABASE_PASSWORD'] %>
+  database: evaluator-production
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
