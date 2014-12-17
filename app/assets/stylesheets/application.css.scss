@@ -11,7 +11,7 @@
  * file per style scope.
  *
  *= require app_strap/bootstrap.min
- *= require app_strap/font-awesome
+ *= require font-awesome
  *= require app_strap/theme-style.min
  *= require app_strap/clingify.css
  *= require animate
@@ -20,7 +20,8 @@
  */
 
 h1, h2 {
-  text-shadow: 1px 1px ;
+
+
 }
 
 .ng-enter, .ng-move{

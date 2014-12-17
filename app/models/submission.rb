@@ -2,7 +2,7 @@ class Submission < ActiveRecord::Base
   belongs_to :evaluation
   belongs_to :template
   has_many :answers
-  has_many :questions, :through => :questions
+  has_many :questions, :through => :answers
 
 
   accepts_nested_attributes_for :answers
@@ -13,7 +13,7 @@ class Submission < ActiveRecord::Base
 
   def multiple_choice_answers
     answers.select { |answer| answer.question.format_type == "multipleChoice" }.map { |answer| answer.answer }
-    answers = ["Diego", "Suzzy", "Suzzy", "Carl", "Diego"]
+
 
 
 

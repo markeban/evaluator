@@ -13,7 +13,7 @@
     <% @evaluations.each do |evaluation| %>
       <tr>
           <td><a href="/analysis/instructor_only/<%= evaluation.id %>"><%= evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
-          <td><a href="/analysis/instructor_only/templates/<%= evaluation.template.id %>"><%= evaluation.template.name %></td>
+          <td><a href="/analysis/instructor_only/templates/<%= evaluation.template.id %>?teacher=<%= @teacher.id %> "><%= evaluation.template.name %></td>
           <% if evaluation.submissions.first %>
             <td><%= evaluation.submissions.first.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
             <td><%= evaluation.submissions.last.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>

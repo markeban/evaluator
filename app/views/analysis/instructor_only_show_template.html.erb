@@ -1,1 +1,109 @@
-instructor_only_show_template.html.erb
+<h2>Template: <%= @specific_template.name %></h2>
+<h2>Instructor: <%= @teacher.full_name %></h2>
+<h2>Results from "1 to 10" Scale Questions</h2>
+<div id="chart-template-instructor-only-scale"></div>
+
+<table class="table table-hover">
+     <tr>
+        <th>Question</th>
+        <% @evaluation_start_dates.each do |date| %>
+            <th><%= date %></th>
+        <% end %>
+      </tr>
+      <% @averages.each do |question, evaluation| %>
+        <tr>
+          <td><%= question %></td>
+            <% evaluation.each do |score| %>
+              <td><%= score %></td>
+            <% end %>
+        </tr>
+      <% end %>
+
+</table>
+
+<h2>Results to "Yes or No" Questions</h2>
+<div id="chart-template-instructor-only-boolean"></div>
+
+
+
+
+
+
+<script>
+$(function () {
+    $('#chart-template-instructor-only-scale').highcharts({
+        title: {
+            text: 'Results Over Time',
+            x: -20 //center
+        },
+        xAxis: {
+
+            categories: <%= raw @evaluation_start_dates %>
+        },
+        yAxis: {
+            min: 0,     
+            max: 10,
+            title: {
+                text: 'Scale of 1 to 10'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+          series: [
+        <% @averages.each do |question, evaluation| %>
+          {
+              name: '<%= raw question %>',
+              data: <%= raw evaluation %>
+          }, 
+        <% end %>
+        ]
+    });
+});
+(function () {
+    $('#chart-template-instructor-only-boolean').highcharts({
+        title: {
+            text: 'Results Over Time',
+            x: -20 //center
+        },
+        xAxis: {
+
+            categories: <%= raw @evaluation_start_dates %>
+        },
+        yAxis: {
+            min: 0,     
+            max: 10,
+            title: {
+                text: 'Scale of 1 to 10'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+          series: [
+        <% @averages_boolean.each do |question, evaluation| %>
+          {
+              name: '<%= raw question %>',
+              data: <%= raw evaluation %>
+          }, 
+        <% end %>
+        ]
+    });
+});
+</script>
