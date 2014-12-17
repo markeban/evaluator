@@ -13,8 +13,8 @@
       $scope.templateId = id;
       $http.get("/api/v1/questions.json?template_id=" + $scope.templateId).then(function (response) {
         $scope.questions = response.data;
+        $scope.addQuestion(id);
       });
-      
     };
 
     

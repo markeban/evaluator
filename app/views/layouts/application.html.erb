@@ -3,9 +3,9 @@
 <head>
   <title>Instructor Evals</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
@@ -78,29 +78,11 @@
                 <% if user_signed_in? %>
                 <a href="/users/sign_out" class="btn btn-link signout" data-toggle="modal" data-method="delete" rel="nofollow">Sign Out</a>
                 <% else %>
+                <a href="/users/sign_up" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
                 <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
-                <a href="#signup-modal" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
               </li>
-              <a href="#login-modal" class="btn btn-link login" data-toggle="modal">Login</a> 
+              <a href="/users/sign_in" class="btn btn-link login" data-toggle="modal">Login</a> 
               <% end %>
-              <div class="btn-group language-menu">
-                <!--language menu-->
-                <a href="#en" class="btn btn-link dropdown-toggle" data-toggle="dropdown"><span class="flag-icon flag-icon-gb"></span></a>
-                <ul class="dropdown-menu dropdown-menu-mini dropdown-menu-primary">
-                  <li>
-                    <a href="#es" class="lang-es"><span class="flag-icon flag-icon-es"></span> Spanish</a>
-                  </li>
-                  <li>
-                    <a href="#pt" class="lang-pt"><span class="flag-icon flag-icon-pt"></span> Portguese</a>
-                  </li>
-                  <li>
-                    <a href="#cn" class="lang-cn"><span class="flag-icon flag-icon-cn"></span> Chinese</a>
-                  </li>
-                  <li>
-                    <a href="#se" class="lang-se"><span class="flag-icon flag-icon-se"></span> Swedish</a>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
@@ -133,7 +115,7 @@
           <div class="navbar-collapse collapse">
             <!--main navigation-->
             <ul class="nav navbar-nav">
-              <li class="dropdown dropdown-full">
+  <!--             <li class="dropdown dropdown-full">
                 <a href="#" class="dropdown-toggle menu-item" id="megamenu-drop" data-toggle="dropdown" data-hover="dropdown">Take a Tour +</a> 
                 <!-- Dropdown Menu - Mega Menu -->
                 <ul class="dropdown-menu mega-menu" role="menu" aria-labelledby="megamenu-drop">
@@ -171,7 +153,7 @@
                     </ul>
                   </li>
                 </ul>
-              </li>
+              </li> -->
               
               <li class="dropdown active">
                 <a href="#" class="dropdown-toggle" id="pages-drop" data-toggle="dropdown" data-hover="dropdown">About</a> 
@@ -179,7 +161,17 @@
               </li>
               
               <li class="dropdown">
-                <a href="blog.htm" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Contact</a> 
+                <a href="#" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Contact</a> 
+
+              </li>
+
+              <li class="dropdown">
+                <a href="<%= new_evaluation_path %>" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Send Eval</a> 
+
+              </li>
+
+              <li class="dropdown">
+                <a href="<%= analysis_path %>" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Analysis</a> 
 
               </li>
               

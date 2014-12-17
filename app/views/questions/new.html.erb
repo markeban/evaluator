@@ -7,48 +7,46 @@
     
 
 
-              <div class="row">
-                <div ng-repeat="question in questions">
-                 <div class="col-md-12">
+              <div ng-repeat="question in questions">
+                <div class="row">
+                  <div class="col-md-2"></div>
+                   <div class="col-md-8">
+                      <form role="form">
+                      <fieldset>
+                       <legend >Question: {{$index + 1}}</legend>
+                        <div class="form-group">
+                          <label for="format_type_input">Format Type:</label>
+                          <select ng-model="question.format_type" class="form-control">
+                            <option value="multipleChoice">Multiple Choice</option>
+                            <option value="boolean">Yes or No</option>
+                            <option value="scale1To10">Scale from 1 to 10</option>
+                            <option value="text">Text (non-quantitative)</option>       
+                          </select>
+                        </div>
+                        <div class="form-group" ng-if="question.format_type">
+                          <label for="question_input">Question:</label>
+                          <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here">
+                        </div>
+                        <div class="form-group" ng-repeat="option in question.options track by $index" ng-if="question.format_type.indexOf('multipleChoice') !== -1">
+                          <label for="option_input">Add an option:</label>
+                          <input ng-model="option.text" type="text" class="form-control" id="option_input">
+                        </div>
 
-                  <form role="form">
-                  <fieldset>
-                   <legend >Question: {{$index + 1}}</legend>
-                    <div class="form-group">
-                      <label for="format_type_input">Format Type:</label>
-                      <select ng-model="question.format_type" class="form-control">
-                        <option value="multipleChoice">Multiple Choice</option>
-                        <option value="boolean">Yes or No</option>
-                        <option value="scale1To10">Scale from 1 to 10</option>
-                        <option value="text">Text (non-quantitative)</option>       
-                      </select>
-                    </div>
-                    <div class="form-group" ng-if="question.format_type">
-                      <label for="question_input">Question:</label>
-                      <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here">
-                    </div>
-                    <div class="form-group" ng-repeat="option in question.options track by $index" ng-if="question.format_type.indexOf('multipleChoice') !== -1">
-                      <label for="option_input">Add an option:</label>
-                      <input ng-model="option.text" type="text" class="form-control" id="option_input">
-                    </div>
-
-                  <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-default btn-sm">Add Option</button>
-                  <button ng-click="removeOption(question)" ng-if="question.options" type="button" class="btn btn-warning btn-sm">Remove Option</button>
+                      <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-default btn-sm">Add Option</button>
+                      <button ng-click="removeOption(question)" ng-if="question.options" type="button" class="btn btn-warning btn-sm">Remove Option</button>
 
 
-                  <div class="checkbox">
-                    <label>
-                      <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required:
-                    </label>
-                    <button ng-click="deleteQuestion(question)" type="button" class="btn btn-danger pull-right">Delete This Question</button>
+                      <div class="checkbox">
+                        <label>
+                          <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required:
+                        </label>
+                        <button ng-click="deleteQuestion(question)" type="button" class="btn btn-danger pull-right">Delete This Question</button>
+                      </div>
+                      </fieldset>
+                      </form>
+                      <button ng-click="addQuestion(templateId)" class="btn btn-primary add-question">Add Question</button>
                   </div>
-
-
-
-                  </fieldset>
-                  </form>
-                </div>
-
+                <div class="col-md-2"></div>
             
 
               </div>
@@ -58,8 +56,7 @@
 
 
 
-      <button ng-click="addQuestion(templateId)" class="btn btn-primary add-question">Add Question
-      </button>
+      
       <div class="preview-template">
         <button ng-click="save(templateId)" type="button" class="btn btn-success btn-lg center-block">Preview Template</button>
         <p class="help-block preview-center">You will have an ability to preview the finished evaluation before confirming the template.</p>

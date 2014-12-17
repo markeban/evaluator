@@ -19,10 +19,7 @@
  *= require_self
  */
 
-h1, h2 {
 
-
-}
 
 .ng-enter, .ng-move{
   -webkit-animation: fadeIn 1s;
@@ -41,4 +38,39 @@ h1, h2 {
 
 .panel, table {
   box-shadow:0 0 10px #666;
+}
+
+.btn-xlarge {
+    margin: 0px 10px 0px 10px;
+    padding: 18px 28px;
+    font-size: 22px; //change this to your desired size
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
+h1, h2 {
+    color: #1C7E6E;
+    text-align: center;
+    margin: 30px 0px 30px 0px;
+}
+
+
+
+.accounts {
+
+  width: 270px;
+  margin: 5% 0 0 10%;
+  text-align: left;
+  font-size: 16px;
+  color: #000000;
+  background: #8EC1B9;
+  opacity:0.9;
+  border-radius:25px;
+  padding: 20px 20px 20px 20px;
+  display: inline-block;
+  float: left;
+
+
 }

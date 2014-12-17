@@ -1,15 +1,20 @@
-<h1>Analysis</h1>
+<h2>Analysis</h2>
 
-<p>Choose specific instructor:</p>
+<div class="row">
+  <div class="col-md-3"></div>
+    <div class="col-md-6">
 
-  <div class="panel-body">
-<%= bootstrap_form_tag :url => '/analysis/instructor_only', :method => 'post' do |f| %> 
-     <div><%= f.select :teacher_id, @teacher_select %>
-     </div>
-     <div>
-       <%= f.submit 'Select by Instructor' %>
-     </div>
-  <% end %>
- </div>
+          <div class="panel-body">
+        <%= bootstrap_form_tag :url => '/analysis/instructor_only', :method => 'post' do |f| %> 
+             <div><%= f.select :teacher_id, @teacher_select, label: "Select Instructor:" %>
+             </div>
+             <div>
+               <%= f.submit 'Select' %>
+             </div>
+          <% end %>
+         </div>
 
+    </div>  
+  <div class="col-md-3"></div>
+</div>
 

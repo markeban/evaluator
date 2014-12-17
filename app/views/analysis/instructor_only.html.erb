@@ -1,27 +1,34 @@
-<h1>All Evaluations for <%= @teacher.full_name %></h1>
+<h2>All Evaluations for <%= @teacher.full_name %></h2>
 
 
-<h2>View Recent Evaluations by instructor</h2>
+<div class="row">
+  <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h3>View Recent Evaluations by instructor</h3>
 
-<table class="table table-hover">
-   <tr> 
-      <th>Date EvaluationCreated<br><i>Click for specific eval results.</i></th>
-      <th>Template Used<br><i>Click for instructor eval results over life of template.</i></th>
-      <th>First Student Submission</th>
-      <th>Last Student Submission</th>
-  </tr>
-    <% @evaluations.each do |evaluation| %>
-      <tr>
-          <td><a href="/analysis/instructor_only/<%= evaluation.id %>"><%= evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
-          <td><a href="/analysis/instructor_only/templates/<%= evaluation.template.id %>?teacher=<%= @teacher.id %> "><%= evaluation.template.name %></td>
-          <% if evaluation.submissions.first %>
-            <td><%= evaluation.submissions.first.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
-            <td><%= evaluation.submissions.last.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
-          <% else %>
-            <td>none submitted</td> 
-            <td>none submitted</td> 
+        <table class="table table-hover">
+           <tr> 
+              <th>Date EvaluationCreated<br><i>Click for specific eval results.</i></th>
+              <th>Template Used<br><i>Click for instructor eval results over life of template.</i></th>
+              <th>First Student Submission</th>
+              <th>Last Student Submission</th>
+          </tr>
+            <% @evaluations.each do |evaluation| %>
+              <tr>
+                  <td><a href="/analysis/instructor_only/<%= evaluation.id %>"><%= evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
+                  <td><a href="/analysis/instructor_only/templates/<%= evaluation.template.id %>?teacher=<%= @teacher.id %> "><%= evaluation.template.name %></td>
+                  <% if evaluation.submissions.first %>
+                    <td><%= evaluation.submissions.first.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
+                    <td><%= evaluation.submissions.last.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
+                  <% else %>
+                    <td>none submitted</td> 
+                    <td>none submitted</td> 
+                  <% end %>
+              </tr>
           <% end %>
-      </tr>
-  <% end %>
-</table>
+        </table>
+
+    </div>  
+  <div class="col-md-1"></div>
+</div>
 

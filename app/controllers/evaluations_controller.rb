@@ -3,12 +3,15 @@ class EvaluationsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @teacher_select = []
-      Teacher.all.each do |teacher|
+    @teacher_select = []   
+    unique_teachers = current_user.teachers.uniq
+    unique_teachers.each do |teacher|
       @teacher_select << [teacher.full_name, teacher.id]
     end
+    
     @template_select = []
-      Template.all.each do |template|
+    unique_templates = current_user.templates.uniq
+      unique_templates.each do |template|
       @template_select << [template.name, template.id]
     end
     @evaluation = Evaluation.new
@@ -33,6 +36,7 @@ class EvaluationsController < ApplicationController
 
   def show
     @evaluation = Evaluation.find_by(:id => params[:id])
+    @questions = @evaluation.template.questions
 
 
   end

@@ -1,23 +1,32 @@
-<div class="template-heading">
-  <h2>Evaluation Templates</h2>
-<% if @templates.nil? %>
-  <p> Let's get started and create your first template for your instructor(s). Be general in order to use the template more than once.</p>
-<% else %>
-  <p> Choose one of your existing templates or create a new one: 
-<% end %> 
-<a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Create Template</button></a></p>
-</div>
 
-<table class="table table-hover">
-  <tr>
-    <th>Template Name</th>
-    <th>Description</th> 
-  </tr>
-  <% @templates.each do |template| %>
-  <tr>
-    <td><%= link_to template.name, template_path(template.id) %><%=  %></td>
-    <td> <%= template.description %></td> 
-  </tr>
-  <% end %>
-</table>
+  <h2>Evaluation Templates</h2>
+
+
+
+
+<div class="row">
+  <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <% if @templates.nil? %>
+        <p> Let's get started and create your first template for your instructor(s). Be general in order to use the template more than once.</p>
+      <% else %>
+        <p> Choose one of your existing templates or create a new one: 
+      <% end %> 
+      <a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Create Template</button></a></p>
+
+      <table class="table table-hover">
+        <tr>
+          <th>Template Name</th>
+          <th>Description</th> 
+        </tr>
+        <% @templates.each do |template| %>
+        <tr>
+          <td><%= link_to template.name, template_path(template.id) %><%=  %></td>
+          <td> <%= template.description %></td> 
+        </tr>
+        <% end %>
+      </table>
+    </div>  
+  <div class="col-md-3"></div>
+</div>
 

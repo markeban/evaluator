@@ -1,6 +1,5 @@
 class SubmissionsController < ApplicationController
 
-  before_action :authenticate_user!
 
   def new
     @evaluation = Evaluation.find_by(:url => params[:id])
@@ -19,13 +18,20 @@ class SubmissionsController < ApplicationController
 
   end
 
+  def complete
+
+  end
+
+
+
+
   def create
     @submission = Submission.new(submission_params)
     if @submission.save
       flash[:success] = "Submission added successfully"
       #redirect_to template_questions_path(@template)
     end
-    redirect_to '/templates'
+    redirect_to '/submissions/complete'
   end
 
   private

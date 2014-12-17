@@ -1,22 +1,34 @@
-<h1>Send Evaluation to Students</h1>
+<h2>Send a New Evaluation to Students</h2>
 
+<div class="row">
+  <div class="col-md-3"></div>
+    <div class="col-md-6">
 
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Create Evaluation</h3>
+        </div>
+        <div class="panel-body">
+         <%= bootstrap_form_for @evaluation do |f| %> 
+          <% if !(@template_select.to_a.empty?) %>
+           <div><%= f.select :template_id, @template_select %></div>
+          <% else %>
+          <p>You'll need to add an template to get started.</p>
+          <% end %>
+              <p><a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Add Template</button></a></p>
+          <% if !(@teacher_select.to_a.empty?) %>
+           <div><%= f.select :teacher_id, @teacher_select %></div>
+          <% else %>
+          <p>You'll need to add an instructor to get started.</p>
+          <% end %>
+              <p><a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p>
+           <div>
+             <%= f.submit 'Create Evaluation Link' %>
+           </div>
+        <% end %>
+       </div>
+      </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Create Evaluation</h3>
-  </div>
-  <div class="panel-body">
-   <%= bootstrap_form_for @evaluation do |f| %> 
-     <div><%= f.select :teacher_id, @teacher_select %>
-     </div>
-        <p><a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p>
-     <div><%= f.select :template_id, @template_select %>
-     </div>
-        <p><a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Add Template</button></a></p>
-     <div>
-       <%= f.submit 'Create Evaluation Link' %>
-     </div>
-  <% end %>
- </div>
+    </div>
+  <div class="col-md-3"></div>
 </div>

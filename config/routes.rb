@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   patch  '/submissions/:id' => 'submissions#update'
   put    '/submissions/:id' =>  'submissions#update'
   delete '/submissions/:id' =>  'submissions#destroy'
+  get 'submissions/complete' => 'submissions#complete' #unRESTful route
 
   get '/analysis' => 'analysis#index'
   post '/analysis/instructor_only' => 'analysis#instructor_only'

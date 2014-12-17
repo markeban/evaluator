@@ -6,10 +6,11 @@ class AnalysisController < ApplicationController
     unique_teachers.each do |teacher|
       @teacher_select << [teacher.full_name, teacher.id]
     end
-    @template_select = []
-      Template.all.each do |template|
-      @template_select << [template.name, template.id]
-    end
+    # @template_select = []
+    # unique_templates = current_user.templates.uniq
+    #   unique_templates.each do |template|
+    #   @template_select << [template.name, template.id]
+    # end
 
   end
 
@@ -23,6 +24,7 @@ class AnalysisController < ApplicationController
   def instructor_only_show
       @specific_evaluation = Evaluation.find_by(:id => params[:id])   
       @submissions = @specific_evaluation.submissions
+      @teacher = @specific_evaluation.teacher
 
       @questions_array_scale = []
       @averages_for_questions_scale = []
@@ -78,17 +80,24 @@ class AnalysisController < ApplicationController
       @questions_array_multiple_choice = []
       @percentages_for_questions_multiple_choice = []
       @specific_evaluation.template.questions.where(:format_type => "multipleChoice").each do |question| 
-          @questions_array_multiple_choice << question.text
-          answers_multiple_choice = @specific_evaluation.answers.where(:question_id => question.id).map(&:answer)
-          question.question_options.each do |option|
-            @percentages_for_questions_multiple_choice << [option.text, (answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
-              .round(2)]
-          end
-
-
-
+        @questions_array_multiple_choice << question.text
+        answers_multiple_choice = @specific_evaluation.answers.where(:question_id => question.id).map(&:answer)
+        question.question_options.each do |option|
+          @percentages_for_questions_multiple_choice << [option.text, (answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
+            .round(2)]
+        end
       end
 
+      questions_text =[]
+      answers_text =[]
+      @specific_evaluation.template.questions.where(:format_type => "text").each do |question| 
+        questions_text << question.text
+        answers_text << @specific_evaluation.answers.where(:question_id => question.id).map(&:answer)
+      end
+      @questions_answers = []
+      questions_text.each_with_index do |question, index|
+      @questions_answers = [question, answers_text[index]]
+    end
 
   end
 
@@ -129,11 +138,11 @@ class AnalysisController < ApplicationController
         averages_for_questions_boolean << (answers_boolean.sum / answers_boolean.count.to_f).round(2)
       end
       averages_of_all_questions_array_boolean << averages_for_questions_boolean
+     
+
     end
     averages_of_all_questions_array_boolean_trans = averages_of_all_questions_array_boolean.transpose
     @averages_boolean = {}
-    puts "ARGH"
-    puts questions_boolean
     questions_boolean.each_with_index do |question, index|
       @averages_boolean[question] = averages_of_all_questions_array_boolean_trans[index]
     end

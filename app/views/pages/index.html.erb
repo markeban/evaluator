@@ -1,12 +1,24 @@
 <div class="landing-col col-md-12 col-xs-12">
 
+  <div class="centered">
+
+    <% if user_signed_in? %>
+      <h1 class="welcome">Let's Get Started</h1>
+      <div class="line-separator"></div>
+      <a href="<%= new_evaluation_path %>"><button type="button" class="btn btn-primary btn-xlarge">Create New Eval</button></a>
+      <a href="<%= analysis_path %>"><button type="button" class="btn btn-primary btn-xlarge">Analyze Results</button></a>
+    <% else %>
+      <h1 class="welcome">Instructor Evals</h1>
+      <div class="line-separator"></div>
+      <p>Adult Education, Foreign Language, Yoga, Flight, Scuba, Fine Arts...</p>
+      <p>Get priceless feedback from student evaluations on your instructors.</p>
+      <p>Analyzise thier results over time, giving your instructors the feedback they need to become even better.</p>
+      <a href="<%= new_user_registration_path %>"><button type="button" class="btn btn-primary btn-xlarge">Sign Up</button></a>
+
+    <% end %>
 
 
-  <a href="<%= new_evaluation_path %>"><button type="button" class="btn btn-primary">Create Evaluation</button></a>
 
-
-
-
-
+  </div>
 
 </div>

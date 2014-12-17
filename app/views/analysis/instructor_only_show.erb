@@ -1,10 +1,61 @@
-<h2>Results from "1 to 10" Scale Questions</h2>
-<div id="chart-scale-avg"></div>
-<div id="chart-scale-ind"></div>
-<h2>Results to "Yes or No" Questions</h2>
-<div id="chart-boolean"></div>
-<h2>Results to Multiple Choice Questions</h2>
-<div id="pie-multiple-choice"></div>
+
+<h2>Results from Instructor <%= @specific_evaluation.teacher.full_name %> from Evaluation Created on <%= @specific_evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></h2>
+
+    <div class="row">
+      <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Results from "1 to 10" Scale Questions</h3>
+            <div id="chart-scale-avg"></div>
+            <br>
+            <div id="chart-scale-ind"></div>
+            <br>
+            <br>
+            <h3>Results to "Yes or No" Questions</h3>
+            <div id="chart-boolean"></div>
+            <br>
+            <br>
+            <h3>Results to Multiple Choice Questions</h3>
+            <div id="pie-multiple-choice"></div>
+            <br>
+            <br>
+            <% if @questions_answers[1][0] %>
+             <h3>Results to Text Questions</h3>
+                <% @questions_answers.each do |question, answers| %>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title"><%= question %></h3>
+                      </div>
+                      <div class="panel-body">
+                        <% answers.each do |answer| %>
+                            <p><%= answer %></p>
+                        <% end %>
+                      </div>
+                    </div>
+                <% end %>
+            <% end %>
+            <br>
+            <br>
+        </div>  
+      <div class="col-md-1"></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 $(function () {

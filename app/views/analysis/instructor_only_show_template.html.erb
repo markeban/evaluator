@@ -1,28 +1,44 @@
-<h2>Template: <%= @specific_template.name %></h2>
-<h2>Instructor: <%= @teacher.full_name %></h2>
-<h2>Results from "1 to 10" Scale Questions</h2>
-<div id="chart-template-instructor-only-scale"></div>
+<h2>All Results from Instructor <%= @teacher.full_name %> from Template: <%= @specific_template.name %></h2>
 
-<table class="table table-hover">
-     <tr>
-        <th>Question</th>
-        <% @evaluation_start_dates.each do |date| %>
-            <th><%= date %></th>
-        <% end %>
-      </tr>
-      <% @averages.each do |question, evaluation| %>
-        <tr>
-          <td><%= question %></td>
-            <% evaluation.each do |score| %>
-              <td><%= score %></td>
-            <% end %>
-        </tr>
-      <% end %>
 
-</table>
+    <div class="row">
+      <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Results from "1 to 10" Scale Questions</h3>
+            <div id="chart-template-instructor-only-scale"></div>
+            <p>Chart Form (Same Data)</p>
+            <table class="table table-hover">
+                 <tr>
+                    <th>Question</th>
+                    <% @evaluation_start_dates.each do |date| %>
+                        <th><%= date %></th>
+                    <% end %>
+                  </tr>
+                  <% @averages.each do |question, evaluation| %>
+                    <tr>
+                      <td><%= question %></td>
+                        <% evaluation.each do |score| %>
+                          <td><%= score %></td>
+                        <% end %>
+                    </tr>
+                  <% end %>
 
-<h2>Results to "Yes or No" Questions</h2>
-<div id="chart-template-instructor-only-boolean"></div>
+            </table>
+            <br>
+            <br>
+            <h3>Results to "Yes or No" Questions</h3>
+            <div id="chart-template-instructor-only-boolean"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>  
+      <div class="col-md-1"></div>
+    </div>
+
+
+
+
 
 
 
@@ -68,7 +84,7 @@ $(function () {
         ]
     });
 });
-(function () {
+$(function () {
     $('#chart-template-instructor-only-boolean').highcharts({
         title: {
             text: 'Results Over Time',
@@ -80,15 +96,25 @@ $(function () {
         },
         yAxis: {
             min: 0,     
-            max: 10,
+            max: 1,
             title: {
-                text: 'Scale of 1 to 10'
+                text: 'Percent'
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
+            labels: {
+                formatter:function() {
+                    return (this.value * 100) + '%';
+                }
+            }
+        },
+        tooltip: {
+
+            
+            formatter: function() {
+                var pcnt = this * 100;
+                return '<b>' + this.x +
+                    '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+            }
+            
         },
         legend: {
             layout: 'vertical',

@@ -1,48 +1,63 @@
-<p>You've been invited to fill out an evaluation for:<p>
-<p>Intructor: <%= @teacher.full_name %></p>
-<p>Your evaluation will be anonymous.</p>
 
 
-<%= bootstrap_form_for @submission do |f| %>
 
-  <%= f.fields_for :answers do |answer| %>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"> <%= answer.object.question.text %> </h3>
-      </div>
-      <div class="panel-body">
-      <% if answer.object.question.format_type== "text" %>  
-        <div>
-         <%= answer.text_field :answer %>
-        </div>
-      <% elsif answer.object.question.format_type == "scale1To10" %>
-        <%= answer.form_group :answer do %>
-          <% 10.times do |count| %>
-            <%= answer.radio_button :answer, (count+1).to_s, label: (count+1).to_s, inline: true %>
-          <% end %>  
-        <% end %> 
-      <% elsif answer.object.question.format_type == "multipleChoice" %>
-        <%= answer.form_group :answer do %>
-          <% answer.object.question.question_options.each do |option| %>
-            <%= answer.radio_button :answer, option.text, label: option.text, inline: true %>
+<div class="row">
+  <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <br>
+      <br>
+      <br>
+
+      <p>You've been invited to fill out an evaluation for:<p>
+      <p>Instructor: <b><%= @teacher.full_name %></b></p>
+      <p><i>Your evaluation will be anonymous.</i></p>
+      <br>
+        <%= bootstrap_form_for @submission do |f| %>
+
+          <%= f.fields_for :answers do |answer| %>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"> <%= answer.object.question.text %> </h3>
+              </div>
+              <div class="panel-body">
+              <% if answer.object.question.format_type== "text" %>  
+                <div>
+                 <%= answer.text_area :answer %>
+                </div>
+              <% elsif answer.object.question.format_type == "scale1To10" %>
+                <%= answer.form_group :answer do %>
+                  <% 10.times do |count| %>
+                    <%= answer.radio_button :answer, (count+1).to_s, label: (count+1).to_s, inline: true %>
+                  <% end %>  
+                <% end %> 
+              <% elsif answer.object.question.format_type == "multipleChoice" %>
+                <%= answer.form_group :answer do %>
+                  <% answer.object.question.question_options.each do |option| %>
+                    <%= answer.radio_button :answer, option.text, label: option.text, inline: true %>
+                  <% end %>
+                <% end %> 
+              <% elsif answer.object.question.format_type == "boolean" %>
+                <%= answer.form_group :answer do %>
+                  <%= answer.radio_button :answer, 1, label: "yes", inline: true %>
+                  <%= answer.radio_button :answer, 0, label: "no", inline: true %>
+                <% end %>
+              <% end %>
+
+              </div>
+            </div>
+            <div>
+              <%= answer.hidden_field :question_id, value: answer.object.question.id %>
+            </div>
+
           <% end %>
-        <% end %> 
-      <% elsif answer.object.question.format_type == "boolean" %>
-        <%= answer.form_group :answer do %>
-          <%= answer.radio_button :answer, 1, label: "yes", inline: true %>
-          <%= answer.radio_button :answer, 0, label: "no", inline: true %>
+          
+          <%= f.hidden_field :evaluation_id, value: @evaluation.id %>
+          <%= f.submit 'Submit', class: "btn btn-success" %>
         <% end %>
-      <% end %>
-
-      </div>
-    </div>
-    <div>
-      <%= answer.hidden_field :question_id, value: answer.object.question.id %>
-    </div>
-
-  <% end %>
-  
-  <%= f.hidden_field :evaluation_id, value: @evaluation.id %>
-  <%= f.submit 'Continue' %>
-<% end %>
+        <br>
+        <br>
+      </div>  
+  <div class="col-md-1"></div>
+</div>

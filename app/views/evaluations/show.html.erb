@@ -1,18 +1,82 @@
-<h2>Evaluation Created</h2>
-<p>Copy and give this link to students, in order to fill out the survey:</p>
-<h3><%= ENV["BASE_URL"] %>submissions/<%= @evaluation.url %>/new</h3>
+<h2>Evaluation</h2>
 
-<p>An evaluation has been created for Instructor: <%= @evaluation.teacher.full_name %></p>
-<p>Using the template: <%= @evaluation.template.name %></p>
+  <div class="eval-heading">
+      <p>Instructor: <b class="strong"><%= @evaluation.teacher.full_name %></b></p> 
+      <p>Web Link: <b><%= ENV["BASE_URL"] %>submissions/<%= @evaluation.url %>/new</b></p>
+      <p>Copy and give this link to students, in order to fill out the survey.</p>
+      <br>
+      <br>
+      <a href="<%= new_evaluation_path %>"><button type="button" class="btn btn-primary btn-lg">Create New Eval</button></a>
+  <a href="<%= analysis_path %>"><button type="button" class="btn btn-primary btn-lg pull-right">Analyze Results</button></a>
+   </div>
 
-<% @evaluation.template.questions.each do |question| %>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"> <%= question.text %> </h3>
-  </div>
-  <div class="panel-body">
-    <p><%= question.format_type_text %></p>
-    <p><%= question.required_text %></p>
-  </div>
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+
+      <h3>Template: <%= @evaluation.template.name %></h3>
+      <% @questions.each do |question| %>
+
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"> <%= question.text %> </h3>
+            </div>
+            <div class="panel-body">
+              <% if question.format_type === "multipleChoice" %>
+              <% question.question_options.each do |option| %>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
+                  <%= option.text %>
+                </label>
+              </div>
+              <% end %>
+              <% elsif question.format_type === "boolean" %>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="yesNo" id="yes" value="yes" checked>
+                  Yes
+                </label>
+                <label>
+                  <input type="radio" name="yesNo" id="no" value="no" checked>
+                  No
+                </label>
+              </div>
+              <% elsif question.format_type === "text" %>
+              <input class="form-control" type="text" placeholder="Students will write answer here.">
+              <% elsif question.format_type === "scale1To10" %>
+              <% 10.times do |count| %>
+              <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+              </label>
+              <% end %>
+              <% end %>      
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <table class="table table-bordered">
+            <tr>
+              <td><%= question.format_type_text %></td>
+            </tr>
+            <tr>
+              <td class="<%= question.label %>"><%= question.required_text %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <% end %>
+ </div>
+ <div class="col-md-1"></div>
 </div>
-<% end %>
