@@ -1,7 +1,3 @@
-User.create!([
-  {email: "test@test.com", encrypted_password: "$2a$10$x01teSVRd4sWSixxJdlRDuc6NhF3Qt0BxUiHXdj3zsBv9c6t/T6Ii", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 6, current_sign_in_at: "2014-12-15 23:20:36", last_sign_in_at: "2014-12-12 00:26:53", current_sign_in_ip: "127.0.0.1", last_sign_in_ip: "127.0.0.1"},
-  {email: "markeban@yahoo.com", encrypted_password: "$2a$10$mKqkKALvTIlnXdMwugS7i.lEYQhHQJSHnOFbz2JB2jh11rcLi9i36", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 1, current_sign_in_at: "2014-11-26 02:39:10", last_sign_in_at: "2014-11-26 02:39:10", current_sign_in_ip: "127.0.0.1", last_sign_in_ip: "127.0.0.1"}
-])
 Answer.create!([
   {question_id: 11, submission_id: 31, answer: ""},
   {question_id: 11, submission_id: 31, answer: ""},
