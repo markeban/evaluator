@@ -96,8 +96,8 @@ class AnalysisController < ApplicationController
       end
       @questions_answers = []
       questions_text.each_with_index do |question, index|
-      @questions_answers = [question, answers_text[index]]
-    end
+        @questions_answers << [question, answers_text[index]]
+      end
 
   end
 
@@ -112,7 +112,7 @@ class AnalysisController < ApplicationController
 
     questions_scale = @evaluations.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
     @evaluations.each do |evaluation|
-      @evaluation_start_dates << evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p")
+      @evaluation_start_dates << evaluation.created_at.strftime("%A, %b, %d %Y %l:%M %p")
       averages_for_questions_scale = []
       evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
           answers_scale = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)

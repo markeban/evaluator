@@ -1,5 +1,5 @@
 
-<h2>Results from Instructor <%= @specific_evaluation.teacher.full_name %> from Evaluation Created on <%= @specific_evaluation.created_at.strftime("%A, %d %b %Y %l:%M %p") %></h2>
+<h2>Results from Instructor <%= @specific_evaluation.teacher.full_name %><br>Evaluation Created on <%= @specific_evaluation.created_at.strftime("%A, %b, %d %Y %l:%M %p") %></h2>
 
     <div class="row">
       <div class="col-md-1"></div>
@@ -18,7 +18,7 @@
             <div id="pie-multiple-choice"></div>
             <br>
             <br>
-            <% if @questions_answers[1] %>
+            <% if @questions_answers[0][1] %>
              <h3>Results to Text Questions</h3>
                 <% @questions_answers.each do |question, answers| %>
                     <div class="panel panel-default">
@@ -26,8 +26,10 @@
                         <h3 class="panel-title"><%= question %></h3>
                       </div>
                       <div class="panel-body">
+                        <% count = 1 %>
                         <% answers.each do |answer| %>
-                            <p><%= answer %></p>
+                            <p>Answer: <%= count %>) <%= answer %></p>
+                            <% count += 1 %>
                         <% end %>
                       </div>
                     </div>
