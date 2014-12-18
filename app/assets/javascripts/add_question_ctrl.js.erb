@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  angular.module("app").controller("addQuestionCtrl", function($scope, $http) {
+  angular.module("app").controller("addQuestionCtrl", ['$scope', '$http', function($scope, $http) {
 
     $scope.questions = [];
     $scope.questionsToDelete = [];
@@ -118,5 +118,5 @@
 
 
 
-  });
+  }]);
 }());
