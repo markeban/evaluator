@@ -74,45 +74,6 @@
 
     window.scope = $scope;
 
-    //      $scope.questionsDelete << $scope.questionsDelete.push(question)
-    // $scope.save = function(templateId) {
-    //   $http.delete("/api/v1/questions/" + $scope.templateId + ".json").then(function (response) {
-    //   });
-    //   for(var m = 0; m < $scope.questions.length; m++) {
-    //     $scope.saveQuestion(m);
-    //   }
-
-    // };
-
-    // $scope.saveQuestion = function(id) {
-    //   var question = $scope.questions[id];
-    //     $http.post('/api/v1/questions.json', {question: question}).then(function(response) {
-    //       var questionId = response.data.id;
-    //       if (question.options) {
-    //         for (var j = 0; j < question.options.length; j++) {
-    //           $scope.saveOption(j, question, questionId);
-    //         }
-    //       } else {
-    //         if(id === $scope.questions.length - 1) {
-    //           $scope.loadIndex($scope.templateId);
-    //         }
-    //       }
-
-    //     }, function (error) {
-    //       $scope.optionErrors = error.data.errors;
-    //     });
-    // }
-
-    // $scope.saveOption = function(id, question, questionId) {
-    //   $http.post('/api/v1/question_options.json', {question_option: { text: question.options[id].text, question_id: questionId }}).then(function(response) {
-    //     if(id === question.options.length - 1 && questionId === $scope.questions.length - 1) {
-    //       $scope.loadIndex($scope.templateId);
-    //     }
-    //           }, function (error) {
-    //           $scope.questionErrors = error.data.errors;
-    //           });
-    // };
-
 
 
 
