@@ -22,7 +22,6 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/annotations
-//= require highcharts/modules/canvas-tools
 //= require highcharts/modules/data
 //= require highcharts/modules/drilldown
 //= require highcharts/modules/exporting
