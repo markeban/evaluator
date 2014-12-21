@@ -20,14 +20,7 @@
 //= require app_strap/jRespond
 //= require app_strap/script
 //= require highcharts
-//= require highcharts/highcharts-more
-//= require highcharts/modules/annotations
-//= require highcharts/modules/data
-//= require highcharts/modules/drilldown
-//= require highcharts/modules/exporting
-//= require highcharts/modules/funnel
-//= require highcharts/modules/heatmap
-//= require highcharts/modules/no-data-to-display
+//= require highcharts/adapters/standalone-framework
 //= require angular
 //= require app
 //= require angular_animate
