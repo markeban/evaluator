@@ -15,9 +15,9 @@
 //= require app_strap/bootstrap.min
 //= require app_strap/bootstrap-hover-dropdown.min
 //= require app_strap/script
+//= require app_strap/jquery.clingify.min
 //= require app_strap/jquery.jpanelmenu.min
 //= require app_strap/jRespond
-//= require app_strap/jquery.clingify.min
 //= require highcharts
 //= require highcharts/adapters/standalone-framework
 //= require app_strap/jquery.jpanelmenu-transform-build.min
