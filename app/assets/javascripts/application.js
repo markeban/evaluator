@@ -10,8 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery_ujs
 //= require app_strap/jquery.min
+//= require jquery_ujs
 //= require app_strap/bootstrap.min
 //= require app_strap/jquery.jpanelmenu.min
 //= require app_strap/jRespond
