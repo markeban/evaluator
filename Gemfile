@@ -54,3 +54,8 @@ gem 'pg', group: :production
 gem 'rails_12factor', group: :production
 
 gem "font-awesome-rails"
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem "factory_girl_rails", "~> 4.5"
+end
+
