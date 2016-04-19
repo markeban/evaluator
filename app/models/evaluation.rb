@@ -3,6 +3,7 @@ class Evaluation < ActiveRecord::Base
   belongs_to :teacher
   has_many :submissions
   has_many :answers, :through => :submissions
+  has_many :respondents
 
 
   def scale_calculations
