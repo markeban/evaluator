@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
 
   def new
     @template = Template.find_by(:id => params[:template_id])
-    @question = Question.new
+    # @question = @template.questions || Question.new
   end
 
 

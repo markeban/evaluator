@@ -13,7 +13,9 @@
       $scope.templateId = id;
       $http.get("/api/v1/questions.json?template_id=" + $scope.templateId).then(function (response) {
         $scope.questions = response.data;
-        $scope.addQuestion(id);
+        if ($scope.questions.length == 0) {
+          $scope.addQuestion(id);
+        }
       });
     };
 
@@ -44,7 +46,7 @@
     };
 
     $scope.removeOption = function(question) {
-      $scope.questionOptionsToDelete.push(question);
+      $scope.questionOptionsToDelete.push(question.options[question.options.length - 1]);
       question.options.pop();
     };
 
@@ -59,16 +61,15 @@
                 $scope.deleteOptionErrors = error.data.errors;
               });
             }
-            window.location.assign('http://localhost:3000/templates/' + templateId + '/questions');
           }, function (error) {
             $scope.deleteErrors = error.data.errors;
           }); 
+        } else {
+          window.location.assign('http://localhost:3000/templates/' + templateId + '/questions');
         }
-        window.location.assign('http://localhost:3000/templates/' + templateId + '/questions');
       }, function (error) {
         $scope.questionErrors = error.data.errors;
       });
-
     };
 
 

@@ -4,9 +4,6 @@ class SubmissionsController < ApplicationController
   def new
     @evaluation = Evaluation.find_by(:url => params[:id])
     @submission = Submission.new
-    
-
-
     @questions = @evaluation.template.questions
     @questions.each do |question|
       @submission.answers.new(:question_id => question.id)

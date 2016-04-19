@@ -38,10 +38,16 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def batch_destroy
+    p params[:questions]
     if params[:questions]
       params[:questions].each do |question|
         question = Question.find_by(:id => question[:id])
-        question.destroy
+        puts "question below"
+        p question
+        if question
+          "question isn't nil"
+          question.destroy
+        end
       end
     end
   end
@@ -52,10 +58,10 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   
-  # def destroy
-  #   template = Template.find_by(:id => params[:id])
-  #   template.questions.destroy_all
-  # end
+  def destroy
+    template = Template.find_by(:id => params[:id])
+    template.questions.destroy_all
+  end
 
 
   private

@@ -13,7 +13,10 @@
 
 ActiveRecord::Schema.define(version: 20141218000209) do
 
-  create_table "answers", force: true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "submission_id"
     t.text     "answer"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20141218000209) do
     t.datetime "updated_at"
   end
 
-  create_table "evaluations", force: true do |t|
+  create_table "evaluations", force: :cascade do |t|
     t.integer  "template_id"
     t.integer  "teacher_id"
     t.string   "url"
@@ -29,14 +32,14 @@ ActiveRecord::Schema.define(version: 20141218000209) do
     t.datetime "updated_at"
   end
 
-  create_table "question_options", force: true do |t|
+  create_table "question_options", force: :cascade do |t|
     t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "text"
   end
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.text     "text"
     t.integer  "template_id"
     t.boolean  "required"
@@ -45,14 +48,14 @@ ActiveRecord::Schema.define(version: 20141218000209) do
     t.datetime "updated_at"
   end
 
-  create_table "submissions", force: true do |t|
+  create_table "submissions", force: :cascade do |t|
     t.integer  "evaluation_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "teachers", force: true do |t|
+  create_table "teachers", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 20141218000209) do
     t.integer  "user_id"
   end
 
-  create_table "templates", force: true do |t|
+  create_table "templates", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -69,7 +72,7 @@ ActiveRecord::Schema.define(version: 20141218000209) do
     t.text     "description"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
