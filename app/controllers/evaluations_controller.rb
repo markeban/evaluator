@@ -53,13 +53,13 @@ class EvaluationsController < ApplicationController
     #   else
     #     errors << "<span style='color:red'>For #{new_student.full_name}, #{new_student.errors.full_messages.join(", ")}</span>"
     #   end
-    end
-    message = ""
-    message << successful_creates.join("<br/>") if successful_creates.any?
-    message << "<br/><br/>" if successful_creates.any? && errors.any?
-    message << errors.join("<br/>") if errors.any?
-    flash[:warning] = message
-    redirect_to cohorts_path
+    # end
+    # message = ""
+    # message << successful_creates.join("<br/>") if successful_creates.any?
+    # message << "<br/><br/>" if successful_creates.any? && errors.any?
+    # message << errors.join("<br/>") if errors.any?
+    # flash[:warning] = message
+    # redirect_to cohorts_path
 
 
   end

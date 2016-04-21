@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :questions
-      resources :question_options
       post '/questions/batch' => 'questions#batch_create'
       post '/questions/batch_destroy' => 'questions#batch_destroy'
+      resources :question_options
       post '/question_options/batch_destroy' => 'question_options#batch_destroy'
+      resources :respondents
+      post '/respondents/batch', to: 'repondents#batch'
     end
   end
  

@@ -1,0 +1,32 @@
+(function() {
+  "use strict";
+
+  angular.module("app").controller("addRespondentsCtrl", ['$scope', '$http', function($scope, $http) {
+
+    $scope.respondents = [];
+
+    $scope.setup = function() {
+      $http.get("/api/v1/respondents").then(function (response) {
+        $scope.respondents = response.data;
+      });
+    };
+
+    $scope.addRespondentInput = function() {
+      var respondent = {unsaved: true};
+      $scope.respondents.push(respondent);
+    };
+
+    $scope.createRespondents = function() {
+      var unsavedRespondents = $filter('filter')($scope.respondents, {unsaved: true});
+      console.log(unsavedRespondents);
+
+      $http.post('/api/v1/respondents', {respondents: $scope.respondents}).then(function(response) {
+
+      });
+    }
+    
+
+    window.scope = $scope;
+
+  }]);
+}());
