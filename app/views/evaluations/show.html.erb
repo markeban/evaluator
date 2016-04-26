@@ -8,7 +8,7 @@
           <p>Copy and give this link to students, in order to fill out the survey.</p> 
         </div>
         <div class="col-md-6">
-          <div ng-controller="addRespondentsCtrl" ng-init="setup()">
+          <div ng-controller="addRespondentsCtrl" ng-init="setup(<%= @evaluation.id %>)">
             <div ng-repeat="respondent in respondents">
               <form class="form-inline">
                 <div class="form-group">

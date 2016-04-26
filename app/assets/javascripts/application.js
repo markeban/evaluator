@@ -24,4 +24,5 @@
 //= require angular
 //= require app
 //= require angular_animate
+//= require angular-flash
 //= require_tree .

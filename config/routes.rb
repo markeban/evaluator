@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       resources :question_options
       post '/question_options/batch_destroy' => 'question_options#batch_destroy'
       resources :respondents
-      post '/respondents/batch', to: 'repondents#batch'
+      post '/respondents/batch', to: 'respondents#batch'
     end
   end
  
