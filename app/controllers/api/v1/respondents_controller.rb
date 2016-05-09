@@ -12,9 +12,14 @@ class Api::V1::RespondentsController < ApplicationController
   end
 
   def create(respondent)
-    respondent = Respondent.new(first_name: respondent[:first_name], last_name: respondent[:last_name], email: respondent[:email], evaluation_id: respondent[:evaluation_id])
+    respondent = Respondent.new(first_name: respondent[:first_name], last_name: respondent[:last_name], email: respondent[:email], evaluation_id: respondent[:evaluation_id], emailed:false)
     respondent.save
     return respondent
+  end
+
+  def destroy
+    Respondent.find(params[:id]).destroy
+    render json: "OK"
   end
 
 

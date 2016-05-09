@@ -138,4 +138,5 @@ class Evaluation < ActiveRecord::Base
     end
     return @averages_boolean
   end
+
 end

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       post '/question_options/batch_destroy' => 'question_options#batch_destroy'
       resources :respondents
       post '/respondents/batch', to: 'respondents#batch'
+      patch 'evaluations/:id', to: 'evaluations#update'
+      get '/evaluations/email_respondents/:id', to: 'evaluations#email_respondents'
     end
   end
  

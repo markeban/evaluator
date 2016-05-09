@@ -1,48 +1,75 @@
 <h2>Prepare Evaluation</h2>
 
-  <div class="eval-heading">
-      <p>Instructor: <b class="strong"><%= @evaluation.teacher.full_name %></b></p>
-      <div class="row">
-        <div class="col-md-6">
-          <p>Web Link: <b><%= ENV["BASE_URL"] %>submissions/<%= @evaluation.url %>/new</b></p>
-          <p>Copy and give this link to students, in order to fill out the survey.</p> 
-        </div>
-        <div class="col-md-6">
-          <div ng-controller="addRespondentsCtrl" ng-init="setup(<%= @evaluation.id %>)">
-            <div ng-repeat="respondent in respondents">
-              <form class="form-inline">
-                <div class="form-group">
-                  <label class="sr-only" for="firstName">First Name</label>
-                  <input class="form-control" id="firstName" placeholder="First Name" ng-model="respondent.first_name">
-                </div>
-                <div class="form-group">
-                  <label class="sr-only" for="lastName">Last Name</label>
-                  <input class="form-control" id="lastName" placeholder="Last Name" ng-model="respondent.last_name">
-                </div>
-                <div class="form-group">
-                  <label class="sr-only" for="email">Email</label>
-                  <input class="form-control" id="email" placeholder="Email" ng-model="respondent.email">
-                </div>             
-              </form>
-            </div>
-            <button class="btn btn-default" ng-click="addRespondentInput()">Add Respondent</button>
-            <button class="btn btn-default" ng-click="createRespondents()">Create Respondents</button>
-
+<div class="eval-heading">
+  <p>Instructor: <b class="strong"><%= @evaluation.teacher.full_name %></b></p>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <p>Web Link: <b><%= ENV["BASE_URL"] %>submissions/<%= @evaluation.url %>/new</b></p>
+      <p>Copy and give this link to students, in order to fill out the survey.</p> 
+    </div>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div ng-controller="addRespondentsCtrl" ng-init="setup(<%= @evaluation.id %>)">
+        <div class="respondent-form">
+          <div ng-repeat="respondent in respondents | filter:{emailed:false}">
+            <form class="form-inline">
+              <i ng-click="removeRespondent(respondent)" class="fa fa-times" aria-hidden="true"></i>
+              <div class="form-group">
+                <label class="sr-only" for="firstName">First Name</label>
+                <input class="form-control" id="firstName" placeholder="First Name" ng-model="respondent.first_name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="lastName">Last Name</label>
+                <input class="form-control" id="lastName" placeholder="Last Name" ng-model="respondent.last_name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="email">Email</label>
+                <input class="form-control" id="email" placeholder="Email" ng-model="respondent.email">
+              </div>             
+            </form>
           </div>
-
-        
-
-
-
-
-
-
-            
+          <div ng-click="addRespondentInput()">
+            <i class="fa fa-plus-square" aria-hidden="true"></i> (Add Respondent)
+          </div>
         </div>
-      </div> 
-      <a href="<%= new_evaluation_path %>"><button type="button" class="btn btn-primary btn-lg pull-left">Create New Eval</button></a>
-      <a href="<%= analysis_path %>"><button type="button" class="btn btn-primary btn-lg pull-right">Analyze Results</button></a>
-   </div>
+        <div>
+          <form>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input class="form-control" id="subject" ng-model="subject">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea class="form-control" id="message" rows="5" ng-model="message"></textarea>
+            </div>
+          </form>
+        </div>
+        <div>
+          <button class="btn btn-primary btn-lg big-button-margin" ng-click="createRespondents()">Email Evaluation</button>
+        </div>
+        <table class="table table-hover">
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date</th>
+          </tr>
+          <tr ng-repeat="respondent in respondents | filter:{emailed:true}">
+            <td>{{respondent.first_name}}</td>
+            <td>{{respondent.last_name}}</td>
+            <td>{{respondent.email}}</td>
+            <td>{{respondent.updated_at}}</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -56,61 +83,61 @@
   <div class="col-md-1"></div>
   <div class="col-md-10">
 
-      <h3>Template: <%= @evaluation.template.name %></h3>
-      <% @questions.each do |question| %>
+    <h3>Template: <%= @evaluation.template.name %></h3>
+    <% @questions.each do |question| %>
 
 
-      <div class="row">
-        <div class="col-md-8">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"> <%= question.text %> </h3>
-            </div>
-            <div class="panel-body">
-              <% if question.format_type === "multipleChoice" %>
-              <% question.question_options.each do |option| %>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
-                  <%= option.text %>
-                </label>
-              </div>
-              <% end %>
-              <% elsif question.format_type === "boolean" %>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="yesNo" id="yes" value="yes" checked>
-                  Yes
-                </label>
-                <label>
-                  <input type="radio" name="yesNo" id="no" value="no" checked>
-                  No
-                </label>
-              </div>
-              <% elsif question.format_type === "text" %>
-              <input class="form-control" type="text" placeholder="Students will write answer here.">
-              <% elsif question.format_type === "scale1To10" %>
-              <% 10.times do |count| %>
-              <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"> <%= question.text %> </h3>
+          </div>
+          <div class="panel-body">
+            <% if question.format_type === "multipleChoice" %>
+            <% question.question_options.each do |option| %>
+            <div class="radio">
+              <label>
+                <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
+                <%= option.text %>
               </label>
-              <% end %>
-              <% end %>      
             </div>
+            <% end %>
+            <% elsif question.format_type === "boolean" %>
+            <div class="radio">
+              <label>
+                <input type="radio" name="yesNo" id="yes" value="yes" checked>
+                Yes
+              </label>
+              <label>
+                <input type="radio" name="yesNo" id="no" value="no" checked>
+                No
+              </label>
+            </div>
+            <% elsif question.format_type === "text" %>
+            <input class="form-control" type="text" placeholder="Students will write answer here.">
+            <% elsif question.format_type === "scale1To10" %>
+            <% 10.times do |count| %>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+            </label>
+            <% end %>
+            <% end %>      
           </div>
         </div>
-        <div class="col-md-4">
-          <table class="table table-bordered">
-            <tr>
-              <td><%= question.format_type_text %></td>
-            </tr>
-            <tr>
-              <td class="<%= question.label %>"><%= question.required_text %></td>
-            </tr>
-          </table>
-        </div>
       </div>
+      <div class="col-md-4">
+        <table class="table table-bordered">
+          <tr>
+            <td><%= question.format_type_text %></td>
+          </tr>
+          <tr>
+            <td class="<%= question.label %>"><%= question.required_text %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
     <% end %>
- </div>
- <div class="col-md-1"></div>
+  </div>
+  <div class="col-md-1"></div>
 </div>
