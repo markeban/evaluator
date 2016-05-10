@@ -139,4 +139,12 @@ class Evaluation < ActiveRecord::Base
     return @averages_boolean
   end
 
+  def email_respondents_for_first_time
+    respondents.where(emailed: false).each do |respondent|
+      EvaluationMailer.email_respondent(respondent).deliver_now
+      respondent.update(emailed:true)
+    end
+    respondents
+  end
+
 end

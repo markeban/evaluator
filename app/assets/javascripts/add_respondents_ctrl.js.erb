@@ -9,6 +9,7 @@
       $scope.evaluation_id = evaluation_id;
       $http.get("/api/v1/respondents?evaluation_id=" + $scope.evaluation_id).then(function (response) {
         $scope.respondents = response.data;
+        $scope.addRespondentInput();
       });
     };
 
@@ -24,9 +25,10 @@
     // }
 
     $scope.addRespondentInput = function() {
-      var respondent = {unsaved: true, evaluation_id: $scope.evaluation_id};
+      console.log("hello?");
+      var respondent = {unsaved: true, evaluation_id: $scope.evaluation_id, emailed: false};
       $scope.respondents.push(respondent);
-      $scope.sendEvaluation();
+      console.log($scope.respondents);
     };
 
     $scope.createRespondents = function() {
@@ -34,12 +36,12 @@
         return (respondent.unsaved == true);
       });
       $http.post('/api/v1/respondents/batch', {respondents: unsaved_respondents}).then(function(response) {
-        Flash.create('success', '<strong>Respondents added.</strong> Success', 0, {class: 'custom-class', id: 'custom-id'}, true);
+        $scope.sendEvaluation();
       });
     }
 
     $scope.removeRespondent = function(respondent) {
-      if (respondent.unsaved) {
+      if (respondent.id || respondent.unsaved) {
         $http.delete('/api/v1/respondents/' + respondent.id).then(function(response) {
           Flash.create('info', '<strong>Respondents removed.</strong> Success', 0, {class: 'custom-class', id: 'custom-id'}, true);
         });
@@ -50,7 +52,7 @@
 
     $scope.sendEvaluation = function () {
       var emailContents = {subject: scope.subject, message: scope.message};
-      $http.post('api/v1/respondents/' + $scope.evaluation_id, {emailContents: emailContents}).then(function(response) {
+      $http.patch('/api/v1/evaluations/' + $scope.evaluation_id, {email_contents: emailContents}).then(function(response) {
         $scope.respondents = response.data;
       });
     }

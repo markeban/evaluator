@@ -13,7 +13,7 @@
       <p>Instructor: <b><%= @teacher.full_name %></b></p>
       <p><i>Your evaluation will be anonymous.</i></p>
       <br>
-        <%= bootstrap_form_for @submission do |f| %>
+        <%= bootstrap_form_for @submission, url: submissions_path(@submission, submission_id: params[:submission_id]) do |f| %>
 
           <%= f.fields_for :answers do |answer| %>
 
@@ -54,6 +54,7 @@
           <% end %>
           
           <%= f.hidden_field :evaluation_id, value: @evaluation.id %>
+          <%= f.hidden_field :respondent_id, value: @respondent_id %>
           <%= f.submit 'Submit', class: "btn btn-success" %>
         <% end %>
         <br>

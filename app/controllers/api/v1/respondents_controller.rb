@@ -23,4 +23,11 @@ class Api::V1::RespondentsController < ApplicationController
   end
 
 
+  private
+
+  def batch_params
+    params.permit(respondents_attributes:[:email, :first_name, :last_name, :evaluation_id])
+  end
+
+
 end
