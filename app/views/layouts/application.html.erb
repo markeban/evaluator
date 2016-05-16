@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Instructor Evals</title>
+  <%= include_gon %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
@@ -161,7 +162,7 @@
               </li>
               
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Contact</a> 
+                <a href="#" class="dropdown-toggle" id="blog-drop" data-toggle="dropdown" data-hover="dropdown">Pricing</a> 
 
               </li>
 
@@ -190,7 +191,8 @@
 <div id="content">
   <div class="container-fluid">
     <div ng-app="app">
-      <flash-message></flash-message> 
+      <flash-message></flash-message>
+      <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
       <%= yield %>
     </div>
   </div>

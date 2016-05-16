@@ -1,0 +1,8 @@
+
+  <h2 class="mbs">New Transaction</h2>
+  <%= form_tag subscriptions_path do %>
+  <%= render 'customer_form' unless current_user.has_payment_info? %>
+    <p>Please enter your payment details:</p>
+    <div id="dropin"></div>
+    <%=submit_tag "Order subscription" %>
+  <%end%>

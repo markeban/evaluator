@@ -39,6 +39,8 @@ GEM
     arel (6.0.3)
     bcrypt (3.1.11)
     bootstrap_form (2.3.0)
+    braintree (2.61.1)
+      builder (>= 2.0.0)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -70,6 +72,11 @@ GEM
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gon (6.0.1)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     highcharts-rails (3.0.10)
       railties (>= 3.1)
     hike (1.2.3)
@@ -134,6 +141,7 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    request_store (1.3.1)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
     rspec-core (3.4.4)
@@ -192,11 +200,13 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap_form
+  braintree
   coffee-rails (~> 4.0.0)
   devise
   dotenv-rails
   factory_girl_rails (~> 4.5)
   font-awesome-rails
+  gon
   highcharts-rails (~> 3.0.0)
   jbuilder (~> 2.0)
   jquery-rails

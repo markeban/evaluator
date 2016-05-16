@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root 'pages#index'
+  get '/pricing', to: 'pages#pricing'
   devise_for :users
   resources :evaluations
   resources :teachers
   resources :answers
+  resources :subscriptions, only: [:new, :create]
   resources :templates do
     resources :questions
   end

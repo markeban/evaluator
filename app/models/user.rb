@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   has_many :templates
   has_many :teachers, :through => :templates
   has_many :teachers
+  has_one :subscription
+
+  def has_payment_info?
+    braintree_customer_id
+  end
 
 
 end
