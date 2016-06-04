@@ -1,5 +1,12 @@
 
   <h2 class="mbs">New Transaction</h2>
+  <% if @result %>
+    <% @result.errors.each do |error| %>
+      <%= error.code %>
+      <%= error.message %>
+    <% end %>
+  <% end %>
+
   <%= form_tag subscriptions_path do %>
   <%= render 'customer_form' unless current_user.has_payment_info? %>
     <p>Please enter your payment details:</p>

@@ -10,8 +10,7 @@ class User < ActiveRecord::Base
   has_one :subscription
 
   def has_payment_info?
-    braintree_customer_id
+    subscription.braintree_customer_id if subscription
   end
-
 
 end

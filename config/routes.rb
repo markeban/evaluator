@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :evaluations
   resources :teachers
   resources :answers
-  resources :subscriptions, only: [:new, :create]
+  resources :subscriptions, only: [:new, :create, :show]
   resources :templates do
     resources :questions
   end

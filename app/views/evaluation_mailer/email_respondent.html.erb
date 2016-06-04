@@ -1,3 +1,4 @@
 <p>Dear <%= @respondent.full_name %>,</p>
 <p><%= @respondent.evaluation.message %></p>
 <p><%= link_to "Click to fill out the evaluation", "#{ENV['DOMAIN']}submissions/#{@respondent.evaluation.url}/new?respondent_id=#{@respondent.id}" %></p>
+<p>To unsubscribe, click here</p>

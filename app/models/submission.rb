@@ -13,10 +13,6 @@ class Submission < ActiveRecord::Base
 
   def multiple_choice_answers
     answers.select { |answer| answer.question.format_type == "multipleChoice" }.map { |answer| answer.answer }
-
-
-
-
   end
 
 

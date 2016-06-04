@@ -1,0 +1,10 @@
+<table class="table">
+  <tr>
+    <th>Email</th>
+    <th>Next Bill Date</th>
+  </tr>
+  <tr>
+    <th><%= @subscription.user.email %></th>
+    <th><%= @braintree.next_billing_date %></th>
+  </tr>
+</table>
