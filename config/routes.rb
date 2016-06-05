@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :teachers
   resources :answers
   resources :subscriptions, only: [:new, :create, :show]
+  get '/respondents/unsubscribe/:signature' => 'respondents#unsubscribe', as: 'unsubscribe'
+  patch '/respondents/:signature', to: 'respondents#update'
   resources :templates do
     resources :questions
   end

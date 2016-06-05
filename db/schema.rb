@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519170745) do
+ActiveRecord::Schema.define(version: 20160604234331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,10 +55,12 @@ ActiveRecord::Schema.define(version: 20160519170745) do
     t.string   "last_name"
     t.string   "email"
     t.boolean  "responded"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "evaluation_id"
     t.boolean  "emailed"
+    t.boolean  "unsubscribed_to_user"
+    t.boolean  "unsubscribed_to_all"
   end
 
   create_table "submissions", force: :cascade do |t|
