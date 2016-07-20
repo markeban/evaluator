@@ -28,36 +28,36 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring', group: :development
-gem 'pry', group: :development
+gem 'bootstrap_form' #use bootstrap forms with rails
+gem 'seed_dump'
+gem 'devise'
+gem "highcharts-rails", "~> 3.0.0"
+gem "font-awesome-rails"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
-gem 'quiet_assets', group: :development
-gem 'bootstrap_form' #use bootstrap forms with rails
-gem 'seed_dump'
-gem 'devise'
-
-gem 'pg', group: :production
-gem 'rails_12factor', group: :production
-gem 'dotenv-rails', :groups => [:development, :test]
-gem "highcharts-rails", "~> 3.0.0"
-#gem "highcharts-ng-rails", "~> 0.0.3"
-
-
-gem "font-awesome-rails"
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem "factory_girl_rails", "~> 4.5"
+  gem 'quiet_assets'
+  gem 'pry'
+  gem 'spring'
+  gem 'dotenv-rails'
 end
+
+group :production do
+  gem 'pg'
+  gem 'unicorn' 
+  gem 'rails_12factor'
+end
+
+
 
