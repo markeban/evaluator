@@ -6,12 +6,11 @@ class AnalysisController < ApplicationController
     unique_teachers.each do |teacher|
       @teacher_select << [teacher.full_name, teacher.id]
     end
-    # @template_select = []
-    # unique_templates = current_user.templates.uniq
-    #   unique_templates.each do |template|
-    #   @template_select << [template.name, template.id]
-    # end
-
+    @template_select = []
+    unique_templates = current_user.templates.uniq
+      unique_templates.each do |template|
+      @template_select << [template.name, template.id]
+    end
   end
 
   def instructor_only
@@ -47,18 +46,62 @@ class AnalysisController < ApplicationController
     @specific_template = Template.find_by(:id => params[:id])
     @teacher = Teacher.find_by(:id => params[:teacher])
     @evaluations = @specific_template.evaluations.where(:teacher_id => @teacher.id)
-
-    specific_instructor_only_scale_calculations = @evaluations.instructor_only_scale_calculations
+    specific_instructor_only_scale_calculations = instructor_only_scale_calculations(@evaluations)
     @evaluation_start_dates = specific_instructor_only_scale_calculations[0]
     @averages = specific_instructor_only_scale_calculations[1]
-
-    @averages_boolean = @evaluations.instructor_only_boolean_calculations
+    @averages_boolean = instructor_only_boolean_calculations(@evaluations)
   end
 
 
-  def template_only
+  def template
     @template = current_user.templates.find_by(:id => params[:template_id])
+  end
 
+  private
+
+  def instructor_only_scale_calculations(evaluations)
+    averages_of_all_questions_array_scale = []
+    @evaluation_start_dates = []
+
+    questions_scale = evaluations.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
+    evaluations.each do |evaluation|
+      @evaluation_start_dates << evaluation.created_at.strftime("%A, %b, %d %Y %l:%M %p")
+      averages_for_questions_scale = []
+      evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
+          answers_scale = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)
+          averages_for_questions_scale << (answers_scale.sum / answers_scale.count.to_f).round(1)
+      end
+      averages_of_all_questions_array_scale << averages_for_questions_scale  
+    end
+    averages_of_all_questions_array_scale_trans = averages_of_all_questions_array_scale.transpose
+    @averages = {}
+    questions_scale.each_with_index do |question, index|
+      @averages[question] = averages_of_all_questions_array_scale_trans[index]
+    end
+    return [@evaluation_start_dates, @averages]
+  end
+
+  def instructor_only_boolean_calculations(evaluations)
+    questions_boolean = evaluations.last.submissions.first.questions.where(:format_type => "boolean").map(&:text)
+    averages_of_all_questions_array_boolean = []
+    evaluations.each do |evaluation|
+      questions_array_boolean = []
+      averages_for_questions_boolean = []
+      evaluation.template.questions.where(:format_type => "boolean").each do |question|
+        questions_array_boolean << question.text
+        answers_boolean = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)
+        averages_for_questions_boolean << (answers_boolean.sum / answers_boolean.count.to_f).round(2)
+      end
+      averages_of_all_questions_array_boolean << averages_for_questions_boolean
+     
+
+    end
+    averages_of_all_questions_array_boolean_trans = averages_of_all_questions_array_boolean.transpose
+    @averages_boolean = {}
+    questions_boolean.each_with_index do |question, index|
+      @averages_boolean[question] = averages_of_all_questions_array_boolean_trans[index]
+    end
+    return @averages_boolean
   end
 
   def evaluation_params
@@ -68,27 +111,4 @@ end
 
 
 
-    # submissions.each do |submission|
-    #   ind_submissions << submission.id
-    # end
-
-
-
-     #redirect_to /instructor_only
-    # @questions_array_scale_scale = [] 
-    # questions.each do |question|
-    #   @questions_array_scale_scale << question.text
-    # end
-
-        # @templates = @teacher.templates
-    # @submissions.each_with_index do |submission, sub|
-    #   # submission.answers.each_with_index do |answer, ans|
-    #   #   puts @submissions_avg[ans]
-    #   #   @submissions_avg[ans] += answer.answer.to_i
-    #   # end
-    #   # @submissions_avg[sub] == (@submissions_avg[sub] / @submissions.length )
-    #   submission.
-    # end
-
-
-    # @questions_array_scale_scale = @specific_evaluation.template.questions.map(&:text)  
+  

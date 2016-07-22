@@ -33,7 +33,7 @@
               });
             }
           }
-        window.location.assign('<%= ENV["BASE_URL"] %>templates/' + templateId + '/questions');
+        window.location.assign('<%= ENV["DOMAIN"] %>templates/' + templateId + '/questions');
         }, function (error) {
           $scope.optionErrors = error.data.errors;
         });

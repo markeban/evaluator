@@ -10,15 +10,26 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require app_strap/jquery.min
+//= require flat/jquery-1.11.3.min
+//= require flat/jquery-migrate-1.2.1.min
+//= require flat/jquery.counterup.min
+//= require flat/jquery.easing.min
+//= require flat/jquery.fancybox.pack
+//= require flat/jquery.fitvids
+//= require flat/jquery.imgpreload.min
+//= require flat/jquery.mousewheel-3.0.6.pack
+//= require flat/jquery.placeholder.min
+//= require flat/bootstrap.min
+//= require flat/html5
+//= require flat/isotope.pkgd.min
+//= require flat/parallax.min
+//= require flat/respond.min
+//= require flat/response.min
+//= require flat/script
+//= require flat/slick.min
+//= require flat/smoothscroll
+//= require flat/waypoints.min
 //= require jquery_ujs
-//= require app_strap/jquery.jpanelmenu-transform-build.min
-//= require app_strap/jquery.jpanelmenu.min
-//= require app_strap/bootstrap.min
-//= require app_strap/bootstrap-hover-dropdown.min
-//= require app_strap/jquery.clingify.min
-//= require app_strap/jRespond
-//= require app_strap/script
 //= require highcharts
 //= require highcharts/adapters/standalone-framework
 //= require angular

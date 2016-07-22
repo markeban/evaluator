@@ -4,375 +4,92 @@
   <title>Instructor Evals</title>
   <%= include_gon %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Rambla' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 </head>
-<body class="page page-starter">
-
-  <!-- ======== @Region: #navigation ======== -->
-  <div id="navigation" class="wrapper">
-    <!--Branding & Navigation Region-->
-    <div class="navbar-static-top">
-
-      <!--Hidden Header Region-->
-      <div class="header-hidden">
-        <div class="header-hidden-inner container">
-          <div class="row">
-            <div class="col-sm-6 col-md-6">
-              <h3>
-                Questions? Comments?
-              </h3>
-              <p>We love feedback.</p><p> Send us an email: <a href="mailto:feedback@instructoreval.com?Subject=Feeback" target="_top">feedback@instructoreval.com</a></p> 
-            </div>
-            <div class="col-sm-6 col-md-6">
-              <!--@todo: replace with company contact details-->
-              <h3>
-                Contact Us
-              </h3>
-              <address>
-                <p>
-                  <abbr title="Phone"><i class="fa fa-phone"></i></abbr>
-                  1-800-867-9309
-                </p>
-                <p>
-                  <abbr title="Email"><i class="fa fa-envelope"></i></abbr>
-                  <a href="mailto:info@instructoreval.com?Subject=Feeback" target="_top">info@instructoreval.com</a>
-                </p>
-                <p>
-                  1871<br>
-                  222 West Merchandise Mart Plaza<br>
-                  1871, Chicago, IL.
-                </p>
-              </address>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Header upper region-->
-      <div class="header-upper">
-        <div class="header-upper-inner container">
-          <div class="row">
-            <div class="col-xs-8 col-xs-push-4">
-
-              <!--Show/hide trigger for #hidden-header -->
-              <div id="header-hidden-link">
-                <a href="#" title="Click me you'll get a surprise" class="show-hide" data-toggle="show-hide" data-target=".header-hidden" data-callback="searchFormFocus"><i></i>Open</a>
-              </div>
-
-              <!--social media icons-->
-              <div class="social-media">
-                <!--@todo: replace with company social media details-->
-                <a href="#"> <i class="fa fa-twitter-square"></i> </a>
-                <a href="#"> <i class="fa fa-facebook-square"></i> </a>
-                <a href="#"> <i class="fa fa-linkedin-square"></i> </a>
-                <a href="#"> <i class="fa fa-google-plus-square"></i> </a>
-              </div>
-            </div>
-            <div class="col-xs-4 col-xs-pull-8">
-
-              <!--user menu-->
-              <div class="btn-group user-menu">
-                <% if user_signed_in? %>
-                <a href="/users/sign_out" class="btn btn-link signout" data-toggle="modal" data-method="delete" rel="nofollow">Sign Out</a>
-                <% else %>
-                <a href="/users/sign_up" class="btn btn-link signup" data-toggle="modal">Sign Up</a>
-                <a href="login.htm" class="btn btn-link login-mobile"><i class="fa fa-user"></i></a>
-              </li>
-              <a href="/users/sign_in" class="btn btn-link login" data-toggle="modal">Login</a> 
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Header search region - hidden by default -->
-
-    <!--Header & Branding region-->
-    <div class="header" data-toggle="clingify">
-      <div class="header-inner container">
-        <div class="navbar">
-          <div class="pull-left">
-            <!--branding/logo-->
-            <a class="navbar-brand" href="/" title="Home">
-              <h1>
-                <span>Instructor </span>Evals<span></span>
-              </h1>
-            </a>
-            <div class="slogan">Track Instructors. Track Results.</div>
-          </div>
-
-          <!--Search trigger -->
-
-          
-          <!-- mobile collapse menu button - data-toggle="toggle" = default BS menu - data-toggle="jpanel-menu" = jPanel Menu -->
-          <a href="#top" class="navbar-btn" data-toggle="jpanel-menu" data-target=".navbar-collapse" data-direction="right"><i class="fa fa-bars"></i></a>
-          
-          <!--everything within this div is collapsed on mobile-->
-          <div class="navbar-collapse collapse">
-            <!--main navigation-->
-            <ul class="nav navbar-nav">
-  <!--             <li class="dropdown dropdown-full">
-                <a href="#" class="dropdown-toggle menu-item" id="megamenu-drop" data-toggle="dropdown" data-hover="dropdown">Take a Tour +</a> 
-                <!-- Dropdown Menu - Mega Menu -->
-                <ul class="dropdown-menu mega-menu" role="menu" aria-labelledby="megamenu-drop">
-                  <li role="presentation" class="dropdown-header">Mega Menu with links & text items</li>
-                  <li role="presentation">
-                    <ul class="row list-unstyled" role="menu">
-                      <li class="col-md-3" role="presentation">
-                        <a role="menuitem" href="features.htm" class="img-link">
-                          <%= image_tag("wrench.png") %>
-                        </a>
-                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>Create Template</strong></a>
-                        <span>Create an evaluation template to send to students. Use it again and again for the same or different instructor.</span> 
-                      </li>
-                      <li class="col-md-3" role="presentation">
-                        <a role="menuitem" href="features.htm" class="img-link">
-                          <img src="/assets/app_strap/features/feature-2.png" alt="Feature 2" />
-                        </a>
-                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>Send Submission Requests</strong></a>
-                        <span>Assign your template to an instructor, then send a link to students.</span> 
-                      </li>
-                      <li class="col-md-3" role="presentation">
-                        <a role="menuitem" href="features.htm" class="img-link">
-                          <img src="/assets/app_strap/features/feature-3.png" alt="Feature 3" />
-                        </a>
-                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>View Evaluation Results</strong></a>
-                        <span>View insightful student feedback with powerful visual graphs and reports.</span> 
-                      </li>
-                      <li class="col-md-3" role="presentation">
-                        <a role="menuitem" href="features.htm" class="img-link">
-                          <img src="/assets/app_strap/features/feature-4.png" alt="Feature 4" />
-                        </a>
-                        <a role="menuitem" href="features.htm" tabindex="-1" class="menu-item"><strong>Analyze Multiple Reports</strong></a>
-                        <span>Repeat the process. Assist instructors over, or compare to other instructors.</span> 
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li> -->
-              
-              <li class="dropdown active">
-                <a href="#" class="dropdown-toggle" id="pages-drop" data-toggle="dropdown" data-hover="dropdown">About</a> 
-                <!-- Menu -->
-              </li>
-              
-              <li class="dropdown">
-                <%= link_to "Pricing", "/pricing" %> 
-
-              </li>
-
-              <li class="dropdown">
-                <a href="<%= new_evaluation_path %>" class="dropdown-toggle" id="blog-drop" >Send Eval</a> 
-
-              </li>
-
-              <li class="dropdown">
-                <a href="<%= analysis_path %>" class="dropdown-toggle" id="blog-drop" >Analysis</a> 
-
-              </li>
-              
-              <li class="home-link">
-                <a href="/"><i class="fa fa-home"></i><span class="hidden">Home</span></a>
-              </li>
-            </ul>
-          </div>
-          <!--/.navbar-collapse -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="content">
-  <div class="container-fluid">
-    <div ng-app="app">
-      <flash-message></flash-message>
-      <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
-      <%= yield %>
-    </div>
-  </div>
-</div>
-<!-- ======== @Region: #footer ======== -->
-<footer id="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col">
-        <div class="block contact-block">
-          <!--@todo: replace with company contact details-->
-             <h3>
-                Contact Us
-              </h3>
-              <address>
-                <p>
-                  <abbr title="Phone"><i class="fa fa-phone"></i></abbr>
-                  1-800-867-9309
-                </p>
-                <p>
-                  <abbr title="Email"><i class="fa fa-envelope"></i></abbr>
-                  <a href="mailto:info@instructoreval.com?Subject=Feeback" target="_top">info@instructoreval.com</a>
-                </p>
-                <p>
-                  1871<br>
-                  222 West Merchandise Mart Plaza<br>
-                  1871, Chicago, IL.
-                </p>
-              </address>
-        </div>
-      </div>
-      
-      <div class="col-md-5 col">
-        <div class="block">
-          <h3>
-            About Us
-          </h3>
-          <p>We help small schools and organizations better track their instructors through student surveys. Be able to track your instructors progress over time.</p>
-        </div>
-      </div>
-      
-      <div class="col-md-4 col">
-        <div class="block newsletter">
-          <h3>
-            Newsletter
-          </h3>
-          <p>Stay up to date with our latest news and product releases by signing up to our newsletter.</p>
-          <!--@todo: replace with mailchimp code-->
-          <form role="form">
-            <div class="input-group input-group-sm">
-              <label class="sr-only" for="email-field">Email</label>
-              <input type="text" class="form-control" id="email-field" placeholder="Email">
-              <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">Go!</button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+<body>
+	
+  <!-- #header -->
+  <header id="header">
     
-    <div class="row">
-      <div id="toplink">
-        <a href="#top" class="top-link" title="Back to top">Back To Top <i class="fa fa-chevron-up"></i></a>
-      </div>
-      <!--@todo: replace with company copyright details-->
-      <div class="subfooter">
-        <div class="col-md-6">
-          <p>Instructor Evals | Copyright <%= Time.new.year %> </p>
+    <!-- #navigation -->
+    <nav id="navigation" class="navbar">
+      
+      <!-- .container -->
+      <div class="container">
+        
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse-1">
+            <span class="sr-only">Menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand"><img src="assets/flat/logo.png" alt="Logo" /></div> <!-- site logo -->
         </div>
-        <div class="col-md-6">
-          <ul class="list-inline footer-menu">
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Contact Us</a></li>
+        
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="menu-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#header" class="smooth-scroll">Home</a></li>
+            <li><a href="#features" class="smooth-scroll">Features</a></li>
+            <li><a href="#screenshots" class="smooth-scroll">Screenshots</a></li>
+            <li><a href="#pricing" class="smooth-scroll">Pricing</a></li>
+            <li><a href="#download" class="smooth-scroll">Download</a></li>
+            <li><a href="page.html">Page</a></li>
           </ul>
         </div>
+        
+        <div class="navbar-sep-border"></div> <!-- separator -->
+        
       </div>
-    </div>
-  </div>
-</footer>
-<!--Hidden elements - excluded from jPanel Menu on mobile-->
-<div class="hidden-elements jpanel-menu-exclude">
-  <!--@modal - signup modal-->
-  <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">
-            Sign Up
-          </h4>
-        </div>
-        <div class="modal-body">
-          <form action="signup.htm" role="form">
-            <h5>
-              Price Plan
-            </h5>
-            <select class="form-control">
-              <option>Basic</option>
-              <option>Pro</option>
-              <option>Pro +</option>
-            </select>
-            
-            <h5>
-              Account Information
-            </h5>
-            <div class="form-group">
-              <label class="sr-only" for="signup-first-name">First Name</label>
-              <input type="text" class="form-control" id="signup-first-name" placeholder="First name">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="signup-last-name">Last Name</label>
-              <input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="signup-username">Userame</label>
-              <input type="text" class="form-control" id="signup-username" placeholder="Username">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="signup-email">Email address</label>
-              <input type="email" class="form-control" id="signup-email" placeholder="Email address">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="signup-password">Password</label>
-              <input type="password" class="form-control" id="signup-password" placeholder="Password">
-            </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" value="term">
-                I agree with the Terms and Conditions. 
-              </label>
-            </div>
-            <button class="btn btn-primary" type="submit">Sign up</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <small>Already signed up? <a href="login.htm">Login here</a>.</small>
+      <!-- .container end -->
+      
+    </nav>
+    <!-- #navigation end -->
+    
+    
+    <%= yield %>
+    
+    <!-- #footer -->
+    <footer id="footer">
+      
+      <div class="footer-socials">
+        <div class="container">
+          <a href="#" title="Twitter" class="animation" data-animation="animation-bounce-in"><i class="fa fa-twitter"></i></a>
+          <a href="#" title="Facebook" class="animation" data-animation="animation-bounce-in" data-delay="200"><i class="fa fa-facebook"></i></a>
+          <a href="#" title="Google Plus" class="animation" data-animation="animation-bounce-in" data-delay="400"><i class="fa fa-google-plus"></i></a>
+          <a href="#" title="Pinterest" class="animation" data-animation="animation-bounce-in" data-delay="600"><i class="fa fa-pinterest"></i></a>
+          <a href="#" title="Instagram" class="animation" data-animation="animation-bounce-in" data-delay="800"><i class="fa fa-instagram"></i></a>
+          <a href="#" title="LinkedIn" class="animation" data-animation="animation-bounce-in" data-delay="1000"><i class="fa fa-linkedin"></i></a>
+          <a href="#" title="Github" class="animation" data-animation="animation-bounce-in" data-delay="1200"><i class="fa fa-github"></i></a>
         </div>
       </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-  
-  <!--@modal - login modal-->
-  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">
-            Login
-          </h4>
-        </div>
-        <div class="modal-body">
-          <form action="login.htm" role="form">
-            <div class="form-group">
-              <label class="sr-only" for="login-email">Email</label>
-              <input type="email" id="login-email" class="form-control email" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="login-password">Password</label>
-              <input type="password" id="login-password" class="form-control password" placeholder="Password">
-            </div>
-            <button type="button" class="btn btn-primary">Login</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <small>Not a member? <a href="#" class="signup">Sign up now!</a></small>
-          <br />
-          <small><a href="#">Forgotten password?</a></small>
+      
+      <div class="footer-copyright">
+        <div class="container">
+          <p>&copy; 2016 Copyright. All Rights Reserved. Created by <a href="http://affapress.com" target="_blank">Affapress.</a></p>
         </div>
       </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-</div>
-</body>
-</html>
+      
+    </footer>
+    <!-- #footer end -->
+    
+    <!--[if lt IE 8]>
+    	<div class="browser-notice">
+            <div class="container">
+            	<div class="text">
+                    <h1>Internet Explorer Out To Date</h1>
+                    <p>Please update your Internet Explorer browser with a newer version (Internet Explorer 8 above) now!</p>
+                    <span>You can download it <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="blank">here....</a></span>
+                </div>
+            </div>
+        </div>
+        <![endif]-->
+        
+        
+      </body>
+      </html>
