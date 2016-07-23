@@ -17,7 +17,7 @@
     <div class="col-md-6">
       <div class="panel-body">
         <%= bootstrap_form_tag :url => '/analysis/template', :method => 'post' do |f| %> 
-        <div><%= f.select :teacher_id, @template_select, label: "Select Template:" %>
+        <div><%= f.select :template_id, @template_select, label: "Select Template:" %>
         </div>
         <div>
          <%= f.submit 'Select' %>
