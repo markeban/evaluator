@@ -27,7 +27,7 @@ class Teacher < ActiveRecord::Base
 
     questions_scale = evaluations.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
     evaluations.each do |evaluation|
-      @evaluation_start_dates << evaluation.created_at.strftime("%A, %b, %d %Y %l:%M %p")
+      @evaluation_start_dates << evaluation.created_at
       averages_for_questions_scale = []
       evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
           answers_scale = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)

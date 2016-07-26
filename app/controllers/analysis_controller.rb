@@ -51,13 +51,10 @@ class AnalysisController < ApplicationController
 
   def template
     @template = current_user.templates.find_by(:id => params[:template_id])
-    all_instructors_per_template_data = @template.get_all_instructors_per_template_data
-        
+    @all_instructors_per_template_data = @template.get_all_instructors_per_template_data      
   end
 
   private
-
-
 
   def evaluation_params
     params.require(:evaluation).permit(:id, :template_id, :teacher_id)
