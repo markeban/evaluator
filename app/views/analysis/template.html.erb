@@ -12,13 +12,13 @@
 <script type="text/javascript">
   $(function () {
       <% @all_instructors_per_template_data.each_with_index do |chart, index| %>
-      $("#scale-1-10-charts").append("<div id='chart_<%= index %>'></div>");
+      $("#scale-1-10-charts").append("<div id='chart-<%= index %>'></div>");
       $('#chart-<%= index %>').highcharts({
           chart: {
               type: 'spline'
           },
           title: {
-              text: 'Snow depth at Vikjafjellet, Norway'
+              text: "<%= chart[index][:question_text] %>"
           },
           subtitle: {
               text: 'Irregular time data in Highcharts JS'
@@ -57,7 +57,7 @@
               }
           },
 
-          series: <%= raw chart[0][:series].to_json %>
+          series: <%= raw chart[index][:series].to_json %>
       });
       <% end %>
   });

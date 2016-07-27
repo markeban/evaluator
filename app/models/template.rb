@@ -20,16 +20,17 @@ class Template < ActiveRecord::Base
     all_instructors_per_template_data
     scale_1_to_10_questions = []
     all_instructors_per_template_data.each do |instructor|
-      series_group = []
+      question_group = []
       instructor[:averages].each do |question, averages|
         data = instructor[:evaluation_start_dates].map.with_index { |date, index| [(date.to_f * 1000).to_i, averages[index]] }
         hash_for_highcharts = {
           name: instructor[:teacher],
           data: data
         }
-        series_group << {question_text: question, series: hash_for_highcharts}
+        question_group << {question_text: question, series: hash_for_highcharts}
+        binding.pry
       end
-      scale_1_to_10_questions << series_group
+      scale_1_to_10_questions << question_group
     end
     # binding.pry
     scale_1_to_10_questions
