@@ -18,18 +18,21 @@ class Template < ActiveRecord::Base
 
   def format_for_highcharts(all_instructors_per_template_data)
     all_instructors_per_template_data
-    scale_1_to_10_questions = [] # get all questions!
-    series = []
+    scale_1_to_10_questions = []
     all_instructors_per_template_data.each do |instructor|
-      data = instructor[:evaluation_start_dates].map.with_index { |date, index| [(date.to_f * 1000).to_i, instructor[:averages].values[0][index]] }
-      hash_for_highcharts = {
-        name: instructor[:averages].keys.first,
-        data: data
-      }
-      series << hash_for_highcharts
+      series_group = []
+      instructor[:averages].each do |question, averages|
+        data = instructor[:evaluation_start_dates].map.with_index { |date, index| [(date.to_f * 1000).to_i, averages[index]] }
+        hash_for_highcharts = {
+          name: instructor[:teacher],
+          data: data
+        }
+        series_group << {question_text: question, series: hash_for_highcharts}
+      end
+      scale_1_to_10_questions << series_group
     end
-    series.to_json
-    binding.pry
+    # binding.pry
+    scale_1_to_10_questions
   end
 
 end

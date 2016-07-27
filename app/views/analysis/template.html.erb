@@ -2,7 +2,8 @@
   <div class="col-md-1"></div>
     <div class="col-md-10">
         <h3>Results from "1 to 10" Scale Questions</h3>
-        <div id="chart-template-scale"></div>
+        <div id="scale-1-10-charts"></div>
+        <!-- <div id="chart-template-scale"></div> -->
         
     </div>  
   <div class="col-md-1"></div>
@@ -10,7 +11,9 @@
 
 <script type="text/javascript">
   $(function () {
-      $('#chart-template-scale').highcharts({
+      <% @all_instructors_per_template_data.each_with_index do |chart, index| %>
+      $("#scale-1-10-charts").append("<div id='chart_<%= index %>'></div>");
+      $('#chart-<%= index %>').highcharts({
           chart: {
               type: 'spline'
           },
@@ -54,7 +57,8 @@
               }
           },
 
-          series: <%= raw @all_instructors_per_template_data %>
+          series: <%= raw chart[0][:series].to_json %>
       });
+      <% end %>
   });
 </script>

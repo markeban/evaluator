@@ -12,6 +12,7 @@ class Teacher < ActiveRecord::Base
     specific_template = evaluations.where(template_id: template.id)
     specific_instructor_only_scale_calculations = instructor_only_scale_calculations(specific_template)
     instructor_data_hash = {
+      teacher: self.full_name,
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
       averages_boolean: instructor_only_boolean_calculations(specific_template)
