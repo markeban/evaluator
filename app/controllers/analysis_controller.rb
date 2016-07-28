@@ -51,7 +51,10 @@ class AnalysisController < ApplicationController
 
   def template
     @template = current_user.templates.find_by(:id => params[:template_id])
-    @all_instructors_per_template_data = @template.get_all_instructors_per_template_data      
+    all_instructors_per_template_data = @template.get_all_instructors_per_template_data
+    @all_template_scale_1_to_10s = all_instructors_per_template_data[:scale_1_to_10s]
+    @all_template_booleans = all_instructors_per_template_data[:booleans]
+
   end
 
   private

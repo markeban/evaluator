@@ -11,29 +11,37 @@ class Template < ActiveRecord::Base
     teachers.uniq.each do |teacher|
       all_instructors_per_template_data << teacher.get_data_per_instructor_per_template(self)
     end
-    return format_for_highcharts(all_instructors_per_template_data)
+    scale_1_to_10s = get_series_highcharts(all_instructors_per_template_data, :averages)
+    booleans = get_series_highcharts(all_instructors_per_template_data, :averages_boolean)
+    return {scale_1_to_10s: scale_1_to_10s, booleans: booleans}
   end
 
   private
 
-  def format_for_highcharts(all_instructors_per_template_data)
-    all_instructors_per_template_data
-    scale_1_to_10_questions = []
+  def get_series_highcharts(all_instructors_per_template_data, type)
+    series = []
     all_instructors_per_template_data.each do |instructor|
-      question_group = []
-      instructor[:averages].each do |question, averages|
+      specific_instructor_series = []
+      instructor[type].each do |question, averages|
         data = instructor[:evaluation_start_dates].map.with_index { |date, index| [(date.to_f * 1000).to_i, averages[index]] }
         hash_for_highcharts = {
           name: instructor[:teacher],
-          data: data
+          data: data,
+          lineWidth: 5,
+          question_text: question
         }
-        question_group << {question_text: question, series: hash_for_highcharts}
-        binding.pry
+        specific_instructor_series << hash_for_highcharts
       end
-      scale_1_to_10_questions << question_group
+      series << specific_instructor_series
     end
-    # binding.pry
-    scale_1_to_10_questions
+    series.transpose
   end
 
+
+
+
 end
+
+
+
+
