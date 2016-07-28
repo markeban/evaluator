@@ -13,6 +13,7 @@ class Teacher < ActiveRecord::Base
     specific_instructor_only_scale_calculations = instructor_only_scale_calculations(specific_template)
     instructor_data_hash = {
       teacher: self.full_name,
+      URLs: get_urls(template),
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
       averages_boolean: instructor_only_boolean_calculations(specific_template)
@@ -21,6 +22,10 @@ class Teacher < ActiveRecord::Base
   end
 
   private
+
+  def get_urls(template)
+    ids = evaluations.where(template_id: template.id).map {|evaluation| evaluation.id }
+  end
 
   def instructor_only_scale_calculations(evaluations)
     averages_of_all_questions_array_scale = []

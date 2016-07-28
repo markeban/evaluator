@@ -59,37 +59,22 @@
               }
           },
           series: [
-            <% chart.map do |instructor| %>
-              {
-                name: '<%= instructor[:name] %>',
-                URLs: ['www.google.com',
-                      'www.bing.com',
-                      'www.yahoo.com',
-                      'www.baidu.com',
-                      'www.duckduckgo.com',
-                      'www.sogou.com',
-                      'www.blekko.com',
-                      'www.google.com',
-                      'www.bing.com',
-                      'www.yahoo.com',
-                      'www.baidu.com',
-                      'www.duckduckgo.com',
-                      'www.sogou.com',
-                      'www.blekko.com'
-                      ],
-                data: <%= instructor[:data] %>,
+            <% chart.map do |results_per_question| %>              {
+                name: '<%= results_per_question[:name] %>',
+                URLs: <%= results_per_question[:URLs] %>,
+                data: <%= results_per_question[:data] %>,
                 point: {
                   events: {
                     click: function() {
                       x = this;
                       var someURL = this.series.userOptions.URLs[this.series.data.indexOf(this)];
-                      window.open('http://'+someURL);
+                      window.open('<%= ENV['DOMAIN'] %>'+someURL);
                     }
                   }
                 },
                 lineWidth: 5,
-                question_text: '<%= instructor[:question_text] %>'
-              }<%= "," unless instructor == chart.last %>
+                question_text: '<%= results_per_question[:question_text] %>'
+              }<%= "," unless results_per_question == chart.last %>
             <% end %>
           ]
 

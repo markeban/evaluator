@@ -19,14 +19,18 @@ class Template < ActiveRecord::Base
   private
 
   def get_series_highcharts(all_instructors_per_template_data, type)
+
     series = []
     all_instructors_per_template_data.each do |instructor|
+      # urls_in_order = []
+      # urls_in_order << instructor[:URL]
       specific_instructor_series = []
       instructor[type].each do |question, averages|
         data = instructor[:evaluation_start_dates].map.with_index { |date, index| [(date.to_f * 1000).to_i, averages[index]] }
         hash_for_highcharts = {
           name: instructor[:teacher],
           data: data,
+          URLs: instructor[:URLs],
           lineWidth: 5,
           question_text: question
         }
