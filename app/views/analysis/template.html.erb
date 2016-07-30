@@ -47,8 +47,8 @@
               }
           },
           tooltip: {
-              headerFormat: '<b>{series.name}</b><br>',
-              pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+              headerFormat: '<strong>Name: </strong>{series.name}<br>',
+              pointFormat: '<strong>Date: </strong>{point.x:%B, %e %Y}<br><strong>Score: </strong>{point.y:.1f}/10<br>(Click Point for Detail)'
           },
 
           plotOptions: {
@@ -59,9 +59,9 @@
               }
           },
           series: [
-            <% chart.map do |results_per_question| %>              {
+            <% chart.map do |results_per_question| %> {
                 name: '<%= results_per_question[:name] %>',
-                URLs: <%= results_per_question[:URLs] %>,
+                URLs: <%= raw results_per_question[:URLs].map{|url| "analysis/instructor_only/#{url}"} %>,
                 data: <%= results_per_question[:data] %>,
                 point: {
                   events: {
@@ -116,8 +116,8 @@
             }
           },
           tooltip: {
-              headerFormat: '<b>{series.name}</b><br>',
-              pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+              headerFormat: '<strong>Name: </strong>{series.name}<br>',
+              pointFormat: '<strong>Date: </strong>{point.x:%B, %e %Y}<br><strong>Score: </strong>{point.y:.1f}/10<br>(Click Point for Detail)'
           },
 
           plotOptions: {
@@ -128,7 +128,25 @@
               }
           },
 
-          series: <%= raw chart.to_json %>
+          series: [
+            <% chart.map do |results_per_question| %> {
+                name: '<%= results_per_question[:name] %>',
+                URLs: <%= raw results_per_question[:URLs].map{|url| "analysis/instructor_only/#{url}"} %>,
+                data: <%= results_per_question[:data] %>,
+                point: {
+                  events: {
+                    click: function() {
+                      x = this;
+                      var someURL = this.series.userOptions.URLs[this.series.data.indexOf(this)];
+                      window.open('<%= ENV['DOMAIN'] %>'+someURL);
+                    }
+                  }
+                },
+                lineWidth: 5,
+                question_text: '<%= results_per_question[:question_text] %>'
+              }<%= "," unless results_per_question == chart.last %>
+            <% end %>
+          ]
       });
       <% end %>
   });

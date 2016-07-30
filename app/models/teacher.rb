@@ -24,7 +24,7 @@ class Teacher < ActiveRecord::Base
   private
 
   def get_urls(template)
-    ids = evaluations.where(template_id: template.id).map {|evaluation| evaluation.id }
+    evaluations.where(template_id: template.id).map {|evaluation| evaluation.id }
   end
 
   def instructor_only_scale_calculations(evaluations)

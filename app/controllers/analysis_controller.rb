@@ -21,31 +21,33 @@ class AnalysisController < ApplicationController
   end
   
   def instructor_only_show
-      @specific_evaluation = Evaluation.find_by(:id => params[:id])   
-      specific_scale_calculations = @specific_evaluation.scale_calculations
+      @evaluation = Evaluation.find_by(:id => params[:id])   
+      specific_scale_calculations = @evaluation.scale_calculations
       @submissions = specific_scale_calculations[0]
       @teacher = specific_scale_calculations[1]
       @questions_array_scale = specific_scale_calculations[2]
       @averages_for_questions_scale = specific_scale_calculations[3]
       @percentage_colors_scale = specific_scale_calculations[4]
 
-      specific_boolean_calculations = @specific_evaluation.boolean_calculations
+      specific_boolean_calculations = @evaluation.boolean_calculations
       @questions_array_boolean = specific_boolean_calculations[0]
       @percentages_for_questions_boolean = specific_boolean_calculations[1]
       @percentage_colors_boolean = specific_boolean_calculations[2]
 
-      specific_multiple_choice_calculations = @specific_evaluation.multiple_choice_calculations
+      specific_multiple_choice_calculations = @evaluation.multiple_choice_calculations
       @questions_array_multiple_choice = specific_multiple_choice_calculations[0]
       @percentages_for_questions_multiple_choice = specific_multiple_choice_calculations[1]
 
-      @questions_answers = @specific_evaluation.text_calculations
+      @questions_answers = @evaluation.text_calculations
   end
 
 
   def instructor_only_show_template
     @teacher = Teacher.find_by(:id => params[:teacher])
     @template = Template.find_by(:id => params[:id])
-    @instructor_data_hash = @teacher.get_data_per_instructor_per_template(@template)
+    data = @teacher.get_data_per_instructor_per_template(@template)
+    data[:evaluation_start_dates].map!{|date| date = date.strftime("%b %d, %Y")}
+    @instructor_data_hash = data
   end
 
 

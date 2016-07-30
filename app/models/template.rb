@@ -19,7 +19,6 @@ class Template < ActiveRecord::Base
   private
 
   def get_series_highcharts(all_instructors_per_template_data, type)
-
     series = []
     all_instructors_per_template_data.each do |instructor|
       # urls_in_order = []

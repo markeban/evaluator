@@ -14,3 +14,24 @@
 .highcharts-container {
   margin: 30px 0px 30px 0px;
 }
+
+.custom-pills {
+  list-style: none;
+  display: inline-block;
+  padding: 10px 0px 10px 0px;
+  margin: 10px 0px 0px 0px;
+}
+
+.custom-pills li a{
+  padding: 10px;
+
+}
+
+/* bootstrap hack: fix content width inside hidden tabs */
+.tab-content > .tab-pane:not(.active),
+.pill-content > .pill-pane:not(.active) {
+    display: block;
+    height: 0;
+    overflow-y: hidden;
+} 
+/* bootstrap hack end */

@@ -1,12 +1,17 @@
 class Evaluation < ActiveRecord::Base
+  include HumanTime
+
   belongs_to :template
   belongs_to :teacher
   has_many :submissions
   has_many :answers, :through => :submissions
   has_many :respondents
 
-  def this_is_a_test
-    self
+  def template_position
+    template = self.template
+    teacher = self.teacher
+    evaluation_ids = template.evaluations.where(template_id: template.id, teacher_id: teacher.id).map{|evaluation| evaluation.id}
+    evaluation_ids.index(self.id) + 1
   end
 
   def scale_calculations
