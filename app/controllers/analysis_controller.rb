@@ -6,11 +6,13 @@ class AnalysisController < ApplicationController
     unique_teachers.each do |teacher|
       @teacher_select << [teacher.full_name, teacher.id]
     end
-    @template_select = []
-    unique_templates = current_user.templates.uniq
-      unique_templates.each do |template|
-      @template_select << [template.name, template.id]
-    end
+    @templates = current_user.templates
+
+    # @templates = []
+    # unique_templates = current_user.templates.uniq
+    #   unique_templates.each do |template|
+    #   @templates << [template.name, template.id]
+    # end
   end
 
   def instructor_only

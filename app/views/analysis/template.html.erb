@@ -1,20 +1,13 @@
-<div class="row">
-  <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <div class="panel panel-default">
-          <div class="panel-heading text-center">
-            <h3 class="panel-title">Template: <%= @template.name %></h3>
-          </div>
-          <div class="panel-body">
-            <div id="scale-1-10-charts"></div>
-            <div id="boolean-charts"></div>
-          </div>
-        </div>
-        <!-- <div id="chart-template-scale"></div> -->
-        
-    </div>  
-  <div class="col-md-1"></div>
-</div>
+
+  <div class="row">
+    <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <h3>Template: <%= @template.name %></h3>
+        <div id="scale-1-10-charts"></div>
+        <div id="boolean-charts"></div>
+      </div>  
+    <div class="col-md-1"></div>
+  </div>
 
 <script type="text/javascript">
   $(function () {
@@ -25,7 +18,8 @@
               type: 'spline'
           },
           title: {
-              text: "Question: <%= chart.first[:question_text] %>"
+              text: "Question: <%= chart.first[:question_text] %>",
+              align: 'left'
           },
           xAxis: {
               type: 'datetime',
@@ -89,7 +83,8 @@
               type: 'spline'
           },
           title: {
-              text: "Question: <%= chart.first[:question_text] %>"
+              text: "Question: <%= chart.first[:question_text] %>",
+              align: 'left'
           },
           xAxis: {
               type: 'datetime',
