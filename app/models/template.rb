@@ -1,10 +1,10 @@
 class Template < ActiveRecord::Base
   include HumanTime
-  
+
   belongs_to :user
   has_many :questions
   has_many :evaluations
-  has_many :submissions
+  has_many :submissions, -> { order(:updated_at) }, through: :evaluations
   has_many :teachers, -> { distinct }, :through => :evaluations
   has_many :answers, :through => :questions
 
@@ -16,6 +16,10 @@ class Template < ActiveRecord::Base
     scale_1_to_10s = get_series_highcharts(all_instructors_per_template_data, :averages)
     booleans = get_series_highcharts(all_instructors_per_template_data, :averages_boolean)
     return {scale_1_to_10s: scale_1_to_10s, booleans: booleans}
+  end
+
+  def last_submission
+    submissions.any? ? submissions.last.updated_at.strftime("%B %d, %Y") : "None"
   end
 
   private

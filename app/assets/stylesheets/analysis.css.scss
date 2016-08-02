@@ -35,3 +35,35 @@
     overflow-y: hidden;
 } 
 /* bootstrap hack end */
+
+.custom-accordion {
+  margin: 0px 2px 0px 15px;
+}
+
+.top-level-accordion {
+  margin: 0px 2px 0px 0px;
+}
+
+.middle-level-accordion {
+  margin: 0px 0px 0px 30px;
+}
+
+.first-level {
+  background: #d0d0e1;
+}
+.second-level {
+  background: #e0e0eb;
+}
+
+.third-level {
+  background: #efeff5;
+}
+
+.no-accordion {
+  margin: 0px 0px 0px 13px;
+}
+
+.no-accordion-second-level {
+  margin: 0px 0px 0px 30px;
+}
+

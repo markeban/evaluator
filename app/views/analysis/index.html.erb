@@ -1,17 +1,21 @@
 
+    
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10">
     <h2>Analysis</h2>
+  </div>
+</div>    
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 first-level">
     <div class="row">
       <div class="col-md-4">
-        Template
+        Template > Instructor > Evaluation
       </div>
       <div class="col-md-4">
-        Created At
       </div>
       <div class="col-md-4">
-        Amount
       </div>
     </div>
     <% @templates.each do |template| %>
@@ -21,13 +25,13 @@
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-template-<%= template.id %>" href="#collapse-template-<%= template.id %>">
             <div class="row">
               <div class="col-md-4">
-                <em class="icon-fixed-width fa fa-plus"></em><%= template.name %>
+                <em class="<%= template.evaluations.any? ? "icon-fixed-width fa fa-plus" : "no-accordion" %> top-level-accordion"></em><%= template.name %>
               </div>
               <div class="col-md-4">
-                <%= template.created_at %>
+                Last Submission: <%= template.last_submission %>
               </div>
               <div class="col-md-4">
-                <%= template.evaluations.count %>
+                <%= template.evaluations.count %> Evaluation(s)
               </div>
             </div>
             </a>
@@ -44,32 +48,45 @@
                     <div class="accordion-heading">
                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
                         
-                        <div class="row">
+                        <div class="row second-level">
                           <div class="col-md-4">
-                            <em class="icon-fixed-width fa fa-plus"></em><%= teacher.full_name %>
+                            <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.full_name %>
                           </div>
                           <div class="col-md-4">
-                            <%= teacher.created_at %>
+    
                           </div>
                           <div class="col-md-4">
-                            <%= teacher.evaluations.count %>
+                            
                           </div>
                         </div>
                       </a>
                     </div>
                     <div id="collapse-<%= template.id %>-teacher-<%= teacher.id %>" class="accordion-body collapse">
                       <div class="accordion-inner">
-    
+                          <div class="row third-level">
+                              <div class="col-md-4">
+                                <div class="middle-level-accordion"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher=#{teacher.id}" %>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                           
+                              </div>
+                              <div class="col-md-4">
+       
+                              </div>
+                          </div>
                           <% teacher.evaluations.where(template_id: template.id).each do |evaluation| %>
-                            <div class="row">
+                            <div class="row third-level">
                               <div class="col-md-4">
-                                evaluation
+                                <div class="middle-level-accordion">
+                                  &#10551; <%= link_to "Specific Evaluation", "/analysis/instructor_only/#{evaluation.id}" %>
+                                </div>
                               </div>
                               <div class="col-md-4">
-                                <%= evaluation.created_at %>
+                                Last Submission: <%= human_month_day_year_time(evaluation.updated_at) %>
                               </div>
                               <div class="col-md-4">
-                                <%= evaluation.submissions.count %>
+                                <%= evaluation.submissions.count %> Submission(s)
                               </div>
                             </div>
                           <% end %>
@@ -92,28 +109,7 @@
 
   </div>
 
-  <div class="col-md-6">
-    <div class="panel-body">
-      <%= bootstrap_form_tag :url => '/analysis/instructor_only', :method => 'post' do |f| %> 
-      <div><%= f.select :teacher_id, @teacher_select, label: "Select Instructor:" %>
-      </div>
-      <div>
-       <%= f.submit 'Select' %>
-     </div>
-     <% end %>
-   </div>
- </div>
- <div class="col-md-6">
-  <div class="panel-body">
-    <%= bootstrap_form_tag :url => '/analysis/template', :method => 'post' do |f| %> 
-    <div><%= f.select :template_id, @templates, label: "Select Template:" %>
-    </div>
-    <div>
-     <%= f.submit 'Select' %>
-   </div>
-   <% end %>
- </div>
-</div>
+
 </div>  
 <div class="col-md-1"></div>
 </div>

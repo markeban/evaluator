@@ -1,5 +1,4 @@
 class Evaluation < ActiveRecord::Base
-  include HumanTime
 
   belongs_to :template
   belongs_to :teacher

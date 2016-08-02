@@ -1,4 +1,6 @@
 class Teacher < ActiveRecord::Base
+  include HumanTime
+  
   has_many :templates, :through => :evaluations
   has_many :evaluations
   has_many :submissions, :through => :evaluations

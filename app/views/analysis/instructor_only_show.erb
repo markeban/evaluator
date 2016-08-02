@@ -6,7 +6,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">Instructor: <%= @evaluation.teacher.full_name %></h3>
           <small>Evaluation Created: 
-            <%= @evaluation.human_month_day_year_time %><br>
+            <%= @evaluation.created_at.human_month_day_year_time %><br>
             <%= @evaluation.template_position.ordinalize %> Evaluation from this Template
           </small>
         </div>

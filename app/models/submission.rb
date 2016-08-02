@@ -1,6 +1,6 @@
 class Submission < ActiveRecord::Base
   belongs_to :evaluation
-  belongs_to :template
+  has_one :template, through: :evaluation
   has_many :answers
   has_many :questions, :through => :answers
 
