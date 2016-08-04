@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-1"></div>
       <div class="col-md-10">
-        <h3>Template: <%= @template.name %></h3>
+        <h3><%= @template.name %></h3>
         <div id="scale-1-10-charts"></div>
         <div id="boolean-charts"></div>
       </div>  
@@ -18,7 +18,7 @@
               type: 'spline'
           },
           title: {
-              text: "Question: <%= chart.first[:question_text] %>",
+              text: "<%= chart.first[:question_text] %>",
               align: 'left'
           },
           xAxis: {
@@ -83,7 +83,7 @@
               type: 'spline'
           },
           title: {
-              text: "Question: <%= chart.first[:question_text] %>",
+              text: "<%= chart.first[:question_text] %>",
               align: 'left'
           },
           xAxis: {

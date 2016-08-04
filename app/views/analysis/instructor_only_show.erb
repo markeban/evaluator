@@ -1,38 +1,31 @@
 
 <div class="row">
   <div class="col-md-1"></div>
-    <div class="col-md-10 text-center">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Instructor: <%= @evaluation.teacher.full_name %></h3>
-          <small>Evaluation Created: 
-            <%= @evaluation.created_at.human_month_day_year_time %><br>
-            <%= @evaluation.template_position.ordinalize %> Evaluation from this Template
-          </small>
-        </div>
-          <ul class="nav-pills custom-pills">
-            <li role="presentation" class="active"><a data-toggle="tab" href="#chart-scale-avg">Average</a></li>
-            <li role="presentation"><a data-toggle="tab" href="#chart-scale-ind">Individual Responses</a></li>
-          </ul>
-          <div class="tab-content">
-            <div id="chart-scale-avg" class="tab-pane active"></div>
-            <div id="chart-scale-ind" class="tab-pane"></div>
-          </div>
-          <div id="chart-boolean"></div>
-          <div id="pie-multiple-choice"></div>
-          <% if @questions_answers[0] %>
-            <% @questions_answers.each do |question, answers| %>
-                <text class="highcharts-title"><%= question %></text>
-                <% count = 1 %>
-                <% answers.each do |answer| %>
-                <p>Answer: <%= count %>) <%= answer %></p>
-                <% count += 1 %>
-                <% end %>
-            <% end %>
-          <% end %>
-        <br>
-        <br>
+    <div class="col-md-10">
+    <h2><%= @evaluation.template.name %> > <%= @teacher.full_name %> > <%= "#{human_month_day_year_time(@evaluation.created_at)} (#{@evaluation.template_position.ordinalize})" %></h2>
+    <h4>Scale of 1 to 10 Questions</h4>
+      <ul class="nav-pills custom-pills">
+        <li role="presentation" class="active"><a data-toggle="tab" href="#chart-scale-avg">Average</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#chart-scale-ind">Individual Responses</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="chart-scale-avg" class="tab-pane active"></div>
+        <div id="chart-scale-ind" class="tab-pane"></div>
       </div>
+      <div id="chart-boolean"></div>
+      <div id="pie-multiple-choice"></div>
+      <% if @questions_answers[0] %>
+        <% @questions_answers.each do |question, answers| %>
+            <text class="highcharts-title"><%= question %></text>
+            <% count = 1 %>
+            <% answers.each do |answer| %>
+            <p>Answer: <%= count %>) <%= answer %></p>
+            <% count += 1 %>
+            <% end %>
+        <% end %>
+      <% end %>
+
+
     </div>  
   <div class="col-md-1"></div>
 </div>
@@ -81,7 +74,7 @@
         type: 'column'
       },
       title: {
-        text: 'Scale of 1 to 10 Questions (Each Student)'
+        text: ''
       },
       xAxis: {
         categories: <%= raw @questions_array_scale %>

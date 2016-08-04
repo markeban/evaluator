@@ -1,16 +1,16 @@
 
     
 <div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
     <h2>Analysis</h2>
   </div>
 </div>    
 <div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10 first-level">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 first-level">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4 accordion-title">
         Template > Instructor > Evaluation
       </div>
       <div class="col-md-4">
@@ -37,8 +37,23 @@
             </a>
           </div>
           <div id="collapse-template-<%= template.id %>" class="accordion-body collapse">
-            <% template.teachers.each do |teacher| %>
               <div class="accordion-inner">
+                <div class="row second-level">
+                    <div class="col-md-4">
+                      <div class="custom-accordion all-results">
+                        <%= link_to "All Results", "/analysis/template/#{template.id}" %>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                 
+                    </div>
+                    <div class="col-md-4">
+                
+                    </div>
+                </div>
+            <% template.teachers.each do |teacher| %>
+                      
+                      
 
                 <!-- Here we insert another nested accordion -->
 
@@ -47,7 +62,6 @@
                   <div class="accordion-group">
                     <div class="accordion-heading">
                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
-                        
                         <div class="row second-level">
                           <div class="col-md-4">
                             <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.full_name %>
@@ -65,7 +79,7 @@
                       <div class="accordion-inner">
                           <div class="row third-level">
                               <div class="col-md-4">
-                                <div class="middle-level-accordion"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher=#{teacher.id}" %>
+                                <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher=#{teacher.id}" %>
                                 </div>
                               </div>
                               <div class="col-md-4">
@@ -79,7 +93,7 @@
                             <div class="row third-level">
                               <div class="col-md-4">
                                 <div class="middle-level-accordion">
-                                  &#10551; <%= link_to "Specific Evaluation", "/analysis/instructor_only/#{evaluation.id}" %>
+                                  &#10551;<%= link_to "Specific Evaluation", "/analysis/instructor_only/#{evaluation.id}" %>
                                 </div>
                               </div>
                               <div class="col-md-4">
@@ -111,7 +125,7 @@
 
 
 </div>  
-<div class="col-md-1"></div>
+<div class="col-md-2"></div>
 </div>
 
 <script type="text/javascript">

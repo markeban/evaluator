@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   get '/analysis/instructor_only' => 'analysis#instructor_only'
   get '/analysis/instructor_only/:id' => 'analysis#instructor_only_show'
   get '/analysis/instructor_only/templates/:id' => 'analysis#instructor_only_show_template'
-  post '/analysis/template' => 'analysis#template'
+  get '/analysis/template/:id' => 'analysis#template'
 
 
   get '/chart' => 'pages#chart'

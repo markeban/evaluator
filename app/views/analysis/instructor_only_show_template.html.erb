@@ -1,41 +1,76 @@
-<h2>All Results from Instructor <%= @teacher.full_name %><br>
- Template: <%= @template.name %></h2>
 
 
-    <div class="row">
-      <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h3>Results from "1 to 10" Scale Questions</h3>
-            <div id="chart-template-instructor-only-scale"></div>
-            <p>Chart Form (Same Data)</p>
-            <table class="table table-hover">
-                 <tr>
-                    <th>Question</th>
-                    <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
-                        <th><%= date %></th>
-                    <% end %>
-                  </tr>
-                  <% @instructor_data_hash[:averages].each do |question, evaluation| %>
-                    <tr>
-                      <td><%= question %></td>
-                        <% evaluation.each do |score| %>
-                          <td><%= score %></td>
-                        <% end %>
-                    </tr>
-                  <% end %>
 
-            </table>
-            <br>
-            <br>
-            <h3>Results to "Yes or No" Questions</h3>
-            <div id="chart-template-instructor-only-boolean"></div>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>  
-      <div class="col-md-1"></div>
-    </div>
+<div class="row">
+  <div class="col-md-1"></div>
+</h2>
+<div class="col-md-10">
+  <h2><%= @template.name %> > <%= @teacher.full_name %></h2> 
+  <div>
+    <div class="tab-content">
+      <h4>1 to 10 Scale Questions</h4>
+      <ul class="nav-pills custom-pills">
+        <li role="presentation" class="active"><a data-toggle="tab" href="#chart-template-instructor-only-scale">Graph</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#chart-scale">Chart</a></li>
+      </ul>
+      <div id="chart-template-instructor-only-scale" class="tab-pane active"></div>
+      <div id="chart-scale" class="tab-pane">
+       <table class="table table-hover">
+        <tr>
+         <th>Question</th>
+         <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
+         <th><%= date %></th>
+         <% end %>
+       </tr>
+       <% @instructor_data_hash[:averages].each do |question, evaluation| %>
+       <tr>
+         <td><%= question %></td>
+         <% evaluation.each do |score| %>
+         <td><%= score %></td>
+         <% end %>
+       </tr>
+       <% end %>
+
+     </table> 
+   </div>
+ </div>
+</div>
+  <div>
+    <h4>Yes or No Questions</h4>
+    <ul class="nav-pills custom-pills">
+      <li role="presentation" class="active"><a data-toggle="tab" href="#chart-template-instructor-only-boolean">Graph</a></li>
+      <li role="presentation"><a data-toggle="tab" href="#chart-boolean">Chart</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="chart-template-instructor-only-boolean" class="tab-pane active"></div>
+      <div id="chart-boolean" class="tab-pane">
+       <table class="table table-hover">
+        <tr>
+         <th>Question</th>
+         <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
+         <th><%= date %></th>
+         <% end %>
+       </tr>
+       <% @instructor_data_hash[:averages_boolean].each do |question, evaluation| %>
+       <tr>
+         <td><%= question %></td>
+         <% evaluation.each do |score| %>
+         <td><%= number_to_percentage(score * 100, precision: 0) %></td>
+         <% end %>
+       </tr>
+       <% end %>
+
+     </table> 
+   </div>
+  </div>
+</div>            
+
+
+<div id="chart-template-instructor-only-boolean"></div>
+
+</div>  
+<div class="col-md-1"></div>
+</div>
 
 
 
@@ -47,90 +82,80 @@
 
 
 <script>
-$(function () {
+  $(function () {
     $('#chart-template-instructor-only-scale').highcharts({
-        title: {
-            text: 'Results Over Time',
-            x: -20 //center
-        },
-        xAxis: {
+      title: {
+        text: "",
+        align: "left"
+      },
+      xAxis: {
 
-            categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
+        categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
+      },
+      yAxis: {
+        min: 0,     
+        max: 10,
+        title: {
+          text: 'Scale of 1 to 10'
         },
-        yAxis: {
-            min: 0,     
-            max: 10,
-            title: {
-                text: 'Scale of 1 to 10'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-          series: [
-        <% @instructor_data_hash[:averages].each do |question, evaluation| %>
-          {
-              name: '<%= raw question %>',
-              data: <%= raw evaluation %>
-          }, 
-        <% end %>
-        ]
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }]
+      },
+      series: [
+      <% @instructor_data_hash[:averages].each do |question, evaluation| %>
+      {
+        name: '<%= raw question %>',
+        data: <%= raw evaluation %>,
+        lineWidth: 5
+      }, 
+      <% end %>
+      ]
     });
-});
-$(function () {
+  });
+  $(function () {
     $('#chart-template-instructor-only-boolean').highcharts({
+      title: {
+        text: "",
+        align: "left"
+      },
+      xAxis: {
+
+        categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
+      },
+      yAxis: {
+        min: 0,     
+        max: 1,
         title: {
-            text: 'Results Over Time',
-            x: -20 //center
+          text: 'Percent'
         },
-        xAxis: {
+        labels: {
+          formatter:function() {
+            return (this.value * 100) + '%';
+          }
+        }
+      },
+      tooltip: {
 
-            categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
-        },
-        yAxis: {
-            min: 0,     
-            max: 1,
-            title: {
-                text: 'Percent'
-            },
-            labels: {
-                formatter:function() {
-                    return (this.value * 100) + '%';
-                }
-            }
-        },
-        tooltip: {
 
-            
-            formatter: function() {
-                var pcnt = this * 100;
-                return '<b>' + this.x +
-                    '</b>: <b>' + (this.y * 100) + '%' + '</b>';
-            }
-            
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-          series: [
-        <% @instructor_data_hash[:averages_boolean].each do |question, evaluation| %>
-          {
-              name: '<%= raw question %>',
-              data: <%= raw evaluation %>
-          }, 
-        <% end %>
-        ]
+        formatter: function() {
+          var pcnt = this * 100;
+          return '<b>' + this.x +
+          '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+        }
+
+      },
+      series: [
+      <% @instructor_data_hash[:averages_boolean].each do |question, evaluation| %>
+      {
+        name: '<%= raw question %>',
+        data: <%= raw evaluation %>,
+        lineWidth: 5
+      }, 
+      <% end %>
+      ]
     });
-});
+  });
 </script>

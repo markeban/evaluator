@@ -4,5 +4,4 @@ module HumanTime
     updated_at.strftime("%B %d, %Y at %l:%M %p")
   end
 
-
 end

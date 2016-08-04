@@ -1,25 +1,12 @@
 class AnalysisController < ApplicationController
 #Since there is no analysis.rb model, Model logic is in evaluation.rb
   def index
-    @teacher_select = []   
-    unique_teachers = current_user.teachers.uniq
-    unique_teachers.each do |teacher|
-      @teacher_select << [teacher.full_name, teacher.id]
-    end
     @templates = current_user.templates
-
-    # @templates = []
-    # unique_templates = current_user.templates.uniq
-    #   unique_templates.each do |template|
-    #   @templates << [template.name, template.id]
-    # end
   end
 
   def instructor_only
     @teacher = Teacher.find_by(:id => params[:teacher_id])
     @evaluations = @teacher.evaluations
-
-
   end
   
   def instructor_only_show
@@ -54,7 +41,7 @@ class AnalysisController < ApplicationController
 
 
   def template
-    @template = current_user.templates.find_by(:id => params[:template_id])
+    @template = current_user.templates.find_by(:id => params[:id])
     all_instructors_per_template_data = @template.get_all_instructors_per_template_data
     @all_template_scale_1_to_10s = all_instructors_per_template_data[:scale_1_to_10s]
     @all_template_booleans = all_instructors_per_template_data[:booleans]
