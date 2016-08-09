@@ -18,8 +18,8 @@ class Teacher < ActiveRecord::Base
       URLs: get_urls(template),
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
-      averages_boolean: instructor_only_boolean_calculations(evaluations_specific_template)
-      # multiple_choice: specific_instructor_multiple_choice_calculations(evaluations_specific_template)
+      averages_boolean: instructor_only_boolean_calculations(evaluations_specific_template),
+      multiple_choice: specific_instructor_multiple_choice_calculations(evaluations_specific_template)
     }
     return instructor_data_hash
   end
@@ -75,36 +75,9 @@ class Teacher < ActiveRecord::Base
     return @averages_boolean
   end
 
-  # def specific_instructor_multiple_choice_calculations(evaluations)
-  #   calculations_per_evaluation = evaluations.map{ |evaluation| evaluation.multiple_choice_calculations }
-  #   scores = calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
-  #   nested_scores = []
-  #   scores.each do |evaluation|
-  #     choice_span = []
-  #     evaluation[:scores].each do |set|
-  #       scores_again = []
-  #       set.each do |choice|
-  #         scores_again << choice[:y]
-  #       end
-  #       choice_span << scores_again
-  #     end
-  #     nested_scores << choice_span
-  #   end
-
-  #   questions = []
-  #   scores.each_with_index do |evaluation, index|
-  #     scores_spanned = nested_scores.shift
-  #     question = {
-  #       text: evaluation[:question][index],
-  #       scores: {
-  #         choice: evaluation[:scores].first.first[:name],
-  #         scores: scores_spanned
-  #       }
-  #     }
-  #     questions << question
-  #   end
-  #   binding.pry
-
-  # end
+  def specific_instructor_multiple_choice_calculations(evaluations)
+    calculations_per_evaluation = evaluations.map{ |evaluation| evaluation.multiple_choice_calculations }
+    calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
+  end
 
 end
