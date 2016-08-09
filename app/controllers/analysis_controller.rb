@@ -22,10 +22,13 @@ class AnalysisController < ApplicationController
       @questions_array_boolean = specific_boolean_calculations[0]
       @percentages_for_questions_boolean = specific_boolean_calculations[1]
       @percentage_colors_boolean = specific_boolean_calculations[2]
+      @boolean_submissions = specific_boolean_calculations[3]
+
 
       specific_multiple_choice_calculations = @evaluation.multiple_choice_calculations
       @questions_array_multiple_choice = specific_multiple_choice_calculations[0]
       @percentages_for_questions_multiple_choice = specific_multiple_choice_calculations[1]
+      @multiple_choice_submissions = specific_multiple_choice_calculations[2]
 
       @questions_answers = @evaluation.text_calculations
   end

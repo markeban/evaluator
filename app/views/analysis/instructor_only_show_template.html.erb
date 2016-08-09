@@ -64,9 +64,14 @@
    </div>
   </div>
 </div>            
+<!-- <div id="chart-template-instructor-only-boolean"></div> -->
 
 
-<div id="chart-template-instructor-only-boolean"></div>
+<h4>Multiple Choice Questions</h4>
+<% @instructor_data_hash[:multiple_choice].each_with_index do |question, index| %>
+  <div id="chart-multiple-column-<%= index %>"></div>
+  <% #binding.pry %>
+<% end %>
 
 </div>  
 <div class="col-md-1"></div>
@@ -114,8 +119,6 @@
       <% end %>
       ]
     });
-  });
-  $(function () {
     $('#chart-template-instructor-only-boolean').highcharts({
       title: {
         text: "",
@@ -157,5 +160,49 @@
       <% end %>
       ]
     });
+    <% @instructor_data_hash[:multiple_choice].each_with_index do |all_data, index| %>
+      $('#chart-multiple-column-<%= index %>').highcharts({
+        title: {
+          text: "",
+          align: "left"
+        },
+        xAxis: {
+
+          categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
+        },
+        yAxis: {
+          min: 0,     
+          max: 1,
+          title: {
+            text: 'Percent'
+          },
+          labels: {
+            formatter:function() {
+              return (this.value * 100) + '%';
+            }
+          }
+        },
+        tooltip: {
+
+
+          formatter: function() {
+            var pcnt = this * 100;
+            return '<b>' + this.x +
+            '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+          }
+
+        },
+        series: [
+        <% all_data[:answers][index].each do |point| %>
+          {
+            name: '<%= point[:name] %>',
+            data: <%= point[:y] %>,
+            lineWidth: 5
+          }, 
+        <% end %>
+        ]
+      });
+    <% end %>
   });
+
 </script>

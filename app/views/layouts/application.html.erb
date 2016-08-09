@@ -34,12 +34,15 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="menu-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#header" class="smooth-scroll">Home</a></li>
-            <li><a href="#features" class="smooth-scroll">Features</a></li>
-            <li><a href="#screenshots" class="smooth-scroll">Screenshots</a></li>
-            <li><a href="#pricing" class="smooth-scroll">Pricing</a></li>
-            <li><a href="#download" class="smooth-scroll">Download</a></li>
-            <li><a href="page.html">Page</a></li>
+            <% if current_user %>
+              <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
+              <li><%= link_to "Create Template", "/templates/new", class: "smooth-scroll" %></li>
+              <li><%= link_to "Send Evaluation", "/evaluations/new", class: "smooth-scroll" %></li>
+              <li><%= link_to "Sign Out", "/users/signout", method: :delete  %></li>
+            <% else %>
+              <li><%= link_to "Sign In", "/users/sign_up" %></li>
+              <li><%= link_to "Login", "/users/sign_in" %></li>
+            <% end %>
           </ul>
         </div>
         

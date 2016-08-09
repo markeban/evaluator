@@ -11,14 +11,15 @@ class Teacher < ActiveRecord::Base
   end
 
   def get_data_per_instructor_per_template(template)
-    specific_template = evaluations.where(template_id: template.id)
-    specific_instructor_only_scale_calculations = instructor_only_scale_calculations(specific_template)
+    evaluations_specific_template = evaluations.where(template_id: template.id)
+    specific_instructor_only_scale_calculations = instructor_only_scale_calculations(evaluations_specific_template)
     instructor_data_hash = {
       teacher: self.full_name,
       URLs: get_urls(template),
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
-      averages_boolean: instructor_only_boolean_calculations(specific_template)
+      averages_boolean: instructor_only_boolean_calculations(evaluations_specific_template)
+      # multiple_choice: specific_instructor_multiple_choice_calculations(evaluations_specific_template)
     }
     return instructor_data_hash
   end
@@ -52,7 +53,7 @@ class Teacher < ActiveRecord::Base
   end
 
   def instructor_only_boolean_calculations(evaluations)
-    questions_boolean = evaluations.last.submissions.first.questions.where(:format_type => "boolean").map(&:text)
+    questions_boolean = evaluations.last.template.questions.where(:format_type => "boolean").map(&:text)
     averages_of_all_questions_array_boolean = []
     evaluations.each do |evaluation|
       questions_array_boolean = []
@@ -73,5 +74,37 @@ class Teacher < ActiveRecord::Base
     end
     return @averages_boolean
   end
+
+  # def specific_instructor_multiple_choice_calculations(evaluations)
+  #   calculations_per_evaluation = evaluations.map{ |evaluation| evaluation.multiple_choice_calculations }
+  #   scores = calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
+  #   nested_scores = []
+  #   scores.each do |evaluation|
+  #     choice_span = []
+  #     evaluation[:scores].each do |set|
+  #       scores_again = []
+  #       set.each do |choice|
+  #         scores_again << choice[:y]
+  #       end
+  #       choice_span << scores_again
+  #     end
+  #     nested_scores << choice_span
+  #   end
+
+  #   questions = []
+  #   scores.each_with_index do |evaluation, index|
+  #     scores_spanned = nested_scores.shift
+  #     question = {
+  #       text: evaluation[:question][index],
+  #       scores: {
+  #         choice: evaluation[:scores].first.first[:name],
+  #         scores: scores_spanned
+  #       }
+  #     }
+  #     questions << question
+  #   end
+  #   binding.pry
+
+  # end
 
 end

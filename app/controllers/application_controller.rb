@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery
   after_filter :set_csrf_cookie_for_ng
-  helper_method :human_month_day_year_time
+  helper_method :human_month_day_year_time, :human_boolean
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
@@ -16,6 +16,11 @@ class ApplicationController < ActionController::Base
   def human_month_day_year_time(unformatted_time)
     unformatted_time.strftime("%B %d, %Y")
   end
+
+  def human_boolean(zero_or_one)
+    zero_or_one == 1 ? 'Yes' : 'No'
+  end
+    
 
 
 

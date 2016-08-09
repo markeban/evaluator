@@ -46,6 +46,7 @@ class Evaluation < ActiveRecord::Base
   end
 
   def boolean_calculations
+    boolean_submissions = self.submissions
     @questions_array_boolean = []
     @percentages_for_questions_boolean = []
       self.template.questions.where(:format_type => "boolean").each do |question|
@@ -71,21 +72,24 @@ class Evaluation < ActiveRecord::Base
             @percentage_colors_boolean << "#ff0000"
         end
       end
-    return [@questions_array_boolean, @percentages_for_questions_boolean, @percentage_colors_boolean]  
+    return [@questions_array_boolean, @percentages_for_questions_boolean, @percentage_colors_boolean, boolean_submissions]  
   end
 
   def multiple_choice_calculations
+    multiple_choice_submissions = self.submissions
     @questions_array_multiple_choice = []
       @percentages_for_questions_multiple_choice = []
       self.template.questions.where(:format_type => "multipleChoice").each do |question| 
         @questions_array_multiple_choice << question.text
         answers_multiple_choice = self.answers.where(:question_id => question.id).map(&:answer)
+        each_question = []
         question.question_options.each do |option|
-          @percentages_for_questions_multiple_choice << [option.text, (answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
-            .round(2)]
+          each_question << {name: option.text, y: ((answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
+            .round(2))}
         end
+        @percentages_for_questions_multiple_choice << each_question
       end
-    return [@questions_array_multiple_choice, @percentages_for_questions_multiple_choice]
+    return [@questions_array_multiple_choice, @percentages_for_questions_multiple_choice, multiple_choice_submissions]
   end
 
   def text_calculations

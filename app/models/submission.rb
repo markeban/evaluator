@@ -15,6 +15,10 @@ class Submission < ActiveRecord::Base
     answers.select { |answer| answer.question.format_type == "multipleChoice" }.map { |answer| answer.answer }
   end
 
+  def boolean_answers
+    answers.select { |answer| answer.question.format_type == "boolean" }.map { |answer| answer.answer.to_i }
+  end
+
 
 
 end

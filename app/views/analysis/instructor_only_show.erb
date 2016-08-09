@@ -2,28 +2,144 @@
 <div class="row">
   <div class="col-md-1"></div>
     <div class="col-md-10">
-    <h2><%= @evaluation.template.name %> > <%= @teacher.full_name %> > <%= "#{human_month_day_year_time(@evaluation.created_at)} (#{@evaluation.template_position.ordinalize})" %></h2>
-    <h4>Scale of 1 to 10 Questions</h4>
-      <ul class="nav-pills custom-pills">
-        <li role="presentation" class="active"><a data-toggle="tab" href="#chart-scale-avg">Average</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#chart-scale-ind">Individual Responses</a></li>
-      </ul>
-      <div class="tab-content">
-        <div id="chart-scale-avg" class="tab-pane active"></div>
-        <div id="chart-scale-ind" class="tab-pane"></div>
-      </div>
-      <div id="chart-boolean"></div>
-      <div id="pie-multiple-choice"></div>
-      <% if @questions_answers[0] %>
-        <% @questions_answers.each do |question, answers| %>
-            <text class="highcharts-title"><%= question %></text>
-            <% count = 1 %>
-            <% answers.each do |answer| %>
-            <p>Answer: <%= count %>) <%= answer %></p>
-            <% count += 1 %>
+    <h2><%= link_to @evaluation.template.name, "/analysis/template/#{@evaluation.template.id}" %> > <%= link_to @teacher.full_name, "/analysis/instructor_only/templates/#{@evaluation.template.id}?teacher=#{@teacher.id}" %> > <%= "#{human_month_day_year_time(@evaluation.created_at)} (#{@evaluation.template_position.ordinalize} in Series)" %></h2>
+    
+      <% if @questions_array_scale.any? %>
+        <h4>Scale of 1 to 10 Questions</h4>
+        <ul class="nav-pills custom-pills">
+          <li role="presentation" class="active"><a data-toggle="tab" href="#chart-scale-avg">Average</a></li>
+          <li role="presentation"><a data-toggle="tab" href="#chart-scale-ind">Individual Responses</a></li>
+          <li role="presentation"><a data-toggle="tab" href="#scale-table">Table</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="chart-scale-avg" class="tab-pane active"></div>
+          <div id="chart-scale-ind" class="tab-pane"></div>
+          <div id="scale-table" class="tab-pane">
+              <table class="table">
+                <tr>
+                  <th>Student</th>
+                  <% @questions_array_scale.each do |question| %>
+                    <th><%= question %></th>
+                  <% end %>
+                </tr>
+                <% @submissions.each do |submission| %>
+                  <tr>
+                    <td><%= submission.id %></td>
+                    <% submission.scale_answers.each do |answer| %>
+                      <td><%= answer %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td class="bold">Average</td>
+                  <% @averages_for_questions_scale.each do |average| %>
+                    <td class="bold"><%= average %></td>
+                  <% end %> 
+                </tr>
+
+              </table>
+          </div>
+        </div>
+      <% end %>
+ 
+
+      <% if @questions_array_boolean.any? %>
+        <h4>"Yes or No" Questions</h4>
+        <ul class="nav-pills custom-pills">
+          <li role="presentation" class="active"><a data-toggle="tab" href="#chart-boolean">Chart</a></li>
+          <li role="presentation"><a data-toggle="tab" href="#boolean-table">Table</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="chart-boolean" class="tab-pane active"></div>
+          <div id="boolean-table" class="tab-pane">
+            <table class="table">
+              <tr>
+                <th>Student</th>
+                <% @questions_array_boolean.each do |question| %>
+                  <th><%= question %></th>
+                <% end %>
+              </tr>
+              <% @boolean_submissions.each do |submission| %>
+                <tr>
+                  <td><%= submission.id %></td>
+                  <% submission.boolean_answers.each do |answer| %>
+                    <td><%= human_boolean(answer) %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+              <tr>
+                <td class="bold">Average</td>
+                <% @percentages_for_questions_boolean.each do |average| %>
+                  <td class="bold"><%= number_to_percentage(average * 100, precision: 0) %> Yes</td>
+                <% end %> 
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @questions_array_multiple_choice.any? %>
+        <h4>Multiple Choice Questions</h4>
+        <ul class="nav-pills custom-pills">
+          <li role="presentation" class="active"><a data-toggle="tab" href="#pie-multiple-choice">Chart</a></li>
+          <li role="presentation"><a data-toggle="tab" href="#multiple-choice-table">Table</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="pie-multiple-choice" class="row tab-pane active">
+            <% @questions_array_multiple_choice.each_with_index do |question, index| %>
+              <div class="col-md-6">
+                <div id="pie-multiple-choice-<%=index %>"></div>
+              </div>
             <% end %>
+          </div>
+          <div id="multiple-choice-table" class="tab-pane">
+            <table class="table">
+              <tr>
+                <th>Student</th>
+                <% @questions_array_multiple_choice.each do |question| %>
+                  <th><%= question %></th>
+                <% end %>
+              </tr>
+              <% @multiple_choice_submissions.each do |submission| %>
+                <tr>
+                  <td><%= submission.id %></td>
+                  <% submission.multiple_choice_answers.each do |answer| %>
+                    <td><%= answer %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+              <tr>
+                <td class="bold">Average</td>
+                  <%  @percentages_for_questions_multiple_choice.each do |questions| %>
+                    <td>
+                      <% average_choice_text = questions.map do |question| %>  
+                        <% "#{question[:name]} #{number_to_percentage(question[:y] * 100, precision: 0)}" %>
+                      <% end %>
+                      <%= average_choice_text.join(" / ")  %>
+                    </td>
+                  <% end %>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      <% end %>
+
+
+
+      <% if @questions_answers.any? %>
+        <h4>Text Answers</h4>
+        <% @questions_answers.each do |question, answers| %>
+            <h5><%= question %></h5>
+            <ol>
+            <% answers.each do |answer| %>
+              <li><%= answer %></li>
+            <% end %>
+            </ol>
         <% end %>
       <% end %>
+     
 
 
     </div>  
@@ -32,43 +148,43 @@
 
 <script>
   $(function () {
-
-    $('#chart-scale-avg').highcharts({
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: 'Scale of 1 to 10 Questions (Average)'
-      },
-      xAxis: {
-        categories: <%= raw @questions_array_scale %>
-      },
-      yAxis: {
-        min: 0,     
-        max: 10,
-        title: {
-          text: 'Scale of 1 to 10'
-        }
-      },
-      plotOptions: {
-        column: {
-          colorByPoint: true
+     <% if @questions_array_scale.any? %>
+      $('#chart-scale-avg').highcharts({
+        chart: {
+          type: 'column'
         },
-        line: {
-          dataLabels: {
-            enabled: true
+        title: {
+          text: 'Scale of 1 to 10 Questions (Average)'
+        },
+        xAxis: {
+          categories: <%= raw @questions_array_scale %>
+        },
+        yAxis: {
+          min: 0,     
+          max: 10,
+          title: {
+            text: 'Scale of 1 to 10'
+          }
+        },
+        plotOptions: {
+          column: {
+            colorByPoint: true
           },
-          enableMouseTracking: false
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: false
+          }
+        },
+        colors: <%= raw @percentage_colors_scale %>,
+        series: [
+        { 
+          showInLegend: false,
+          data: <%= raw @averages_for_questions_scale %>
         }
-      },
-      colors: <%= raw @percentage_colors_scale %>,
-      series: [
-      { 
-        showInLegend: false,
-        data: <%= raw @averages_for_questions_scale %>
-      }
-      ]
-    });
+        ]
+      });
     $('#chart-scale-ind').highcharts({
       chart: {
         type: 'column'
@@ -103,72 +219,72 @@
       <% end %>
       ]
     });
-    $('#chart-boolean').highcharts({
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: '"Yes or No" Questions'
-      },
-      xAxis: {
-        categories: <%= raw @questions_array_boolean %>
-      },
-      yAxis: {
-        min: 0,     
-        max: 1,
+    <% end %>
+    <% if @questions_array_boolean.any? %>
+      $('#chart-boolean').highcharts({
+        chart: {
+          type: 'column'
+        },
         title: {
-          text: 'Percent Positive'
+          text: ''
         },
-        labels: {
-          formatter:function() {
-            return (this.value * 100) + '%';
-          }
-        }
-      },
-      tooltip: {
-
-
-        formatter: function() {
-          var pcnt = this * 100;
-          return '<b>' + this.x +
-          '</b>: <b>' + (this.y * 100) + '%' + '</b>';
-        }
-
-      },
-      plotOptions: {
-        column: {
-          colorByPoint: true
+        xAxis: {
+          categories: <%= raw @questions_array_boolean %>
         },
-        series: {
-          dataLabels:{
-            enabled:true,
+        yAxis: {
+          min: 0,     
+          max: 1,
+          title: {
+            text: 'Percent Positive'
+          },
+          labels: {
             formatter:function() {
-              return (this.y * 100) + '%';
+              return (this.value * 100) + '%';
             }
           }
         },
-        enableMouseTracking: false
+        tooltip: {
 
-      },
-      colors: <%= raw @percentage_colors_boolean %>,
-      series: [
-      { 
-        showInLegend: false,  
-        data: <%= raw @percentages_for_questions_boolean %>
-      }
-      ]
-    });
-    <% choice_count = 0 %>
-    <% @questions_array_multiple_choice.each do |pie_chart| %>
-    document.getElementById("pie-multiple-choice").innerHTML = '<div id="pie-multiple-choice-' + <%=choice_count %> + '"></div>';
-    $('#pie-multiple-choice-'+<%= choice_count %>).highcharts({
+
+          formatter: function() {
+            var pcnt = this * 100;
+            return '<b>' + this.x +
+            '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+          }
+
+        },
+        plotOptions: {
+          column: {
+            colorByPoint: true
+          },
+          series: {
+            dataLabels:{
+              enabled:true,
+              formatter:function() {
+                return (this.y * 100) + '%';
+              }
+            }
+          },
+          enableMouseTracking: false
+
+        },
+        colors: <%= raw @percentage_colors_boolean %>,
+        series: [
+        { 
+          showInLegend: false,  
+          data: <%= raw @percentages_for_questions_boolean %>
+        }
+        ]
+      });
+    <% end %>
+    <% @questions_array_multiple_choice.each_with_index do |question, index| %>
+    $('#pie-multiple-choice-<%= index %>').highcharts({
       chart: {
         plotBackgroundColor: null,
-                plotBorderWidth: 1,//null,
                 plotShadow: false
               },
               title: {
-                text: '<%= pie_chart %>'
+                text: "<%= question.html_safe %>",
               },
               tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -189,10 +305,10 @@
               series: [{
                 type: 'pie',
                 name: 'Browser share',
-                data: <%= raw @percentages_for_questions_multiple_choice %>
+                data: <%= raw @percentages_for_questions_multiple_choice[index].to_json %>
               }]
             });
-    <% choice_count += choice_count %>
+
     <% end %>
 
 
