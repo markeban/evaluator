@@ -68,7 +68,7 @@
 
 
 <h4>Multiple Choice Questions</h4>
-  <table class="table table-hover">
+  <table class="table table-hover" id="datatable">
    <tr>
     <th>Question</th>
     <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
@@ -86,7 +86,9 @@
     </tr>
   <% end %>
 
-</table> 
+</table>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 </div>  
 <div class="col-md-1"></div>
@@ -174,6 +176,31 @@
       }, 
       <% end %>
       ]
+    });
+    $(function () {
+        $('#container').highcharts({
+            data: {
+                table: 'datatable'
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Data extracted from a HTML table in the page'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: 'Units'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        this.point.y + ' ' + this.point.name.toLowerCase();
+                }
+            }
+        });
     });
   });
 
