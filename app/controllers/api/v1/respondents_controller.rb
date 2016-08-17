@@ -1,4 +1,6 @@
 class Api::V1::RespondentsController < ApplicationController
+  before_action :authenticate_user!
+  
 
   def index
     @respondents = Respondent.where(evaluation_id: params[:evaluation_id])

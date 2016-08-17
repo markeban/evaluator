@@ -1,9 +1,8 @@
 class QuestionsController < ApplicationController
-
   before_action :authenticate_user!
-
+  before_action :restrict_current_user_template!
+  
   def new
-    @template = Template.find_by(:id => params[:template_id])
     # @question = @template.questions || Question.new
   end
 
@@ -20,17 +19,14 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @template = Template.find_by(:id => params[:template_id])
     @questions = @template.questions.all
   end
 
   def edit
-    @template = Template.find_by(:id => params[:template_id])
     @question = @template.questions.find_by(:id => params[:id])
   end
 
   def update
-    @template = Template.find_by(:id => params[:template_id])
     @question = @template.questions.find_by(:id => params[:id])
     @question.update(question_params)
     flash[:success] = "Product successfully updated"
@@ -38,7 +34,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @template = Template.find_by(:id => params[:template_id])
     @question = @template.questions.find_by(:id => params[:id])
     @question.destroy
     flash[:danger] = "Product deleted"

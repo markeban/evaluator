@@ -41,7 +41,7 @@
                 <div class="row second-level">
                     <div class="col-md-4">
                       <div class="custom-accordion all-results">
-                        <%= link_to "All Results", "/analysis/template/#{template.id}" %>
+                        <%= link_to "All Results", "/analysis/templates/#{template.id}" %>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -79,7 +79,7 @@
                       <div class="accordion-inner">
                           <div class="row third-level">
                               <div class="col-md-4">
-                                <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher=#{teacher.id}" %>
+                                <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher_id=#{teacher.id}" %>
                                 </div>
                               </div>
                               <div class="col-md-4">

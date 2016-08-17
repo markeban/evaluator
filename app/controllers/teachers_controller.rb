@@ -1,5 +1,4 @@
 class TeachersController < ApplicationController
- 
   before_action :authenticate_user!
 
   def new
@@ -7,7 +6,7 @@ class TeachersController < ApplicationController
   end
 
   def index
-    @teachers = Teacher.all
+    @teachers = current_user.teachers
   end
 
    def create
@@ -16,14 +15,9 @@ class TeachersController < ApplicationController
       flash[:success] = "Teacher added successfully"
       redirect_to new_evaluation_path
     else
-      render 'new'
+      render :new
     end
   end
-
-
-
-
-
 
   private
 

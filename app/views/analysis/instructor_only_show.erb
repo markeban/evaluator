@@ -129,14 +129,14 @@
 
 
       <% if @questions_answers.any? %>
-        <h4>Text Answers</h4>
-        <% @questions_answers.each do |question, answers| %>
-            <h5><%= question %></h5>
-            <ol>
-            <% answers.each do |answer| %>
+        <h4>Text Questions</h4>
+        <% @questions_answers.each do |question_answer| %>
+            <h5><%= question_answer[:question] %></h5>
+            <ul class="text-one-instructor list-unstyled">
+            <% question_answer[:answers].each do |answer| %>
               <li><%= answer %></li>
             <% end %>
-            </ol>
+            </ul>
         <% end %>
       <% end %>
      

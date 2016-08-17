@@ -19,7 +19,8 @@ class Teacher < ActiveRecord::Base
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
       averages_boolean: instructor_only_boolean_calculations(evaluations_specific_template),
-      multiple_choice: specific_instructor_multiple_choice_calculations(evaluations_specific_template)
+      multiple_choice: specific_instructor_multiple_choice_calculations(evaluations_specific_template),
+      text: specific_instructor_text_answers(evaluations_specific_template)
     }
     return instructor_data_hash
   end
@@ -77,7 +78,55 @@ class Teacher < ActiveRecord::Base
 
   def specific_instructor_multiple_choice_calculations(evaluations)
     calculations_per_evaluation = evaluations.map{ |evaluation| evaluation.multiple_choice_calculations }
-    calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
+    questions = calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
+    table_format = get_table_format(questions)
+    remapped_questions = []
+    questions.each_with_index do |evaluation, question_index|
+      points_across_questions = []
+      evaluation[:scores][question_index].each_with_index do |choice, score_set_index|
+        scores_grouped = []
+        questions_iterated = 0
+        questions.length.times do
+          scores_grouped << questions[questions_iterated][:scores][question_index][score_set_index][:y]
+          questions_iterated += 1
+        end
+        points_across_questions << {choice: questions.first[:scores][question_index][score_set_index][:name], scores: scores_grouped}
+      end
+      remapped_questions << {question: evaluation[:question][question_index] , data: points_across_questions}
+    end
+    {teacher: evaluations.first.teacher.full_name, chart: remapped_questions, table: table_format}
+  end
+
+  def get_table_format(questions)
+    all_sets = []
+    questions.each_with_index do |question, index|
+      sets = []
+      question[:scores].each_with_index do |score_all, index|
+        sets << score_all.map{|individual_score| {name: individual_score[:name], score: individual_score[:y]}}
+      end
+      all_sets << sets
+    end
+    sets_transposed = all_sets.transpose
+    returned_questions = []
+    sets_transposed.each_with_index do |set, index|
+      hash = {}
+      hash[:question] = questions.first[:question][index]
+      hash[:scores] = set
+      returned_questions << hash
+    end
+    returned_questions
+  end
+
+  def specific_instructor_text_answers(evaluations)
+    transposed_evals = evaluations.map{ |evaluation| evaluation.text_calculations }.transpose
+    properly_nested = []
+    transposed_evals.each do |transposed_eval|
+      better_hash = {question: transposed_eval.first[:question]}
+      answers = []
+      better_hash[:different_dates] = transposed_eval.map{|eval| {date: eval[:date], texts: eval[:answers]} }
+      properly_nested << better_hash
+    end
+    return properly_nested
   end
 
 end

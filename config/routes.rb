@@ -38,11 +38,11 @@ Rails.application.routes.draw do
   get 'submissions/complete' => 'submissions#complete' #unRESTful route
 
   get '/analysis' => 'analysis#index'
-  post '/analysis/instructor_only' => 'analysis#instructor_only'
+  # post '/analysis/instructor_only' => 'analysis#instructor_only'
   get '/analysis/instructor_only' => 'analysis#instructor_only'
   get '/analysis/instructor_only/:id' => 'analysis#instructor_only_show'
   get '/analysis/instructor_only/templates/:id' => 'analysis#instructor_only_show_template'
-  get '/analysis/template/:id' => 'analysis#template'
+  get '/analysis/templates/:id' => 'analysis#template'
 
 
   get '/chart' => 'pages#chart'

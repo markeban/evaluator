@@ -15,7 +15,8 @@ class Template < ActiveRecord::Base
     end
     scale_1_to_10s = get_series_highcharts(all_instructors_per_template_data, :averages)
     booleans = get_series_highcharts(all_instructors_per_template_data, :averages_boolean)
-    return {scale_1_to_10s: scale_1_to_10s, booleans: booleans}
+    multiple_choice = get_highcharts_multiple_choice(all_instructors_per_template_data)
+    return {scale_1_to_10s: scale_1_to_10s, booleans: booleans, multiple_choice: multiple_choice, texts: get_texts(all_instructors_per_template_data)}
   end
 
   def last_submission
@@ -46,8 +47,13 @@ class Template < ActiveRecord::Base
     series.transpose
   end
 
+  def get_highcharts_multiple_choice(instructors)
+    instructors.map{|instructor| instructor[:multiple_choice]}
+  end
 
-
+  def get_texts(instructors)
+    instructors.map{|instructor| {teacher:instructor[:teacher], texts: instructor[:text]} }
+  end
 
 end
 

@@ -1,6 +1,5 @@
 class SubmissionsController < ApplicationController
 
-
   def new
     @evaluation = Evaluation.find_by(:url => params[:id])
     @submission = Submission.new

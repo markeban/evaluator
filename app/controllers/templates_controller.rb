@@ -1,6 +1,6 @@
 class TemplatesController < ApplicationController
-
   before_action :authenticate_user!
+  before_action :restrict_current_user_template!, only: [:show]
 
   def new
     @template = Template.new

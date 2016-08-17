@@ -1,16 +1,19 @@
 class AnalysisController < ApplicationController
-#Since there is no analysis.rb model, Model logic is in evaluation.rb
+  before_action :authenticate_user!
+  before_action :restrict_current_user_teacher!, only: [:instructor_only, :instructor_only_show_template]
+  before_action :restrict_current_user_template!, only: [:instructor_only_show_template, :template]
+
   def index
     @templates = current_user.templates
   end
 
   def instructor_only
-    @teacher = Teacher.find_by(:id => params[:teacher_id])
     @evaluations = @teacher.evaluations
   end
   
   def instructor_only_show
-      @evaluation = Evaluation.find_by(:id => params[:id])   
+    @evaluation = Evaluation.find_by(:id => params[:id])
+    if current_user.id == @evaluation.teacher.user.id
       specific_scale_calculations = @evaluation.scale_calculations
       @submissions = specific_scale_calculations[0]
       @teacher = specific_scale_calculations[1]
@@ -31,12 +34,14 @@ class AnalysisController < ApplicationController
       @multiple_choice_submissions = specific_multiple_choice_calculations[2]
 
       @questions_answers = @evaluation.text_calculations
+    else
+      flash[:danger] = "You don't have access to that particular page"
+      redirect_to "/"
+    end
   end
 
 
   def instructor_only_show_template
-    @teacher = Teacher.find_by(:id => params[:teacher])
-    @template = Template.find_by(:id => params[:id])
     data = @teacher.get_data_per_instructor_per_template(@template)
     data[:evaluation_start_dates].map!{|date| date = date.strftime("%b %d, %Y")}
     @instructor_data_hash = data
@@ -44,11 +49,7 @@ class AnalysisController < ApplicationController
 
 
   def template
-    @template = current_user.templates.find_by(:id => params[:id])
-    all_instructors_per_template_data = @template.get_all_instructors_per_template_data
-    @all_template_scale_1_to_10s = all_instructors_per_template_data[:scale_1_to_10s]
-    @all_template_booleans = all_instructors_per_template_data[:booleans]
-
+    @all_instructors_per_template_data = @template.get_all_instructors_per_template_data
   end
 
   private

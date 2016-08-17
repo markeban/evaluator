@@ -1,7 +1,9 @@
 class Api::V1::QuestionOptionsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :restrict_current_user_template!, only:[:show]
+  before_action :restrict_current_user_question!
 
   def new
-    @question = Question.find_by(:id => params[:question_id])
     @template = @question.template
   end
 
@@ -15,7 +17,6 @@ class Api::V1::QuestionOptionsController < ApplicationController
   end
 
   def show
-    @template = Template.find_by(:id => params[:template_id])
     @questions = @template.questions
   end
 
@@ -28,8 +29,6 @@ class Api::V1::QuestionOptionsController < ApplicationController
   end
 
   private
-
-
 
   def question_options_params
     params.require(:question_option).permit(:text, :question_id)

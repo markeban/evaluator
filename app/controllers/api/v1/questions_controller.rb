@@ -1,4 +1,6 @@
 class Api::V1::QuestionsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :restrict_current_user_template!
 
   def new
     @template = Template.find_by(:id => params[:template_id])
@@ -38,7 +40,6 @@ class Api::V1::QuestionsController < ApplicationController
   end
 
   def batch_destroy
-    p params[:questions]
     if params[:questions]
       params[:questions].each do |question|
         question = Question.find_by(:id => question[:id])

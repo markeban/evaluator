@@ -21,9 +21,45 @@ class ApplicationController < ActionController::Base
     zero_or_one == 1 ? 'Yes' : 'No'
   end
     
+  def restrict_current_user_teacher!
+    @teacher = Teacher.find_by(:id => params[:teacher_id])
+    if current_user.id == @teacher.user.id
+      return @teacher
+    else
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
+    end
+  end
 
+  def restrict_current_user_template!
+    @template = Template.find_by(:id => params[:template_id]) || Template.find_by(:id => params[:id])
+    if current_user.id == @template.user.id
+      return @template
+    else
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
+    end
+  end
 
+  def restrict_current_user_evaluation!
+    @evaluation = Evaluation.find_by(:id => params[:id])
+    if current_user.id == @evaluation.teacher.user.id
+      return @evaluation
+    else
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
+    end
+  end
 
+  def restrict_current_user_evaluation!
+    @question = Question.find_by(:id => params[:question_id])
+    if current_user.id == @question.template.user.id
+      return @question
+    else
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
+    end
+  end
 
   protected
 

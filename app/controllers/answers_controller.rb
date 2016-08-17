@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-
+  before_action :authenticate_user!
   def show
     @evaluation = Evaluation.find_by(:url => params[:id])
     @submission = Submission.new(:evaluation_id => @evaluation.id)

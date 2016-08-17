@@ -95,15 +95,15 @@ class Evaluation < ActiveRecord::Base
   def text_calculations
     questions_text = []
     answers_text = []
-      self.template.questions.where(:format_type => "text").each do |question| 
-        questions_text << question.text
-        answers_text << self.answers.where(:question_id => question.id).map(&:answer)
-      end
-      @questions_answers = []
-      questions_text.each_with_index do |question, index|
-        @questions_answers << [question, answers_text[index]]
-      end
-    return @questions_answers
+    self.template.questions.where(:format_type => "text").each do |question| 
+      questions_text << question.text
+      answers_text << self.answers.where(:question_id => question.id).map(&:answer)
+    end
+    @questions_answers = []
+    questions_text.each_with_index do |question, index|
+      @questions_answers << {question: question, answers: answers_text[index], date: created_at}
+    end
+  return @questions_answers
   end
 
   # def instructor_only_scale_calculations

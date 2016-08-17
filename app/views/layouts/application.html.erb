@@ -38,9 +38,9 @@
               <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
               <li><%= link_to "Create Template", "/templates/new", class: "smooth-scroll" %></li>
               <li><%= link_to "Send Evaluation", "/evaluations/new", class: "smooth-scroll" %></li>
-              <li><%= link_to "Sign Out", "/users/signout", method: :delete  %></li>
+              <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
             <% else %>
-              <li><%= link_to "Sign In", "/users/sign_up" %></li>
+              <li><%= link_to "Sign Up", "/users/sign_up" %></li>
               <li><%= link_to "Login", "/users/sign_in" %></li>
             <% end %>
           </ul>

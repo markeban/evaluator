@@ -5,7 +5,7 @@
   <div class="col-md-1"></div>
 </h2>
 <div class="col-md-10">
-  <h2><%= @template.name %> > <%= @teacher.full_name %></h2> 
+  <h2><%= link_to @template.name, "/analysis/templates/#{@template.id}" %> > <%= @teacher.full_name %></h2> 
   <div>
     <div class="tab-content">
       <h4>1 to 10 Scale Questions</h4>
@@ -64,32 +64,73 @@
    </div>
   </div>
 </div>            
-<!-- <div id="chart-template-instructor-only-boolean"></div> -->
 
+<div>
+  <h4>Multiple Choice Questions</h4>
+  <ul class="nav-pills custom-pills">
+  <li role="presentation" class="active"><a data-toggle="tab" href="#multiple-choice-charts">Graph</a></li>
+    <li role="presentation"><a data-toggle="tab" href="#table-multiple-choice">Table</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="multiple-choice-charts" class="tab-pane active">
+      <% @instructor_data_hash[:multiple_choice][:chart].each_with_index do |questions, index| %>
+        <h5><%= questions[:question] %></h5>
+        <div id="chart-multiple-choice-<%= index %>"></div>
+      <% end %>
+    </div>
+    <div id="table-multiple-choice" class="tab-pane">
+     <table class="table table-hover">
+      <tr>
+       <th>Question</th>
+       <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
+       <th><%= date %></th>
+       <% end %>
+     </tr>
+     <% @instructor_data_hash[:multiple_choice][:table].each do |question| %>
+     <tr>
+        <td><%= question[:question] %></td>
+        <% question[:scores].each do |scores| %>
+          <td>
+            <ul class="text-one-instructor list-unstyled">
+              <% scores.each do |score| %>
+                <li><%= "#{score[:name]} #{number_to_percentage(score[:score] * 100, precision: 0)}" %></li>
+              <% end %>
+            </ul>
+          </td>
+        <% end %>
+     </tr>
+     <% end %>
 
-<h4>Multiple Choice Questions</h4>
-  <table class="table table-hover" id="datatable">
-   <tr>
+   </table> 
+   </div>
+  </div>
+</div>
+
+<h4>Text Answers</h4>
+  <table class="table">
+  <tr>
     <th>Question</th>
-    <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
-    <th><%= date %></th>
+    <% @instructor_data_hash[:text].first[:different_dates].each do |date| %>
+      <th>
+        <%= human_month_day_year_time(date[:date]) %>
+      </th>
     <% end %>
   </tr>
-  <% @instructor_data_hash[:multiple_choice].each_with_index do |question, index| %>
-    <tr>
-      <td><%= question[:question][index] %></td>
-      <% count = 0 %>
-      <% @instructor_data_hash[:multiple_choice].length.times do %>
-          <td><%= @instructor_data_hash[:multiple_choice][count][:scores][index].map{ |choice| "#{choice[:name]} #{choice[:y]}" }.join(", ") %></td>
-        <% count += 1 %>
-      <% end %>
-    </tr>
-  <% end %>
-
-</table>
-
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
+    <% @instructor_data_hash[:text].each do |question_answer| %>
+      <tr>
+      <td class="bold"><%= question_answer[:question] %></td>
+        <% question_answer[:different_dates].each do |answer| %>
+          <td>
+            <ul class="text-one-instructor list-unstyled">
+              <% answer[:texts].each do |text| %>
+                <li><%= text %></li>
+              <% end %>
+            </ul>
+          </td>  
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 </div>  
 <div class="col-md-1"></div>
 </div>
@@ -177,31 +218,50 @@
       <% end %>
       ]
     });
-    $(function () {
-        $('#container').highcharts({
-            data: {
-                table: 'datatable'
-            },
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Data extracted from a HTML table in the page'
-            },
-            yAxis: {
-                allowDecimals: false,
-                title: {
-                    text: 'Units'
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        this.point.y + ' ' + this.point.name.toLowerCase();
-                }
+    <% @instructor_data_hash[:multiple_choice][:chart].each_with_index do |question, index| %>
+      $('#chart-multiple-choice-<%= index %>').highcharts({
+        title: {
+          text: "",
+          align: "left"
+        },
+        xAxis: {
+
+          categories: <%= raw @instructor_data_hash[:evaluation_start_dates] %>
+        },
+        yAxis: {
+          min: 0,     
+          max: 1,
+          title: {
+            text: 'Percent'
+          },
+          labels: {
+            formatter:function() {
+              return (this.value * 100) + '%';
             }
-        });
-    });
+          }
+        },
+        tooltip: {
+
+
+          formatter: function() {
+            var pcnt = this * 100;
+            return '<b>' + this.x +
+            '</b>: <b>' + (this.y * 100) + '%' + '</b>';
+          }
+
+        },
+        series: [
+        <% question[:data].each do |choice| %>
+        {
+          name: '<%= choice[:choice] %>',
+          data: <%= raw choice[:scores] %>,
+          lineWidth: 5
+        }, 
+        <% end %>
+    
+        ]
+      });
+    <% end %>
   });
 
 </script>

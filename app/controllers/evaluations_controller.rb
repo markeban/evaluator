@@ -1,6 +1,6 @@
 class EvaluationsController < ApplicationController
-
   before_action :authenticate_user!
+  before_action :restrict_current_user_evaluation!
 
   def new
     @teacher_select = []   
@@ -20,7 +20,6 @@ class EvaluationsController < ApplicationController
   def create
     @evaluation = Evaluation.new(evaluation_params)
     
-
     begin
       @evaluation.url = SecureRandom.hex(4).upcase
     end while Evaluation.find_by(:url => @evaluation.url) # or (url: eval_link)
@@ -35,31 +34,9 @@ class EvaluationsController < ApplicationController
   end
 
   def show
-    @evaluation = Evaluation.find_by(:id => params[:id])
-    @questions = @evaluation.template.questions
+      @questions = @evaluation.template.questions
+    end
 
-    # respondents = params[:respondent_details].split("\r\n").reject(&:empty?)
-    # successful_creates = []
-    # errors = []
-    # respondents.each do |respondent_detail_string|
-    #   respondent_details = respondent_detail_string.split(",")
-    #   first_name = respondent_details[0]
-    #   last_name = respondent_details[1]
-    #   email = respondent_details[2]
-    #   new_respondent = User.new(cohort_id: params[:cohort_id], email: email, first_name: first_name, last_name: last_name, password: "changeme", role_id: 3)
-    #   if new_respondent.save
-    #     PortalMailer.welcome_respondent(new_student).deliver_now
-    #     successful_creates << "<span style='color:green'>Account created successfully for #{new_student.full_name} and welcome email sent to #{new_student.email} </span>"
-    #   else
-    #     errors << "<span style='color:red'>For #{new_student.full_name}, #{new_student.errors.full_messages.join(", ")}</span>"
-    #   end
-    # end
-    # message = ""
-    # message << successful_creates.join("<br/>") if successful_creates.any?
-    # message << "<br/><br/>" if successful_creates.any? && errors.any?
-    # message << errors.join("<br/>") if errors.any?
-    # flash[:warning] = message
-    # redirect_to cohorts_path
 
 
   end
