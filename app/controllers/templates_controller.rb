@@ -30,7 +30,7 @@ class TemplatesController < ApplicationController
   private
 
   def template_params
-    params.require(:template).permit(:name, :description)
+    params.require(:template).permit(:name)
   end
 
 end

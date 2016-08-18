@@ -4,9 +4,10 @@
 
     <h1>Sign up</h1>
 
+      <div class="submit-status"><%= devise_error_messages! %></div>
+      
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "affa-form-contact"}) do |f| %>
-      <div class="submit-status"><%= devise_error_messages! %></div>
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true %>
       <%= f.label :password %>

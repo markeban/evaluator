@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#index'
   get '/pricing', to: 'pages#pricing'
+  get '/how_it_works', to: 'pages#how_it_works'
   devise_for :users
   resources :evaluations
   resources :teachers

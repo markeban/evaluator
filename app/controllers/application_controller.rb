@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_current_user_template!
-    @template = Template.find_by(:id => params[:template_id]) || Template.find_by(:id => params[:id])
+    @template = Template.find_by(:id => params[:template_id]) || Template.find_by(:id => params[:id]) || Template.find_by(id: params[:questions].first[:template_id])
     if current_user.id == @template.user.id
       return @template
     else
