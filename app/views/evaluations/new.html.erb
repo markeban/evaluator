@@ -1,34 +1,36 @@
-<h2>Send a New Evaluation to Students</h2>
 
 <div class="row">
-  <div class="col-md-3"></div>
-    <div class="col-md-6">
+  <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <h1>Send New Evaluation</h1>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Create Evaluation</h3>
-        </div>
-        <div class="panel-body">
+      
          <%= bootstrap_form_for @evaluation do |f| %> 
           <% if !(@template_select.to_a.empty?) %>
            <div><%= f.select :template_id, @template_select %></div>
           <% else %>
-          <p>You'll need to add an template to get started.</p>
+          <p>You'll need to add an template to get started <%= link_to "here",new_template_path %>.</p>
           <% end %>
-              <p><a href="<%= new_template_path %>"><button type="button" class="btn btn-primary">Add Template</button></a></p>
+          <div class="helper-dropdown">
+            <%= link_to "Click here", new_template_path %> to add a new template.
+          </div>
+          <br>
           <% if !(@teacher_select.to_a.empty?) %>
-           <div><%= f.select :teacher_id, @teacher_select %></div>
+           <div><%= f.select :teacher_id, @teacher_select, label: "Organization, Group, Instructor, etc." %></div>
           <% else %>
           <p>You'll need to add an instructor to get started.</p>
           <% end %>
-              <p><a href="<%= new_teacher_path %>"><button type="button" class="btn btn-primary">Add Teacher</button></a></p>
-           <div>
-             <%= f.submit 'Create Evaluation Link' %>
-           </div>
+          <div class="helper-dropdown">
+            <%= link_to "Click here", new_teacher_path %> to add a new organization, group, employee, etc.
+          </div>
+          <br>
+          <div>
+            <%= f.submit 'Create Evaluation' %>
+          </div>
         <% end %>
-       </div>
-      </div>
+       
+      
 
     </div>
-  <div class="col-md-3"></div>
+
 </div>

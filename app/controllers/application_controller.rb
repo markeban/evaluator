@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def restrict_current_user_evaluation!
+  def restrict_current_user_question!
     @question = Question.find_by(:id => params[:question_id])
     if current_user.id == @question.template.user.id
       return @question

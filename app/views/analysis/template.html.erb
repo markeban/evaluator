@@ -67,60 +67,63 @@
               </div>
             </div>
           </div>
-
-          <h4>Multiple Choice Questions</h4>
-          <% multiple_choice_table_for_template(@all_instructors_per_template_data[:multiple_choice]).each do |question| %>
-            <h5><%= question[:question] %></h5>
-            <table class="table table-hover">
-              <tr>
-                <th>Instructor</th>
-                <% find_max_evaluations_multiple_choice(question).times do |i| %>
-                  <th><%= (i + 1).ordinalize %> Evaluation</th>
-                <% end %>
-              </tr>
-              <% question[:teachers].each do |teacher| %>
+          <% if @all_instructors_per_template_data[:multiple_choice].first %>
+            <h4>Multiple Choice Questions</h4>
+            <% multiple_choice_table_for_template(@all_instructors_per_template_data[:multiple_choice]).each do |question| %>
+              <h5><%= question[:question] %></h5>
+              <table class="table table-hover">
                 <tr>
-                  <td class="bold"><%= teacher[:name] %></td>
-                  <% teacher[:scores].each do |scores| %>
-                    <td>
-                      <ul class="text-one-instructor list-unstyled">
-                        <% scores.each do |score| %>
-                          <li><%= "#{score[:name]} #{number_to_percentage(score[:score] * 100, precision: 0)}" %></li>
-                        <% end %>
-                      </ul>
-                    </td>
+                  <th>Instructor</th>
+                  <% find_max_evaluations_multiple_choice(question).times do |i| %>
+                    <th><%= (i + 1).ordinalize %> Evaluation</th>
                   <% end %>
                 </tr>
-              <% end %>
-            </table>
+                <% question[:teachers].each do |teacher| %>
+                  <tr>
+                    <td class="bold"><%= teacher[:name] %></td>
+                    <% teacher[:scores].each do |scores| %>
+                      <td>
+                        <ul class="text-one-instructor list-unstyled">
+                          <% scores.each do |score| %>
+                            <li><%= "#{score[:name]} #{number_to_percentage(score[:score] * 100, precision: 0)}" %></li>
+                          <% end %>
+                        </ul>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </table>
+            <% end %>
           <% end %>
 
-          <h4>Text Questions</h4>
-          <% texts_table_for_template(@all_instructors_per_template_data[:texts]).each do |question| %>
-            <h5><%= question[:question] %></h5>
-            <table class="table table-hover">
-              <tr>
-                <th>Instructor</th>
-                <% find_max_evaluations_texts(question).times do |i| %>
-                  <th><%= (i + 1).ordinalize %> Evaluation</th>
-                <% end %>
-              </tr>
-              <% question[:teachers].each do |teacher| %>
+          <% if @all_instructors_per_template_data[:texts].first[:texts].any? %>
+            <h4>Text Questions</h4>
+            <% texts_table_for_template(@all_instructors_per_template_data[:texts]).each do |question| %>
+              <h5><%= question[:question] %></h5>
+              <table class="table table-hover">
                 <tr>
-                  <td class="bold"><%= teacher[:name] %></td>
-                  <% teacher[:texts].each do |texts| %>
-                    <td>
-                      <span class="bold"><%= human_month_day_year_time(texts[:date]) %></span>  
-                      <ul class="text-one-instructor list-unstyled">
-                        <% texts[:texts].each do |text| %>
-                          <li><%= text %></li>
-                        <% end %>
-                      </ul>
-                    </td>
+                  <th>Instructor</th>
+                  <% find_max_evaluations_texts(question).times do |i| %>
+                    <th><%= (i + 1).ordinalize %> Evaluation</th>
                   <% end %>
                 </tr>
-              <% end %>
-            </table>
+                <% question[:teachers].each do |teacher| %>
+                  <tr>
+                    <td class="bold"><%= teacher[:name] %></td>
+                    <% teacher[:texts].each do |texts| %>
+                      <td>
+                        <span class="bold"><%= human_month_day_year_time(texts[:date]) %></span>  
+                        <ul class="text-one-instructor list-unstyled">
+                          <% texts[:texts].each do |text| %>
+                            <li><%= text %></li>
+                          <% end %>
+                        </ul>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </table>
+            <% end %>
           <% end %>
 
 

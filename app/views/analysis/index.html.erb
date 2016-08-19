@@ -64,7 +64,7 @@
                       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
                         <div class="row second-level">
                           <div class="col-md-4">
-                            <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.full_name %>
+                            <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.name %>
                           </div>
                           <div class="col-md-4">
     

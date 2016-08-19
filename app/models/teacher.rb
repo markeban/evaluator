@@ -6,15 +6,13 @@ class Teacher < ActiveRecord::Base
   has_many :submissions, :through => :evaluations
   belongs_to :user
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
+  validates :name, presence: true
 
   def get_data_per_instructor_per_template(template)
     evaluations_specific_template = evaluations.where(template_id: template.id)
     specific_instructor_only_scale_calculations = instructor_only_scale_calculations(evaluations_specific_template)
     instructor_data_hash = {
-      teacher: self.full_name,
+      teacher: self.name,
       URLs: get_urls(template),
       evaluation_start_dates: specific_instructor_only_scale_calculations[0],
       averages: specific_instructor_only_scale_calculations[1],
@@ -79,22 +77,26 @@ class Teacher < ActiveRecord::Base
   def specific_instructor_multiple_choice_calculations(evaluations)
     calculations_per_evaluation = evaluations.map{ |evaluation| evaluation.multiple_choice_calculations }
     questions = calculations_per_evaluation.map {|evaluation| {question: evaluation[0], scores: evaluation[1]} }
-    table_format = get_table_format(questions)
-    remapped_questions = []
-    questions.each_with_index do |evaluation, question_index|
-      points_across_questions = []
-      evaluation[:scores][question_index].each_with_index do |choice, score_set_index|
-        scores_grouped = []
-        questions_iterated = 0
-        questions.length.times do
-          scores_grouped << questions[questions_iterated][:scores][question_index][score_set_index][:y]
-          questions_iterated += 1
+    if questions.first[:question].any?
+      table_format = get_table_format(questions)
+      remapped_questions = []
+      questions.each_with_index do |evaluation, question_index|
+        points_across_questions = []
+        evaluation[:scores][question_index].each_with_index do |choice, score_set_index|
+          scores_grouped = []
+          questions_iterated = 0
+          questions.length.times do
+            scores_grouped << questions[questions_iterated][:scores][question_index][score_set_index][:y]
+            questions_iterated += 1
+          end
+          points_across_questions << {choice: questions.first[:scores][question_index][score_set_index][:name], scores: scores_grouped}
         end
-        points_across_questions << {choice: questions.first[:scores][question_index][score_set_index][:name], scores: scores_grouped}
+        remapped_questions << {question: evaluation[:question][question_index] , data: points_across_questions}
       end
-      remapped_questions << {question: evaluation[:question][question_index] , data: points_across_questions}
+      {teacher: evaluations.first.teacher.name, chart: remapped_questions, table: table_format}
+    else
+      return nil
     end
-    {teacher: evaluations.first.teacher.full_name, chart: remapped_questions, table: table_format}
   end
 
   def get_table_format(questions)

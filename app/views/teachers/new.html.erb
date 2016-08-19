@@ -1,31 +1,21 @@
-<h2>Add New Instructor</h2>
 
 <div class="row">
-  <div class="col-md-3"></div>
-    <div class="col-md-6">
+  <div class="col-md-2"></div>
+    <div class="col-md-8">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Teacher</h3>
+    <h1>Organization, Group, Instructor or Employee</h1>
+     
+      <%= bootstrap_form_for @teacher do |f| %>
+        <div>
+          <%= f.text_field :name %>
         </div>
-        <div class="panel-body">
-          <%= bootstrap_form_for @teacher do |f| %>
-            <div>
-              <%= f.text_field :first_name %>
-            </div>
-            <div>
-              <%= f.text_field :last_name %>
-            </div>
-            <div>
-              <%= f.text_field :email %>
-            </div>
-            <div>
-              <%= f.submit 'Add' %>
-            </div>
-          <% end %>
+        <div>
+          <%= f.text_field :email %>
         </div>
-      </div>
+        <div>
+          <%= f.submit 'Add' %>
+        </div>
+      <% end %>
 
     </div>  
-  <div class="col-md-3"></div>
 </div>

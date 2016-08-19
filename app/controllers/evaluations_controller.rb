@@ -1,12 +1,12 @@
 class EvaluationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :restrict_current_user_evaluation!
+  before_action :restrict_current_user_evaluation!, except: [:new, :create]
 
   def new
     @teacher_select = []   
     unique_teachers = current_user.teachers.uniq
     unique_teachers.each do |teacher|
-      @teacher_select << [teacher.full_name, teacher.id]
+      @teacher_select << [teacher.name, teacher.id]
     end
     
     @template_select = []
@@ -18,27 +18,28 @@ class EvaluationsController < ApplicationController
   end
 
   def create
-    @evaluation = Evaluation.new(evaluation_params)
-    
-    begin
-      @evaluation.url = SecureRandom.hex(4).upcase
-    end while Evaluation.find_by(:url => @evaluation.url) # or (url: eval_link)
+    template = Template.find_by(id: params[:evaluation][:template_id])
+    if template.user.id == current_user.id
+      @evaluation = Evaluation.new(evaluation_params)
+      
+      begin
+        @evaluation.url = SecureRandom.hex(4).upcase
+      end while Evaluation.find_by(:url => @evaluation.url) # or (url: eval_link)
 
-
-    if @evaluation.save
-      flash[:success] = "Evaluation created successfully"
-      redirect_to evaluation_path(@evaluation)
+      if @evaluation.save
+        flash[:success] = "Evaluation created successfully"
+        redirect_to evaluation_path(@evaluation)
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
     end
   end
 
   def show
-      @questions = @evaluation.template.questions
-    end
-
-
-
+    @questions = @evaluation.template.questions
   end
 
 

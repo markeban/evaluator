@@ -4,9 +4,13 @@
   angular.module("app").controller("addRespondentsCtrl", ['$scope', '$http', 'Flash', function($scope, $http, Flash) {
 
     $scope.respondents = [];
+    $scope.evaluation = "";
 
     $scope.setup = function(evaluation_id) {
       $scope.evaluation_id = evaluation_id;
+      $http.get('/api/v1/evaluations/' + evaluation_id).then(function (response) {
+        $scope.evaluation = response.data;
+      });
       $http.get("/api/v1/respondents?evaluation_id=" + $scope.evaluation_id).then(function (response) {
         $scope.respondents = response.data;
         $scope.addRespondentInput();

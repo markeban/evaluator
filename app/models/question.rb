@@ -19,9 +19,9 @@ class Question < ActiveRecord::Base
 
     def required_text
     if self.required
-      return "This question is required."
+      return "(required)"
     else 
-      return "This question is optional."
+      return ""
     end
   end
 

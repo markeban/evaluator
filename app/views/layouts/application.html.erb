@@ -10,78 +10,83 @@
   <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div id="content">
+
 	
-  <!-- #header -->
-  <header id="header">
-    
-    <!-- #navigation -->
-    <nav id="navigation" class="navbar">
+    <!-- #header -->
+    <header id="header">
       
-      <!-- .container -->
-      <div class="container">
+      <!-- #navigation -->
+      <nav id="navigation" class="navbar">
         
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse-1">
-            <span class="sr-only">Menu</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <div class="navbar-brand"><img src="assets/flat/logo.png" alt="Logo" /></div> <!-- site logo -->
-        </div>
-        
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="menu-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <% if current_user %>
-              <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
-              <li><%= link_to "Create Template", "/templates/new", class: "smooth-scroll" %></li>
-              <li><%= link_to "Send Evaluation", "/evaluations/new", class: "smooth-scroll" %></li>
-              <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
-            <% else %>
-              <li><%= link_to "Sign Up", "/users/sign_up" %></li>
-              <li><%= link_to "Login", "/users/sign_in" %></li>
-            <% end %>
-          </ul>
-        </div>
-        
-        <div class="navbar-sep-border"></div> <!-- separator -->
-        
-      </div>
-      <!-- .container end -->
-      
-    </nav>
-    <!-- #navigation end -->
-    
-    <div class="container-fluid content-wrapper">
-      <%= yield %>
-    </div>
-    <!-- #footer -->
-    <footer id="footer">
-      
-  
-      <div class="footer-copyright">
+        <!-- .container -->
         <div class="container">
-          <p>&copy; <%= Time.now.year %> Copyright. All Rights Reserved. Eban Technologies LLC.</p>
+          
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse-1">
+              <span class="sr-only">Menu</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand"><img src="assets/flat/logo.png" alt="Logo" /></div> <!-- site logo -->
+          </div>
+          
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="menu-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <% if current_user %>
+                <li><%= link_to "Create Template", "/templates/new", class: "smooth-scroll" %></li>
+                <li><%= link_to "Send Evaluation", "/evaluations/new", class: "smooth-scroll" %></li>
+                <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
+                <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
+              <% else %>
+                <li><%= link_to "Sign Up", "/users/sign_up" %></li>
+                <li><%= link_to "Login", "/users/sign_in" %></li>
+              <% end %>
+            </ul>
+          </div>
+          
+          <div class="navbar-sep-border"></div> <!-- separator -->
+          
+        </div>
+        <!-- .container end -->
+        
+      </nav>
+      <!-- #navigation end -->
+      </header>
+      
+      <div class="container-fluid content-wrapper">
+        <div ng-app="app">
+          <%= yield %>
         </div>
       </div>
-      
-    </footer>
-    <!-- #footer end -->
+      <!-- #footer -->
+      <footer id="footer">
+        
     
-    <!--[if lt IE 8]>
-    	<div class="browser-notice">
-            <div class="container">
-            	<div class="text">
-                    <h1>Internet Explorer Out To Date</h1>
-                    <p>Please update your Internet Explorer browser with a newer version (Internet Explorer 8 above) now!</p>
-                    <span>You can download it <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="blank">here....</a></span>
-                </div>
-            </div>
+        <div class="footer-copyright">
+          <div class="container">
+            <p>&copy; <%= Time.now.year %> Copyright. All Rights Reserved. Eban Technologies LLC.</p>
+          </div>
         </div>
-        <![endif]-->
         
-        
-      </body>
-      </html>
+      </footer>
+      <!-- #footer end -->
+      
+      <!--[if lt IE 8]>
+      	<div class="browser-notice">
+              <div class="container">
+              	<div class="text">
+                      <h1>Internet Explorer Out To Date</h1>
+                      <p>Please update your Internet Explorer browser with a newer version (Internet Explorer 8 above) now!</p>
+                      <span>You can download it <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="blank">here....</a></span>
+                  </div>
+              </div>
+          </div>
+          <![endif]-->
+          
+    </div>        
+  </body>
+</html>
