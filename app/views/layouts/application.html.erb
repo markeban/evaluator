@@ -30,7 +30,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <div class="navbar-brand"><img src="assets/flat/logo.png" alt="Logo" /></div> <!-- site logo -->
+            <div class="navbar-brand"><%= image_tag "flat/logo_affix.png" %></div> <!-- site logo -->
           </div>
           
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -42,6 +42,7 @@
                 <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
                 <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
               <% else %>
+                <li><%= link_to "How it Works", "/how_it_works" %></li>
                 <li><%= link_to "Sign Up", "/users/sign_up" %></li>
                 <li><%= link_to "Login", "/users/sign_in" %></li>
               <% end %>

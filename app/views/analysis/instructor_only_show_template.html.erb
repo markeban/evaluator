@@ -5,36 +5,38 @@
   <div class="col-md-1"></div>
 </h2>
 <div class="col-md-10">
-  <h2><%= link_to @template.name, "/analysis/templates/#{@template.id}" %> > <%= @teacher.name %></h2> 
-  <div>
-    <div class="tab-content">
-      <h4>1 to 10 Scale Questions</h4>
-      <ul class="nav-pills custom-pills">
-        <li role="presentation" class="active"><a data-toggle="tab" href="#chart-template-instructor-only-scale">Graph</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#table-scale">Table</a></li>
-      </ul>
-      <div id="chart-template-instructor-only-scale" class="tab-pane active"></div>
-      <div id="table-scale" class="tab-pane">
-       <table class="table table-hover">
-        <tr>
-         <th>Question</th>
-         <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
-         <th><%= date %></th>
-         <% end %>
-       </tr>
-       <% @instructor_data_hash[:averages].each do |question, evaluation| %>
-       <tr>
-         <td><%= question %></td>
-         <% evaluation.each do |score| %>
-         <td><%= score %></td>
-         <% end %>
-       </tr>
-       <% end %>
-
-     </table> 
-   </div>
- </div>
-</div>
+  <h2><%= link_to @template.name, "/analysis/templates/#{@template.id}" %> > <%= @teacher.name %></h2>
+  <% if @instructor_data_hash[:averages].any? %>
+    <div>
+      <div class="tab-content">
+        <h4>1 to 10 Scale Questions</h4>
+        <ul class="nav-pills custom-pills">
+          <li role="presentation" class="active"><a data-toggle="tab" href="#chart-template-instructor-only-scale">Graph</a></li>
+          <li role="presentation"><a data-toggle="tab" href="#table-scale">Table</a></li>
+        </ul>
+        <div id="chart-template-instructor-only-scale" class="tab-pane active"></div>
+        <div id="table-scale" class="tab-pane">
+          <table class="table table-hover">
+          <tr>
+            <th>Question</th>
+            <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
+              <th><%= date %></th>
+            <% end %>
+          </tr>
+          <% @instructor_data_hash[:averages].each do |question, evaluation| %>
+            <tr>
+              <td><%= question %></td>
+              <% evaluation.each do |score| %>
+                <td><%= score %></td>
+              <% end %>
+            </tr>
+          <% end %>
+         </table> 
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% if @instructor_data_hash[:averages_boolean].any? %>
   <div>
     <h4>Yes or No Questions</h4>
     <ul class="nav-pills custom-pills">
@@ -44,27 +46,26 @@
     <div class="tab-content">
       <div id="chart-template-instructor-only-boolean" class="tab-pane active"></div>
       <div id="table-boolean" class="tab-pane">
-       <table class="table table-hover">
-        <tr>
-         <th>Question</th>
-         <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
-         <th><%= date %></th>
-         <% end %>
-       </tr>
-       <% @instructor_data_hash[:averages_boolean].each do |question, evaluation| %>
-       <tr>
-         <td><%= question %></td>
-         <% evaluation.each do |score| %>
-         <td><%= number_to_percentage(score * 100, precision: 0) %></td>
-         <% end %>
-       </tr>
-       <% end %>
-
-     </table> 
-   </div>
-  </div>
-</div>            
-
+        <table class="table table-hover">
+          <tr>
+            <th>Question</th>
+            <% @instructor_data_hash[:evaluation_start_dates].each do |date| %>
+              <th><%= date %></th>
+            <% end %>
+          </tr>
+          <% @instructor_data_hash[:averages_boolean].each do |question, evaluation| %>
+            <tr>
+              <td><%= question %></td>
+              <% evaluation.each do |score| %>
+                <td><%= number_to_percentage(score * 100, precision: 0) %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table> 
+      </div>
+    </div>
+  </div>            
+<% end %>
 <% if @instructor_data_hash[:multiple_choice] %>
   <div>
     <h4>Multiple Choice Questions</h4>

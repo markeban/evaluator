@@ -3,39 +3,41 @@
     <div class="col-md-1"></div>
       <div class="col-md-10">
           <h3><%= @template.name %></h3>
-          <h4>Scale of 1 to 10 Questions</h4>
-          <div>
-            <div class="tab-content">
-              <ul class="nav-pills custom-pills">
-                <li role="presentation" class="active"><a data-toggle="tab" href="#scale-1-10-charts">Graph</a></li>
-                <li role="presentation"><a data-toggle="tab" href="#table-scale">Table</a></li>
-              </ul>
-              <div id="scale-1-10-charts" class="tab-pane active"></div>
-              <div id="table-scale" class="tab-pane">
-                <% @all_instructors_per_template_data[:scale_1_to_10s].each do |teachers| %>
-                  <h5><%=  teachers.first[:question_text] %></h5>
-                  <table class="table table-hover">
-                    <tr>
-                      <th>Instructor</th>  
-                      <% find_max_evaluations(teachers).times do |i| %>
-                        <th><%= (i + 1).ordinalize %> Evaluation</th>
-                      <% end %>
-                    </tr>
-                  <% teachers.each do |teacher| %>
-                    <tr>
-                      <td><%= teacher[:name] %></td>
-                      <% teacher[:data].each do |score| %>
-                        <td><%= score.last %></td>
-                      <% end %>
-                    </tr>
+          <% if @all_instructors_per_template_data[:scale_1_to_10s].first.any? %>
+            <h4>Scale of 1 to 10 Questions</h4>
+            <div>
+              <div class="tab-content">
+                <ul class="nav-pills custom-pills">
+                  <li role="presentation" class="active"><a data-toggle="tab" href="#scale-1-10-charts">Graph</a></li>
+                  <li role="presentation"><a data-toggle="tab" href="#table-scale">Table</a></li>
+                </ul>
+                <div id="scale-1-10-charts" class="tab-pane active"></div>
+                <div id="table-scale" class="tab-pane">
+                  <% @all_instructors_per_template_data[:scale_1_to_10s].each do |teachers| %>
+                    <h5><%=  teachers.first[:question_text] %></h5>
+                    <table class="table table-hover">
+                      <tr>
+                        <th>Instructor</th>  
+                        <% find_max_evaluations(teachers).times do |i| %>
+                          <th><%= (i + 1).ordinalize %> Evaluation</th>
+                        <% end %>
+                      </tr>
+                    <% teachers.each do |teacher| %>
+                      <tr>
+                        <td><%= teacher[:name] %></td>
+                        <% teacher[:data].each do |score| %>
+                          <td><%= score.last %></td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                    </table> 
                   <% end %>
-                  </table> 
-                <% end %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
 
-
+        <% if @all_instructors_per_template_data[:booleans].first.any? %>
           <div>
           <h4>Boolean Questions</h4>
             <div class="tab-content">
@@ -64,9 +66,12 @@
                   <% end %>
                   </table> 
                 <% end %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
+
+
           <% if @all_instructors_per_template_data[:multiple_choice].first %>
             <h4>Multiple Choice Questions</h4>
             <% multiple_choice_table_for_template(@all_instructors_per_template_data[:multiple_choice]).each do |question| %>
