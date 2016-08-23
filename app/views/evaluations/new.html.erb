@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-2"></div>
     <div class="col-md-8">
-      <h1>Send New Evaluation</h1>
+      <h1>Create Survey</h1>
 
       
          <%= bootstrap_form_for @evaluation do |f| %> 
@@ -16,16 +16,16 @@
           </div>
           <br>
           <% if !(@teacher_select.to_a.empty?) %>
-           <div><%= f.select :teacher_id, @teacher_select, label: "Organization, Group, Instructor, etc." %></div>
+           <div><%= f.select :teacher_id, @teacher_select, label: "Instructor, Group, Instructor, etc." %></div>
           <% else %>
           <p>You'll need to add an instructor to get started.</p>
           <% end %>
           <div class="helper-dropdown">
-            <%= link_to "Click here", new_teacher_path %> to add a new organization, group, employee, etc.
+            <%= link_to "Click here", new_teacher_path %> to add a new instructor, group, employee, etc. or <%= link_to "click here", "/teachers/new?self=true" %> to add yourself.
           </div>
           <br>
           <div>
-            <%= f.submit 'Create Evaluation' %>
+            <%= f.submit 'Create Survey' %>
           </div>
         <% end %>
        

@@ -7,10 +7,9 @@
     <div class="col-md-10">
       <br>
       <br>
-      <br>
 
-      <p>You've been invited to fill out an evaluation for:<p>
-      <p>Instructor: <b><%= @teacher.name %></b></p>
+      <h2>You've been invited to fill out a survey for:</h2>
+      <p>Person/Group: <b><%= @teacher.name %></b></p>
       <p><i>Your evaluation will be anonymous.</i></p>
       <br>
         <%= bootstrap_form_for @submission, url: submissions_path(@submission, submission_id: params[:submission_id]) do |f| %>

@@ -29,11 +29,11 @@ Rails.application.routes.draw do
     end
   end
  
-  get    '/submissions/new' => 'submissions#new'
+  # get    '/submissions/new' => 'submissions#new'
   get    '/submissions' => 'submissions#index'
   post    '/submissions' =>  'submissions#create', :as => :submissions_path         
   get    '/submissions/:id/edit' => 'submissions#edit'
-  get    '/submissions/:id/new' => 'submissions#new'            #unRESTful route
+  get    '/submissions/:id/new' => 'submissions#new', as: :new_submissions            #unRESTful route
   patch  '/submissions/:id' => 'submissions#update'
   put    '/submissions/:id' =>  'submissions#update'
   delete '/submissions/:id' =>  'submissions#destroy'

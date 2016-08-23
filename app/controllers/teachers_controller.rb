@@ -2,7 +2,11 @@ class TeachersController < ApplicationController
   before_action :authenticate_user!
 
   def new
-     @teacher = Teacher.new
+    @teacher = Teacher.new
+    if params[:self]
+      @teacher.email = current_user.email 
+      @teacher.name = current_user.full_name
+    end
   end
 
   def index

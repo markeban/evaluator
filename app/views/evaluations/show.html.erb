@@ -6,7 +6,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
 
-      <h1>Prepare Evaluation</h1>
+      <h1>Prepare Survey</h1>
       <ul class="nav-pills custom-pills">
         <li role="presentation" class="active"><a data-toggle="tab" href="#evaluation-link">Link</a></li>
         <li role="presentation"><a data-toggle="tab" href="#send-emails">Email Directly</a></li>
@@ -57,7 +57,7 @@
             </div>
 
             <div>
-              <button class="btn btn-primary btn-lg big-button-margin" ng-click="createRespondents()">Email Evaluations</button>
+              <button class="btn btn-primary btn-lg big-button-margin" ng-click="createRespondents()">Email Surveys</button>
             </div>
             <div ng-show="(respondents|filter:{emailed:true}).length > 0">
               <h3>Respondents previously sent requests to take survey</h3> 
@@ -81,6 +81,9 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
 
 

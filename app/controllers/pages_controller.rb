@@ -1,4 +1,9 @@
 class PagesController < ApplicationController
+  
+  def index
+    # render layout: "landing_page"
+  end
+
   def chart
   end
 

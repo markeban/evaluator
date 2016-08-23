@@ -3,16 +3,12 @@
     
 
     <h1>Sign up</h1>
-
-      <div class="submit-status"><%= devise_error_messages! %></div>
       
-
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "affa-form-contact"}) do |f| %>
-      <%= f.label :email %>
+    <%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "affa-form-contact"}) do |f| %>
+      <%= f.text_field :first_name, autofocus: true %>
+      <%= f.text_field :last_name, autofocus: true %>    
       <%= f.email_field :email, autofocus: true %>
-      <%= f.label :password %>
       <%= f.password_field :password, autocomplete: "off" %>
-      <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
       <%= f.submit "Sign up" %>
     <% end %>

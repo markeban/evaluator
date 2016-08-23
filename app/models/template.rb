@@ -8,6 +8,8 @@ class Template < ActiveRecord::Base
   has_many :teachers, -> { distinct }, :through => :evaluations
   has_many :answers, :through => :questions
 
+  validates :name, presence: true
+
   def get_all_instructors_per_template_data
     all_instructors_per_template_data = []
     teachers.uniq.each do |teacher|

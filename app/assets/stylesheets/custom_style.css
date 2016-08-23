@@ -1,0 +1,97 @@
+body, html {
+  min-height: 100vh;
+  margin:0;
+  padding:0;
+}
+
+/*footer {
+  position: absolute;
+  width :100%;
+  bottom: 0;
+}*/
+
+#content {
+  min-height: 100%;
+  position: relative;
+}
+
+.content-wrapper {
+  background: #FFFFFF;
+  padding: 50px 0px 100px 0px;
+  min-height: 100vh;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.5em
+}
+
+h2 {
+  font-size: 1.7em
+}
+
+h3 {
+  font-size: 1.4em
+}
+
+h4 {
+  font-size: 1.2em
+}
+
+h5 {
+  font-size: 1.0em
+}
+
+
+.alert-dismissible {
+  position: fixed;
+  top: 65px;
+  z-index: 1000;
+  width: 100%;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.affa-form-contact input[type="password"], .affa-form-contact input[type="password"], .affa-form-contact textarea {
+  width:100%;
+  margin-bottom:15px;
+}
+
+.affa-form-contact {
+  text-align: left;
+}
+
+/*flash for Devise*/
+.alert-error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+ }
+
+.alert-alert {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+ }
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+ }
+
+.alert-notice {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+ }

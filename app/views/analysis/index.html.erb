@@ -1,5 +1,5 @@
 
-    
+
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
@@ -19,77 +19,75 @@
       </div>
     </div>
     <% @templates.each do |template| %>
-      <div class="accordion" id="accordion-template-<%= template.id %>">
+      <div class="accordion" id="accordion-<%= template.id %>-template">
         <div class="accordion-group">
           <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-template-<%= template.id %>" href="#collapse-template-<%= template.id %>">
-            <div class="row">
-              <div class="col-md-4">
-                <em class="<%= template.evaluations.any? ? "icon-fixed-width fa fa-plus" : "no-accordion" %> top-level-accordion"></em><%= template.name %>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-template" href="#collapse-<%= template.id %>-template">
+              <div class="row">
+                <div class="col-md-4">
+                  <em class="<%= template.evaluations.any? ? "icon-fixed-width fa fa-plus" : "no-accordion" %> top-level-accordion"></em><%= template.name %>
+                </div>
+                <div class="col-md-4">
+                  Last Submission: <%= template.last_submission %>
+                </div>
+                <div class="col-md-4">
+                  <%= template.evaluations.count %> Evaluation(s)
+                </div>
               </div>
-              <div class="col-md-4">
-                Last Submission: <%= template.last_submission %>
-              </div>
-              <div class="col-md-4">
-                <%= template.evaluations.count %> Evaluation(s)
-              </div>
-            </div>
             </a>
           </div>
-          <div id="collapse-template-<%= template.id %>" class="accordion-body collapse">
+
+          <% if template.evaluations.any? %>
+            <div id="collapse-<%= template.id %>-template" class="accordion-body collapse">
               <div class="accordion-inner">
                 <div class="row second-level">
-                    <div class="col-md-4">
-                      <div class="custom-accordion all-results">
-                        <%= link_to "All Results", "/analysis/templates/#{template.id}" %>
-                      </div>
+                  <div class="col-md-4">
+                    <div class="custom-accordion all-results">
+                      <%= link_to "All Results", "/analysis/templates/#{template.id}" %>
                     </div>
-                    <div class="col-md-4">
-                 
-                    </div>
-                    <div class="col-md-4">
-                
-                    </div>
+                  </div>
+                  <div class="col-md-4">
+
+                  </div>
+                  <div class="col-md-4">
+
+                  </div>
                 </div>
-            <% template.teachers.each do |teacher| %>
-                      
-                      
+                <% template.teachers.each do |teacher| %>
+                  <!-- Here we insert another nested accordion -->
+                  <div class="accordion" id="accordion-<%= template.id %>-teacher-<%= teacher.id %>">
 
-                <!-- Here we insert another nested accordion -->
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
+                          <div class="row second-level">
+                            <div class="col-md-4">
+                              <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.name %>
+                            </div>
+                            <div class="col-md-4">
 
-                <div class="accordion" id="accordion-<%= template.id %>-teacher-<%= teacher.id %>">
+                            </div>
+                            <div class="col-md-4">
 
-                  <div class="accordion-group">
-                    <div class="accordion-heading">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
-                        <div class="row second-level">
-                          <div class="col-md-4">
-                            <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.name %>
+                            </div>
                           </div>
-                          <div class="col-md-4">
-    
-                          </div>
-                          <div class="col-md-4">
-                            
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    <div id="collapse-<%= template.id %>-teacher-<%= teacher.id %>" class="accordion-body collapse">
-                      <div class="accordion-inner">
+                        </a>
+                      </div>
+                      <div id="collapse-<%= template.id %>-teacher-<%= teacher.id %>" class="accordion-body collapse">
+                        <div class="accordion-inner">
                           <div class="row third-level">
-                              <div class="col-md-4">
-                                <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher_id=#{teacher.id}" %>
-                                </div>
+                            <div class="col-md-4">
+                              <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher_id=#{teacher.id}" %>
                               </div>
-                              <div class="col-md-4">
-                           
-                              </div>
-                              <div class="col-md-4">
-       
-                              </div>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
                           </div>
-                          <% teacher.evaluations.where(template_id: template.id).each do |evaluation| %>
+                          <% template.evaluations.any? && teacher.evaluations.where(template_id: template.id).each do |evaluation| %>
                             <div class="row third-level">
                               <div class="col-md-4">
                                 <div class="middle-level-accordion">
@@ -104,28 +102,20 @@
                               </div>
                             </div>
                           <% end %>
- 
+
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>          
-
+                <% end %>         
                 <!-- Inner accordion ends here -->
-
               </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
-
-
-
-  </div>
-
-
-</div>  
-<div class="col-md-2"></div>
+  </div> 
 </div>
 
 <script type="text/javascript">
@@ -133,19 +123,19 @@
    "use strict"
    
    // Accordion Toggle Items
-     var iconOpen = 'fa fa-minus',
-          iconClose = 'fa fa-plus';
+   var iconOpen = 'fa fa-minus',
+   iconClose = 'fa fa-plus';
 
-      $(document).on('show.bs.collapse hide.bs.collapse', '.accordion, .accordion-inner', function (e) {
-          var $target = $(e.target)
-            $target.siblings('.accordion-heading')
-            .find('em').toggleClass(iconOpen + ' ' + iconClose);
-            if(e.type == 'show')
-                $target.prev('.accordion-heading').find('.accordion-toggle').addClass('active');
-            if(e.type == 'hide')
-                $(this).find('.accordion-toggle').not($target).removeClass('active');
-      });
-      
-  })(jQuery);
+   $(document).on('show.bs.collapse hide.bs.collapse', '.accordion, .accordion-inner', function (e) {
+    var $target = $(e.target)
+    $target.siblings('.accordion-heading')
+    .find('em').toggleClass(iconOpen + ' ' + iconClose);
+    if(e.type == 'show')
+      $target.prev('.accordion-heading').find('.accordion-toggle').addClass('active');
+    if(e.type == 'hide')
+      $(this).find('.accordion-toggle').not($target).removeClass('active');
+  });
+
+ })(jQuery);
 </script>
 

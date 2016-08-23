@@ -11,7 +11,7 @@
       </div>
       <% @questions.each do |question| %>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="question-spacing">
               <h3> <%= question.text %> <span class="<%= question.label %>"><%= question.required_text %></span></h3>
               <% if question.format_type === "multipleChoice" %>
@@ -35,7 +35,7 @@
                   </label>
                 </div>
               <% elsif question.format_type === "text" %>
-                <input class="form-control" type="text" placeholder="Survey recipients will write answer here.">
+                  <textarea class="form-control" type="text" placeholder="Survey recipients will write answer here."></textarea>
               <% elsif question.format_type === "scale1To10" %>
                 <% 10.times do |count| %>
                   <label class="radio-inline">
