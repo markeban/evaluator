@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  
+  before_action :authenticate_user!, only: [:account]
+
   def index
     # render layout: "landing_page"
   end
@@ -12,5 +13,9 @@ class PagesController < ApplicationController
 
   def how_it_works
     
+  end
+
+  def account
+    @braintree_subscription = Braintree::Subscription.find(current_user.subscription.braintree_subscription_id) if pro_subscription?
   end
 end

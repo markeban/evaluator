@@ -1,15 +1,19 @@
-
-  <h2 class="mbs">New Transaction</h2>
-  <% if @result %>
-    <% @result.errors.each do |error| %>
-      <%= error.code %>
-      <%= error.message %>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <h1 class="mbs">Subscribe</h1>
+    <% if @result %>
+      <% @result.errors.each do |error| %>
+        <%= error.code %>
+        <%= error.message %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <%= form_tag subscriptions_path do %>
-  <%= render 'customer_form' unless current_user.has_payment_info? %>
-    <p>Please enter your payment details:</p>
-    <div id="dropin"></div>
-    <%=submit_tag "Order subscription" %>
-  <%end%>
+    <%= form_tag subscriptions_path do %>
+    <%= render 'customer_form' unless current_user.has_payment_info? %>
+      <p>Please enter your payment details:</p>
+      <div id="dropin"></div>
+      <%=submit_tag "Order subscription" %>
+    <%end%>
+  </div>
+</div>

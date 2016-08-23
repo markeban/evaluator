@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-4">
+    <h1>Account</h1>
+    <ul class="nav-pills custom-pills">
+      <li role="presentation" class="<%= "active" unless params[:billing] %>"><a data-toggle="tab" href="#profile">Profile</a></li>
+      <li role="presentation" class="<%= params[:billing] %>"><a data-toggle="tab" href="#billing">Billing</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="profile" class="tab-pane <%= "active" unless params[:billing] %>">
+        <table class="table table-borderless">
+          <tr>
+            <td class="bold">First Name</td>
+            <td><%= current_user.first_name %> <%= link_to "(Edit)", "/users/edit" %></td>
+          </tr>
+          <tr>
+            <td class="bold">Last Name</td>
+            <td><%= current_user.last_name %> <%= link_to "(Edit)", "/users/edit" %></td>
+          </tr>
+          <tr>
+            <td class="bold">Email</td>
+            <td><%= current_user.email %></td>
+          </tr>
+        </table>
+        
+      </div>
+      <div id="billing" class="tab-pane <%= params[:billing] %>">
+        <% if pro_subscription? %>
+          <table class="table table-borderless">
+            <tr>
+              <td class="bold">Price Per Month</td>
+              <td><%= number_to_currency(@braintree_subscription.next_billing_period_amount) %></td>
+            </tr>
+            <tr>
+              <td class="bold">Next Billing Date</td>
+              <td><%= @braintree_subscription.next_billing_date %></td>
+            </tr>
+          </table>
+          <%= link_to "Cancel Subscription", "/subscriptions/#{current_user.subscription.id}", method: :delete %>
+        <% else  %>
+          <p>You're currently using the free version. <%= link_to "Click here", "/subscriptions/new" %> to upgrade to Pro.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

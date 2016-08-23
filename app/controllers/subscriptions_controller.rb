@@ -17,11 +17,16 @@ class SubscriptionsController < ApplicationController
     else
       result = Braintree::Subscription.create(payment_method_nonce: params[:payment_method_nonce], plan_id: "m34w")
     end
-    # binding.pry
     if result.success?
-      @subscription = Subscription.create(user_id: current_user.id, braintree_customer_id: result.subscription.transactions[0].customer_details.id, braintree_subscription_id: result.subscription.id) unless current_user.has_payment_info?
-      flash[:alert] = "Subscription successful!"
-      redirect_to "/subscriptions/#{@subscription.id}"
+      if current_user.has_payment_info?
+        @subscription = Subscription.find(current_user.subscription.id)
+        @subscription.update(braintree_subscription_id: result.subscription.id)
+      else
+      @subscription = Subscription.create(user_id: current_user.id, braintree_customer_id: result.subscription.transactions[0].customer_details.id, braintree_subscription_id: result.subscription.id)
+      end
+      @subscription.update(active: true)
+      flash[:success] = "Subscription successful!"
+      redirect_to "/account?billing=active"
     else
      flash[:alert] = "Something went wrong while processing your transaction. Please try again!"
      gon.client_token = generate_client_token
@@ -34,11 +39,24 @@ class SubscriptionsController < ApplicationController
     @braintree = Braintree::Subscription.find(@subscription.braintree_subscription_id)
   end
 
+  def destroy
+    subscription = Subscription.find(params[:id])
+    result = Braintree::Subscription.cancel(subscription.braintree_subscription_id)
+    if result.success?
+      subscription.update(active: false)
+      flash[:success] = "Subscription Canceled"
+      redirect_to "/account?billing=active"
+    else
+      flash[:danger] = "Subscription NOT Canceled"
+      redirect_to "/account?billing=active"
+    end
+  end
+
   private
 
   def generate_client_token
     if current_user.has_payment_info?
-     Braintree::ClientToken.generate(customer_id: current_user.braintree_customer_id)
+     Braintree::ClientToken.generate(customer_id: current_user.subscription.braintree_customer_id)
     else
      Braintree::ClientToken.generate
     end

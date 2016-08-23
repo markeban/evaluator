@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   root 'pages#index'
+  get 'account', to: 'pages#account'
   get '/pricing', to: 'pages#pricing'
   get '/how_it_works', to: 'pages#how_it_works'
   devise_for :users
   resources :evaluations
   resources :teachers
   resources :answers
-  resources :subscriptions, only: [:new, :create, :show]
+  resources :subscriptions, only: [:new, :create, :show, :destroy]
   get '/respondents/unsubscribe/:signature' => 'respondents#unsubscribe', as: 'unsubscribe'
   patch '/respondents/:signature', to: 'respondents#update'
   resources :templates do

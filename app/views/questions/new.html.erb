@@ -2,7 +2,7 @@
 
   <div ng-controller="addQuestionCtrl" ng-init="setTemplateId(<%= @template.id %>)">
 
-    <h1>Template: <%= @template.name %> </h1>
+   
 
     
 
@@ -11,6 +11,7 @@
                 <div class="row">
                   <div class="col-md-2"></div>
                    <div class="col-md-8">
+                    <h1>Template: <%= @template.name %> </h1>
                       <form role="form">
                       <fieldset>
                        <legend >Question: {{$index + 1}}</legend>

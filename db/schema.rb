@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822072323) do
+ActiveRecord::Schema.define(version: 20160823223238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20160822072323) do
     t.datetime "updated_at"
     t.integer  "braintree_customer_id"
     t.string   "braintree_subscription_id"
+    t.boolean  "active"
   end
 
   create_table "teachers", force: :cascade do |t|

@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Instructor Evals</title>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
   <%= include_gon %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -45,7 +46,7 @@
               <% if current_user %>
                 <li><%= link_to "Send Survey", "/evaluations/new", class: "smooth-scroll" %></li>
                 <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
-                <li><%= link_to "Account", "/users/edit"  %></li>
+                <li><%= link_to "Account", "/account"  %></li>
                 <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
               <% else %>
                 <li><%= link_to "How it Works", "/how_it_works" %></li>
