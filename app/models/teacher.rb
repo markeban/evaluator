@@ -80,20 +80,24 @@ class Teacher < ActiveRecord::Base
     if questions.first[:question].any?
       table_format = get_table_format(questions)
       remapped_questions = []
-      questions.each_with_index do |evaluation, question_index|
-        points_across_questions = []
-        evaluation[:scores][question_index].each_with_index do |choice, score_set_index|
-          scores_grouped = []
-          questions_iterated = 0
-          questions.length.times do
-            scores_grouped << questions[questions_iterated][:scores][question_index][score_set_index][:y]
-            questions_iterated += 1
+      question_index = 0
+      while question_index < questions.first[:question].length 
+        questions.each do |evaluation|
+          points_across_questions = []
+          evaluation[:scores][question_index].each_with_index do |choice, score_set_index|
+            scores_grouped = []
+            questions_iterated = 0
+            questions.length.times do
+              scores_grouped << questions[questions_iterated][:scores][question_index][score_set_index][:y]
+              questions_iterated += 1
+            end
+            points_across_questions << {choice: questions.first[:scores][question_index][score_set_index][:name], scores: scores_grouped}
           end
-          points_across_questions << {choice: questions.first[:scores][question_index][score_set_index][:name], scores: scores_grouped}
+          remapped_questions << {question: evaluation[:question][question_index] , data: points_across_questions}
         end
-        remapped_questions << {question: evaluation[:question][question_index] , data: points_across_questions}
+        question_index += 1
       end
-      {teacher: evaluations.first.teacher.name, chart: remapped_questions, table: table_format}
+      return {teacher: evaluations.first.teacher.name, chart: remapped_questions, table: table_format}
     else
       return nil
     end

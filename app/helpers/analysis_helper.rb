@@ -20,24 +20,32 @@ module AnalysisHelper
 
   def multiple_choice_table_for_template(instructors)
     questions = []
-    instructors.each_with_index do |instructor, index|
-      instructors_realigned = {question: instructor[:table][index][:question]}
-      instructors_realigned[:teachers] = instructors.map do |instructor| 
-        {name: instructor[:teacher], scores: instructor[:table][index][:scores]}
+    index = 0
+    while index < instructors.first[:table].length 
+      instructors.each do |instructor|
+        instructors_realigned = {question: instructor[:table][index][:question]}
+        instructors_realigned[:teachers] = instructors.map do |instructor| 
+          {name: instructor[:teacher], scores: instructor[:table][index][:scores]}
+        end
+        questions << instructors_realigned
       end
-      questions << instructors_realigned
+      index += 1
     end
     return questions
   end
 
   def texts_table_for_template(instructors)
     questions = []
-    instructors.each_with_index do |instructor, index|
-      instructors_realigned = {question: instructor[:texts][index][:question]}
-      instructors_realigned[:teachers] = instructors.map do |instructor| 
-        {name: instructor[:teacher], texts: instructor[:texts][index][:different_dates]}
+    index = 0
+    while index < instructors.first[:texts].length 
+      instructors.each do |instructor|
+        instructors_realigned = {question: instructor[:texts][index][:question]}
+        instructors_realigned[:teachers] = instructors.map do |instructor| 
+          {name: instructor[:teacher], texts: instructor[:texts][index][:different_dates]}
+        end
+        questions << instructors_realigned
       end
-      questions << instructors_realigned
+      index += 1
     end
     return questions
   end
