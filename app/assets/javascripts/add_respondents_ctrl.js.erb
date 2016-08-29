@@ -55,14 +55,14 @@
     };
 
     $scope.sendEvaluation = function () {
-      var emailContents = {subject: scope.subject, message: scope.message};
+      var emailContents = {subject: $scope.subject, message: $scope.message};
       $http.patch('/api/v1/evaluations/' + $scope.evaluation_id, {email_contents: emailContents}).then(function(response) {
         $scope.respondents = response.data;
       });
     }
     
 
-    window.scope = $scope;
+    window.$scope = $scope;
 
   }]);
 }());

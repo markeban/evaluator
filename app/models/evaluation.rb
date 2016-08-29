@@ -78,17 +78,17 @@ class Evaluation < ActiveRecord::Base
   def multiple_choice_calculations
     multiple_choice_submissions = self.submissions
     @questions_array_multiple_choice = []
-      @percentages_for_questions_multiple_choice = []
-      self.template.questions.where(:format_type => "multipleChoice").each do |question| 
-        @questions_array_multiple_choice << question.text
-        answers_multiple_choice = self.answers.where(:question_id => question.id).map(&:answer)
-        each_question = []
-        question.question_options.each do |option|
-          each_question << {name: option.text, y: ((answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
-            .round(2))}
-        end
-        @percentages_for_questions_multiple_choice << each_question
+    @percentages_for_questions_multiple_choice = []
+    self.template.questions.where(:format_type => "multipleChoice").each do |question| 
+      @questions_array_multiple_choice << question.text
+      answers_multiple_choice = self.answers.where(:question_id => question.id).map(&:answer)
+      each_question = []
+      question.question_options.each do |option|
+        each_question << {name: option.text, y: ((answers_multiple_choice.count(option.text).to_f / answers_multiple_choice.length)
+          .round(2))}
       end
+      @percentages_for_questions_multiple_choice << each_question
+    end
     return [@questions_array_multiple_choice, @percentages_for_questions_multiple_choice, multiple_choice_submissions]
   end
 

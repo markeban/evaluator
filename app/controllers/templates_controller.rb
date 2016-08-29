@@ -10,7 +10,6 @@ class TemplatesController < ApplicationController
   def create
     @template = current_user.templates.new(template_params)
     if @template.save
-      flash[:success] = "Template added successfully"
       redirect_to new_template_question_path(@template)
     else
       render 'new'

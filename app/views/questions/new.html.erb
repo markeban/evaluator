@@ -7,11 +7,11 @@
     
 
 
-              <div ng-repeat="question in questions">
-                <div class="row">
-                  <div class="col-md-2"></div>
-                   <div class="col-md-8">
-                    <h1>Template: <%= @template.name %> </h1>
+              <div class="row">
+                <div class="col-md-2"></div>
+                 <div class="col-md-8">
+                  <h1>Template: <%= @template.name %> </h1>
+                    <div ng-repeat="question in questions">
                       <form role="form">
                       <fieldset>
                        <legend >Question: {{$index + 1}}</legend>
@@ -46,13 +46,13 @@
                       </fieldset>
                       </form>
                       <button ng-click="addQuestion(templateId)" class="btn btn-primary add-question">Add Question</button>
+                    </div>
                   </div>
                 <div class="col-md-2"></div>
             
 
               </div>
 
-            </div>
 
 
 
