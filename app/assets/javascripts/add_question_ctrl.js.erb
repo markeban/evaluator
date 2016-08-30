@@ -6,6 +6,7 @@
     $scope.questions = [];
     $scope.questionsToDelete = [];
     $scope.questionOptionsToDelete = [];
+    $scope.questionsInErrors = [];
 
 
 
@@ -24,7 +25,7 @@
 
 
     $scope.addQuestion = function(templateId) {
-      var question = { text: "", required: "", format_type: "", template_id: templateId};
+      var question = { text: "", required: true, format_type: "", template_id: templateId};
 
       $scope.questions.push(question);
     };
@@ -56,16 +57,18 @@
           $http.post('/api/v1/questions/batch_destroy.json', {questions: $scope.questionsToDelete }).then(function(response) {
             if ($scope.questionOptionsToDelete[0]) {
               $http.post('/api/v1/question_options/batch_destroy.json', {options: $scope.questionOptionsToDelete }).then(function(response) {
-                window.location.assign('http://localhost:3000/templates/' + templateId + '/questions');
+                window.location.assign('<%= ENV['DOMAIN'] %>templates/' + templateId + '/questions');
               }, function (error) {
                 $scope.deleteOptionErrors = error.data.errors;
               });
+            } else {
+              window.location.assign('<%= ENV['DOMAIN'] %>templates/' + templateId + '/questions');
             }
           }, function (error) {
             $scope.deleteErrors = error.data.errors;
           }); 
         } else {
-          window.location.assign('http://localhost:3000/templates/' + templateId + '/questions');
+          window.location.assign('<%= ENV['DOMAIN'] %>templates/' + templateId + '/questions');
         }
       }, function (error) {
         $scope.questionErrors = error.data.errors;

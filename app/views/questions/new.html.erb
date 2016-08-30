@@ -11,6 +11,7 @@
                 <div class="col-md-2"></div>
                  <div class="col-md-8">
                   <h1>Template: <%= @template.name %> </h1>
+                    <div ng-repeat="error in questionErrors track by $index"><div class="strong">Question {{error}}</div></div>
                     <div ng-repeat="question in questions">
                       <form role="form">
                       <fieldset>
@@ -26,21 +27,24 @@
                         </div>
                         <div class="form-group" ng-if="question.format_type">
                           <label for="question_input">Question:</label>
-                          <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here">
+                          <input ng-model="question.text" type="text" class="form-control" id="question_input" placeholder="Write question here" required>
                         </div>
                         <div class="form-group" ng-repeat="option in question.options track by $index" ng-if="question.format_type.indexOf('multipleChoice') !== -1">
                           <label for="option_input">Add an option:</label>
                           <input ng-model="option.text" type="text" class="form-control" id="option_input">
                         </div>
 
-                      <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-default btn-sm">Add Option</button>
+                      <button ng-click="addOption(question)" ng-if="question.format_type.indexOf('multipleChoice') !== -1" type="button" class="btn btn-success btn-sm">Add Option</button>
                       <button ng-click="removeOption(question)" ng-if="question.options" type="button" class="btn btn-warning btn-sm">Remove Option</button>
 
 
                       <div class="checkbox">
-                        <label>
-                          <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required:
+                        <label ng-if="question.format_type === 'text' && question">
+                          <input ng-model="question.required" type="checkbox" ng-model="question.required"> Required
                         </label>
+                        <div ng-if="question.format_type !== 'text' && question">
+                          Respondents Must Submit to Quantitative Questions
+                        </div>
                         <button ng-click="deleteQuestion(question)" type="button" class="btn btn-danger pull-right">Delete This Question</button>
                       </div>
                       </fieldset>

@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :restrict_current_user_template!
+  before_action :restrict_current_user_template!, except: [:batch_destroy]
 
   def new
     @template = Template.find_by(:id => params[:template_id])
@@ -18,38 +18,43 @@ class Api::V1::QuestionsController < ApplicationController
 
   def batch_create
     @questions = []
+    errors = []
     params[:questions].each do |question|
       if question[:id]
-        new_question = Question.find_by(:id => question[:id])
-        new_question.update(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+        question = Question.find_by(:id => question[:id])
+        question.assign_attributes(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
       else
-        new_question = Question.create(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+        question = Question.new(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
       end
-      if question[:options]
-        question[:options].each do |option|
-          if option[:id]
-            existing_option = QuestionOption.find_by(:id => option[:id])
-            existing_option.update(:text => option[:text])
-          else
-            new_question.question_options.create(:text => option[:text])
+      if question.save
+        if question[:options]
+          question[:options].each do |option|
+            if option[:id]
+              existing_option = QuestionOption.find_by(:id => option[:id])
+              existing_option.update(:text => option[:text])
+            else
+              question.question_options.create(:text => option[:text])
+            end
           end
         end
+      else
+        errors << question.errors.full_messages
       end
-      @questions << new_question
+      @questions << question
     end
+    errors.empty? ? @questions : (render json: { errors: errors.flatten }, status: 422)
   end
 
   def batch_destroy
-    if params[:questions]
+    if params[:questions] && restrict_current_user_template!
       params[:questions].each do |question|
         question = Question.find_by(:id => question[:id])
-        puts "question below"
-        p question
         if question
-          "question isn't nil"
           question.destroy
         end
       end
+    else
+      render json: {message: "no questions to destroy"}
     end
   end
 

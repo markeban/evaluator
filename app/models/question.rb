@@ -4,6 +4,8 @@ class Question < ActiveRecord::Base
   has_many :submissions, :through => :answers
   has_many :question_options, :dependent => :destroy
 
+  validates :text, presence: true
+
 
     def format_type_text
     if self.format_type == "text"
