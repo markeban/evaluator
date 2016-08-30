@@ -2,8 +2,8 @@ class Template < ActiveRecord::Base
   include HumanTime
 
   belongs_to :user
-  has_many :questions
-  has_many :evaluations
+  has_many :questions, :dependent => :destroy
+  has_many :evaluations, :dependent => :destroy
   has_many :submissions, -> { order(:updated_at) }, through: :evaluations
   has_many :teachers, -> { distinct }, :through => :evaluations
   has_many :answers, :through => :questions

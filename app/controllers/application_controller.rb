@@ -71,6 +71,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def restrict_current_user_question_option!(option)
+    @question_option = QuestionOption.find_by(:id => option[:id])
+    if current_user.id == @question_option.question.template.user.id
+      return @question_option
+    else
+      flash[:danger] = "You don't have access to that particular page."
+      redirect_to "/"
+    end
+  end
+
   protected
 
   # Override Rails CSRF token requests (w/Angular)

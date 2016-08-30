@@ -45,7 +45,7 @@ h5 {
 
 .alert-dismissible {
   position: fixed;
-  top: 65px;
+  top: 0px;
   z-index: 1000;
   width: 100%;
 }

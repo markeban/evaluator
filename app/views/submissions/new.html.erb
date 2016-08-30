@@ -17,28 +17,28 @@
                 <span class="panel-title"> <%= answer.object.question.text %></span><span class="pull-right"><%= required?(answer.object.question).html_safe %></span>
               </div>
               <div class="panel-body">
-              <% if answer.object.question.format_type== "text" %>  
-            
-                 <%= answer.text_area :answer, required: answer.object.question.required %>
-           
-              <% elsif answer.object.question.format_type == "scale1To10" %>
-                <%= answer.form_group :answer do %>
-                  <% 10.times do |count| %>
-                    <%= answer.radio_button :answer, (count+1).to_s, label: (count+1).to_s, inline: true, required: answer.object.question.required %>
-                  <% end %>  
-                <% end %> 
-              <% elsif answer.object.question.format_type == "multipleChoice" %>
-                <%= answer.form_group :answer do %>
-                  <% answer.object.question.question_options.each do |option| %>
-                    <%= answer.radio_button :answer, option.text, label: option.text, inline: true, required: answer.object.question.required %>
+                <% if answer.object.question.format_type== "text" %>  
+              
+                   <%= answer.text_area :answer, required: answer.object.question.required, class: "custom-textarea" %>
+             
+                <% elsif answer.object.question.format_type == "scale1To10" %>
+                  <%= answer.form_group :answer do %>
+                    <% 10.times do |count| %>
+                      <%= answer.radio_button :answer, (count+1).to_s, label: (count+1).to_s, inline: true, required: answer.object.question.required %>
+                    <% end %>  
+                  <% end %> 
+                <% elsif answer.object.question.format_type == "multipleChoice" %>
+                  <%= answer.form_group :answer do %>
+                    <% answer.object.question.question_options.each do |option| %>
+                      <%= answer.radio_button :answer, option.text, label: option.text, inline: true, required: answer.object.question.required %>
+                    <% end %>
+                  <% end %> 
+                <% elsif answer.object.question.format_type == "boolean" %>
+                  <%= answer.form_group :answer do %>
+                    <%= answer.radio_button :answer, 1, label: "yes", inline: true, required: answer.object.question.required %>
+                    <%= answer.radio_button :answer, 0, label: "no", inline: true %>
                   <% end %>
-                <% end %> 
-              <% elsif answer.object.question.format_type == "boolean" %>
-                <%= answer.form_group :answer do %>
-                  <%= answer.radio_button :answer, 1, label: "yes", inline: true, required: answer.object.question.required %>
-                  <%= answer.radio_button :answer, 0, label: "no", inline: true %>
                 <% end %>
-              <% end %>
 
               </div>
             </div>

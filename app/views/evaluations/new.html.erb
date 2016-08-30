@@ -9,7 +9,7 @@
           <% if !(@template_select.to_a.empty?) %>
            <div><%= f.select :template_id, @template_select %></div>
           <% else %>
-          <p>You'll need to add an template to get started <%= link_to "here",new_template_path %>.</p>
+          <p>You'll need to add an template to get started.</p>
           <% end %>
           <div class="helper-dropdown">
             <%= link_to "Click here", new_template_path %> to add a new template.

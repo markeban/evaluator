@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'account', to: 'pages#account'
   get '/pricing', to: 'pages#pricing'
   get '/how_it_works', to: 'pages#how_it_works'
-  devise_for :users
+  devise_for :users, controllers: {registrations: 'users/registrations'}
   resources :evaluations
   resources :teachers
   resources :answers

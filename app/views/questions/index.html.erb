@@ -5,53 +5,56 @@
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">Template: <%= @template.name %></h2>
-      </div>
+    
+      <h2>Template: <%= @template.name %></h2>
+    
       <% @questions.each do |question| %>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="question-spacing">
-              <h3> <%= question.text %> <span class="<%= question.label %>"><%= question.required_text %></span></h3>
-              <% if question.format_type === "multipleChoice" %>
-                <% question.question_options.each do |option| %>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
-                      <%= option.text %>
-                    </label>
-                  </div>
-                <% end %>
-              <% elsif question.format_type === "boolean" %>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="yesNo" id="yes" value="yes" checked>
-                    Yes
-                  </label>
-                  <label>
-                    <input type="radio" name="yesNo" id="no" value="no" checked>
-                    No
-                  </label>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <%= question.text %> <span class="pull-right <%= question.label %>"><%= question.required_text %></span>
                 </div>
-              <% elsif question.format_type === "text" %>
-                  <textarea class="form-control" type="text" placeholder="Survey recipients will write answer here."></textarea>
-              <% elsif question.format_type === "scale1To10" %>
-                <% 10.times do |count| %>
-                  <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
-                  </label>
-                <% end %>
-              <% end %>
-            </div>
-          </div>      
-        </div>
-    <% end %>
-    </div>
+                <div class="template-view">
+                  <% if question.format_type === "multipleChoice" %>
+                    <% question.question_options.each do |option| %>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="multipleChoice" id="<%= option.text %>" value="<%= option.text %>" checked>
+                          <%= option.text %>
+                        </label>
+                      </div>
+                    <% end %>
+                  <% elsif question.format_type === "boolean" %>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="yesNo" id="yes" value="yes" checked>
+                        Yes
+                      </label>
+                      <label>
+                        <input type="radio" name="yesNo" id="no" value="no" checked>
+                        No
+                      </label>
+                    </div>
+                  <% elsif question.format_type === "text" %>
+                      <textarea class="form-control custom-textarea" type="text" placeholder="Survey recipients will write answer here."></textarea>
+                  <% elsif question.format_type === "scale1To10" %>
+                    <% 10.times do |count| %>
+                      <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<%= count + 1 %>"> <%= count + 1 %>
+                      </label>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+      <% end %>
+  
+   
     <div>
       <a href="<%= new_evaluation_path %>"><button type="button" class="btn btn-success btn-lg" >Complete Template</button></a>
     </div>
     <p class="help-block"><span class ="important">Make Sure this is exactly how you want the template to look.</span><br> After clicking "Modify Template" you won't be able to change it, so you'll be able to use it for multiple evaluations.<br><%= link_to "Click here", new_template_question_path(@template) %> to go back and modify the template before continuing.</p>
+
+
   </div>
 </div>
 

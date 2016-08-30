@@ -21,26 +21,26 @@ class Api::V1::QuestionsController < ApplicationController
     errors = []
     params[:questions].each do |question|
       if question[:id]
-        question = Question.find_by(:id => question[:id])
-        question.assign_attributes(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+        question_object = Question.find_by(:id => question[:id])
+        question_object.assign_attributes(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
       else
-        question = Question.new(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
+        question_object = Question.new(:text => question[:text], :template_id => question[:template_id], :required => question[:required], :format_type => question[:format_type])
       end
-      if question.save
-        if question[:options]
-          question[:options].each do |option|
-            if option[:id]
-              existing_option = QuestionOption.find_by(:id => option[:id])
-              existing_option.update(:text => option[:text])
-            else
-              question.question_options.create(:text => option[:text])
-            end
+      if question_object.save
+        @questions << question_object
+      else
+        errors << question_object.errors.full_messages
+      end
+      if question[:options]
+        question[:options].each do |option|
+          if option[:id]
+            existing_option = QuestionOption.find_by(:id => option[:id])
+            existing_option.update(:text => option[:text])
+          else
+            question_object.question_options.create(:text => option[:text])
           end
         end
-      else
-        errors << question.errors.full_messages
       end
-      @questions << question
     end
     errors.empty? ? @questions : (render json: { errors: errors.flatten }, status: 422)
   end
