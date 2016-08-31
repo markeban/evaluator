@@ -4,11 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   after_action :set_csrf_cookie_for_ng
   before_action :configure_permitted_parameters, if: :devise_controller?
-  helper_method :human_month_day_year_time, :human_boolean, :pro_subscription?
+  helper_method :human_month_day_year_time, :human_boolean
 
-  def pro_subscription?
-    current_user.subscription && current_user.subscription.active
-  end
   
   def after_sign_in_path_for(resource)
     "/analysis"

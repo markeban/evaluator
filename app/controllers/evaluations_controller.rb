@@ -27,7 +27,6 @@ class EvaluationsController < ApplicationController
       end while Evaluation.find_by(:url => @evaluation.url) # or (url: eval_link)
 
       if @evaluation.save
-        flash[:success] = "Evaluation created successfully"
         redirect_to evaluation_path(@evaluation)
       else
         render 'new'

@@ -8,113 +8,133 @@
 </div>    
 <div class="row">
   <div class="col-md-2"></div>
-  <div class="col-md-8 first-level">
-    <div class="row">
-      <div class="col-md-4 accordion-title">
-        Template > Instructor > Survey
+  <% if @templates.map(&:evaluations)[0].any? %>
+    <div class="col-md-8 first-level">
+      <div class="row">
+        <div class="col-md-4 accordion-title">
+          Template > Instructor > Survey
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
       </div>
-      <div class="col-md-4">
-      </div>
-      <div class="col-md-4">
-      </div>
-    </div>
-    <% @templates.each do |template| %>
-      <div class="accordion" id="accordion-<%= template.id %>-template">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-template" href="#collapse-<%= template.id %>-template">
-              <div class="row">
-                <div class="col-md-4">
-                  <em class="<%= template.evaluations.any? ? "icon-fixed-width fa fa-plus" : "no-accordion" %> top-level-accordion"></em><%= template.name %>
-                </div>
-                <div class="col-md-4">
-                  Last Submission: <%= template.last_submission %>
-                </div>
-                <div class="col-md-4">
-                  <%= template.evaluations.count %> Survey(s)
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <% if template.evaluations.any? %>
-            <div id="collapse-<%= template.id %>-template" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <div class="row second-level">
+      <% @templates.each do |template| %>
+        <div class="accordion" id="accordion-<%= template.id %>-template">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-template" href="#collapse-<%= template.id %>-template">
+                <div class="row">
                   <div class="col-md-4">
-                    <div class="custom-accordion all-results">
-                      <%= link_to "All Results", "/analysis/templates/#{template.id}" %>
-                    </div>
+                    <em class="<%= template.evaluations.any? ? "icon-fixed-width fa fa-plus" : "no-accordion" %> top-level-accordion"></em><%= template.name %>
                   </div>
                   <div class="col-md-4">
-
+                    Last Submission: <%= template.last_submission %>
                   </div>
                   <div class="col-md-4">
-
+                    <%= template.evaluations.count %> Survey(s)
                   </div>
                 </div>
-                <% template.teachers.each do |teacher| %>
-                  <!-- Here we insert another nested accordion -->
-                  <div class="accordion" id="accordion-<%= template.id %>-teacher-<%= teacher.id %>">
+              </a>
+            </div>
 
-                    <div class="accordion-group">
-                      <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
-                          <div class="row second-level">
-                            <div class="col-md-4">
-                              <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.name %>
-                            </div>
-                            <div class="col-md-4">
+            <% if template.evaluations.any? %>
+              <div id="collapse-<%= template.id %>-template" class="accordion-body collapse">
+                <div class="accordion-inner">
 
-                            </div>
-                            <div class="col-md-4">
-
-                            </div>
-                          </div>
-                        </a>
+                  <% if template.has_multiple_submissions_over_muliple_teachers %>
+                    <div class="row second-level">
+                      <div class="custom-accordion pull-right">
+                        <% if current_user.pro %>
+                          <%= button_to "Compare Results", "/analysis/templates/#{template.id}", class: "btn btn-my-custom btn-sm", method: :get %>
+                        <% else %>
+                          <%= link_to "Upgrade to Pro to Compare Surveyees", "/subscriptions/new" %>
+                        <% end %>
                       </div>
-                      <div id="collapse-<%= template.id %>-teacher-<%= teacher.id %>" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                          <div class="row third-level">
-                            <div class="col-md-4">
-                              <div class="middle-level-accordion all-results"> <%= link_to "All Results", "/analysis/instructor_only/templates/#{template.id}?teacher_id=#{teacher.id}" %>
+                    </div>
+                  <% end %>
+
+
+                  <% template.teachers.each do |teacher| %>
+                    <!-- Here we insert another nested accordion -->
+                    <div class="accordion" id="accordion-<%= template.id %>-teacher-<%= teacher.id %>">
+
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-<%= template.id %>-teacher-<%= teacher.id %>" href="#collapse-<%= template.id %>-teacher-<%= teacher.id %>">
+                            <div class="row second-level">
+                              <div class="col-md-4">
+                                <em class="<%= teacher.evaluations.where(template_id: template.id).any? ? "icon-fixed-width fa fa-plus" : "no-accordion-second-level" %> custom-accordion"></em><%= teacher.name %>
+                              </div>
+                              <div class="col-md-4">
+
+                              </div>
+                              <div class="col-md-4">
+
                               </div>
                             </div>
-                            <div class="col-md-4">
+                          </a>
+                        </div>
+                        <div id="collapse-<%= template.id %>-teacher-<%= teacher.id %>" class="accordion-body collapse">
+                          <div class="accordion-inner">
 
-                            </div>
-                            <div class="col-md-4">
+                            <% if teacher.has_multiple_submissions_over_muliple_evals(template.id) %>              
+                              <div class="row third-level">
+                                  <div class="middle-level-accordion pull-right"> <%= button_to "Compare Results", "/analysis/instructor_only/templates/#{template.id}", class: "btn btn-my-custom btn-sm", method: :get, params: {teacher_id: teacher.id} %>
+                                  </div>
+                              </div>
+                            <% end %>
 
-                            </div>
+
+                            <% template.evaluations.any? && teacher.evaluations.where(template_id: template.id).each do |evaluation| %>
+                              <div class="row third-level">
+                                <% if evaluation.submissions.any? %>
+                                  <a href="/analysis/instructor_only/<%=evaluation.id %>">
+                                    <div class="col-md-4">
+                                      <div class="middle-level-accordion">
+                                        &#10551;Created: <%= human_month_day_year_time(evaluation.created_at) %>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      Last Submission: <%= human_month_day_year_time(evaluation.submissions.last.created_at) %>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <%= evaluation.submissions.count %> Submission(s)
+                                    </div>
+                                  </a>
+                                <% else %>
+                                  <div class="col-md-4">
+                                    <div class="middle-level-accordion">
+                                      &#10551;<%= human_month_day_year_time(evaluation.created_at) %>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    N/A
+                                  </div>
+                                  <div class="col-md-4">
+                                    None Submitted
+                                  </div>
+                                <% end %>
+                              </div>
+                            <% end %>
                           </div>
-                          <% template.evaluations.any? && teacher.evaluations.where(template_id: template.id).each do |evaluation| %>
-                            <div class="row third-level">
-                              <div class="col-md-4">
-                                <div class="middle-level-accordion">
-                                  &#10551;<%= link_to "Specific Survey", "/analysis/instructor_only/#{evaluation.id}" %>
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                Last Submission: <%= human_month_day_year_time(evaluation.updated_at) %>
-                              </div>
-                              <div class="col-md-4">
-                                <%= evaluation.submissions.count %> Submission(s)
-                              </div>
-                            </div>
-                          <% end %>
                         </div>
                       </div>
                     </div>
-                  </div>
-                <% end %>         
-                <!-- Inner accordion ends here -->
+                  <% end %>         
+                  <!-- Inner accordion ends here -->
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div> 
+      <% end %>
+    </div>
+  <% else %>
+    <div class="col-md-8">
+      <p>You haven't created any surveys. <%= link_to "Click here", "/evaluations/new" %> to get started.</p>
+    </div>
+  <% end %>
 </div>
 
 <script type="text/javascript">

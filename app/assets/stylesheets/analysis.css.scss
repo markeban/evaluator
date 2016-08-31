@@ -83,4 +83,20 @@
 .text-one-instructor li { background: #e7f2fe; }
 .text-one-instructor li:nth-child(odd) { background: #cfe6fc; }
 
-
+.btn-my-custom, input[type="button"], input[type="submit"], input[type="reset"], button {
+  font-family:Montserrat, Arial, sans-serif;
+  color:#FFF !important;
+  font-size:1.0em;
+  line-height:1.0em;
+  font-weight:1.0em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  background-color:#50a2f6;
+  padding:4px 4px 4px 4px;
+  border:0px;
+  border-bottom:3px solid #4395e8;
+  outline:none !important;
+  border-radius:3px;
+  -webkit-transition:background-color .2s ease, color .2s ease, border .2s ease;
+  transition:background-color .2s ease, color .2s ease, border .2s ease;
+}

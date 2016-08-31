@@ -24,7 +24,7 @@ class SubscriptionsController < ApplicationController
       else
       @subscription = Subscription.create(user_id: current_user.id, braintree_customer_id: result.subscription.transactions[0].customer_details.id, braintree_subscription_id: result.subscription.id)
       end
-      @subscription.update(active: true)
+      @subscription.user.update(pro: true)
       flash[:success] = "Subscription successful!"
       redirect_to "/account?billing=active"
     else
@@ -43,7 +43,7 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.find(params[:id])
     result = Braintree::Subscription.cancel(subscription.braintree_subscription_id)
     if result.success?
-      subscription.update(active: false)
+      subscription.user.update(pro: false)
       flash[:success] = "Subscription Canceled"
       redirect_to "/account?billing=active"
     else

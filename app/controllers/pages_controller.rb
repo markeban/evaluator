@@ -16,6 +16,6 @@ class PagesController < ApplicationController
   end
 
   def account
-    @braintree_subscription = Braintree::Subscription.find(current_user.subscription.braintree_subscription_id) if pro_subscription?
+    @braintree_subscription = Braintree::Subscription.find(current_user.subscription.braintree_subscription_id) if current_user.pro
   end
 end

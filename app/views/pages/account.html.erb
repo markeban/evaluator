@@ -26,7 +26,7 @@
         
       </div>
       <div id="billing" class="tab-pane <%= params[:billing] %>">
-        <% if pro_subscription? %>
+        <% if current_user.pro %>
           <table class="table table-borderless">
             <tr>
               <td class="bold">Price Per Month</td>

@@ -25,6 +25,12 @@ class Template < ActiveRecord::Base
     submissions.any? ? submissions.last.updated_at.strftime("%B %d, %Y") : "None"
   end
 
+  def has_multiple_submissions_over_muliple_teachers
+    evaluations_teachers = teachers.map{|teacher| teacher.evaluations.where(template_id: self.id)}
+    submissions_count = evaluations_teachers.select {|evaluations| evaluations.select{|evaluation| evaluation.submissions.any? }[0] }.count
+    (submissions_count > 1) ? true : false
+  end
+
   private
 
   def get_series_highcharts(all_instructors_per_template_data, type)

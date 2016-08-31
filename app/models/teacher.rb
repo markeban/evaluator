@@ -23,6 +23,13 @@ class Teacher < ActiveRecord::Base
     return instructor_data_hash
   end
 
+
+  def has_multiple_submissions_over_muliple_evals(template_id)
+    submissions_booleans = evaluations.where(template_id: template_id).map(&:submissions).map(&:any?)
+    true_booleans = submissions_booleans.select{|boolean| boolean == true}.count
+    true_booleans > 1 ? true : false
+  end
+
   private
 
   def get_urls(template)
@@ -32,9 +39,9 @@ class Teacher < ActiveRecord::Base
   def instructor_only_scale_calculations(evaluations)
     averages_of_all_questions_array_scale = []
     @evaluation_start_dates = []
-
-    questions_scale = evaluations.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
-    evaluations.each do |evaluation|
+    evals_with_submissions = evaluations.select{|evaluation| evaluation.submissions.any?}
+    questions_scale = evals_with_submissions.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
+    evals_with_submissions.each do |evaluation|
       @evaluation_start_dates << evaluation.created_at
       averages_for_questions_scale = []
       evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
