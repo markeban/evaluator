@@ -41,8 +41,7 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  database: evaluator-production
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
+  database: evaluator_production
+  username: rails
+  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
 
