@@ -10,7 +10,6 @@ class Api::V1::RespondentsController < ApplicationController
   def batch
     respondents = params[:respondents]
     @respondents = respondents.map {|respondent| create(respondent)}
-    render json: @respondents
   end
 
   def create(respondent)

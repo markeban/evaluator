@@ -34,7 +34,7 @@
             </div>
 
             <div class="respondent-form">
-              <div ng-repeat="respondent in respondents | filter:{emailed:false}">
+              <div ng-repeat="respondent in respondents track by $index | filter:{emailed:false}">
                 <form class="form-inline">
                   <i ng-click="removeRespondent(respondent)" class="fa fa-times" aria-hidden="true"></i>
                   <div class="form-group">
@@ -48,7 +48,10 @@
                   <div class="form-group">
                     <label class="sr-only" for="email">Email</label>
                     <input class="form-control" id="email" placeholder="Email" ng-model="respondent.email">
-                  </div>             
+                  </div> 
+                  <span ng-if="respondent.error_messages">
+                    {{respondent.error_messages}}
+                  </span>            
                 </form>
               </div>
               <div ng-click="addRespondentInput()">
@@ -69,7 +72,7 @@
                   <th>Date Sent</th>
                   <th>Responded?</th>
                 </tr>
-                <tr ng-repeat="respondent in respondents | filter:{emailed:true}">
+                <tr ng-repeat="respondent in respondents track by $index | filter:{emailed:true}">
                   <td>{{respondent.first_name}}</td>
                   <td>{{respondent.last_name}}</td>
                   <td>{{respondent.email}}</td>

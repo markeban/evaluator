@@ -39,15 +39,29 @@
       var unsaved_respondents = $scope.respondents.filter(function (respondent) {
         return (respondent.unsaved == true);
       });
-      $http.post('/api/v1/respondents/batch', {respondents: unsaved_respondents}).then(function(response) {
-        $scope.sendEvaluation();
+      $http.post('/api/v1/respondents/batch.json', {respondents: unsaved_respondents}).then(function(response) {
+        $scope.respondents = $scope.respondents.filter(function (respondent) {
+          return (respondent.unsaved == false);
+        }); // set $scope.respondents to only have saved respondents, then add respondents from 'batch' to get errors if any
+        $scope.respondents = $scope.respondents.concat(response.data);
+
+
+        var errors = false;
+        for (var i=0; i < response.data.length; i++) {
+          if (response.data[i].error_messages) {
+            errors = true;
+          }
+        }
+        if (errors === false) {
+          $scope.sendEvaluation();
+        }
       });
     }
 
     $scope.removeRespondent = function(respondent) {
-      if (respondent.id || respondent.unsaved) {
+      if (respondent.id) {
         $http.delete('/api/v1/respondents/' + respondent.id).then(function(response) {
-          Flash.create('info', '<strong>Respondents removed.</strong> Success', 0, {class: 'custom-class', id: 'custom-id'}, true);
+          // Flash.create('info', '<strong>Respondents removed.</strong> Success', 0, {class: 'custom-class', id: 'custom-id'}, true);
         });
       }
       var index = $scope.respondents.indexOf(respondent);
