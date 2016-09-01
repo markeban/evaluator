@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       resources :respondents
       post '/respondents/batch', to: 'respondents#batch'
       get 'evaluations/:id', to: 'evaluations#show'
-      patch 'evaluations/:id', to: 'evaluations#update'
+      patch 'evaluations/:id', to: 'evaluations#email_respondents'
       get '/evaluations/email_respondents/:id', to: 'evaluations#email_respondents'
     end
   end

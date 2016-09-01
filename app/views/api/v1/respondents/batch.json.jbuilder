@@ -12,7 +12,6 @@ json.array! @respondents.each do |respondent|
   json.unsubscribed_to_all respondent.unsubscribed_to_all
   if respondent.errors
     json.error_messages respondent.errors.full_messages
-    json.unsaved true
   else
     json.error_messages nil
   end

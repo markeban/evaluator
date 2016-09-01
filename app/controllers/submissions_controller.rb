@@ -26,7 +26,7 @@ class SubmissionsController < ApplicationController
     submission_only = submission_params.except(:respondent_id)
     @submission = Submission.new(submission_only)
     if @submission.save
-      Respondent.find(submission_id).update(responded: true) unless submission_id.blank?   
+      Respondent.find(submission_id).update_column(:responded, true) unless submission_id.blank?   
       flash[:success] = "Submission added successfully"
     end
     redirect_to '/submissions/complete'

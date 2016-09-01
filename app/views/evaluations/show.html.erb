@@ -23,34 +23,34 @@
             <div>
               <form>
                 <div class="form-group">
-                  <label for="subject">Subject</label>
+                  <label for="subject">Subject</label> <span class="error-respondent">{{evaluation.error_messages.subject.join(", ")}}</span>
                   <input class="form-control" id="subject" ng-model="evaluation.subject">
                 </div>
                 <div class="form-group">
-                  <label for="message">Message</label>
+                  <label for="message">Message</label> <span class="error-respondent">{{evaluation.error_messages.message.join(", ")}}</span>
                   <textarea class="form-control" id="message" rows="5" ng-model="evaluation.message"></textarea>
                 </div>
               </form>
             </div>
 
             <div class="respondent-form">
-              <div ng-repeat="respondent in respondents track by $index | filter:{emailed:false}">
+              <div ng-repeat="unsavedRespondent in unsavedRespondents track by $index | filter:{emailed:false}">
                 <form class="form-inline">
-                  <i ng-click="removeRespondent(respondent)" class="fa fa-times" aria-hidden="true"></i>
+                  <i ng-click="removeRespondent(unsavedRespondent)" class="fa fa-times" aria-hidden="true"></i>
                   <div class="form-group">
                     <label class="sr-only" for="firstName">First Name</label>
-                    <input class="form-control" id="firstName" placeholder="First Name" ng-model="respondent.first_name">
+                    <input class="form-control" id="firstName" placeholder="First Name" ng-model="unsavedRespondent.first_name">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="lastName">Last Name</label>
-                    <input class="form-control" id="lastName" placeholder="Last Name" ng-model="respondent.last_name">
+                    <input class="form-control" id="lastName" placeholder="Last Name" ng-model="unsavedRespondent.last_name">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="email">Email</label>
-                    <input class="form-control" id="email" placeholder="Email" ng-model="respondent.email">
+                    <input class="form-control" id="email" placeholder="Email" ng-model="unsavedRespondent.email">
                   </div> 
-                  <span ng-if="respondent.error_messages">
-                    {{respondent.error_messages}}
+                  <span ng-if="unsavedRespondent.error_messages" class="error-respondent">
+                    {{unsavedRespondent.error_messages.join(", ")}}
                   </span>            
                 </form>
               </div>
@@ -60,26 +60,27 @@
             </div>
 
             <div>
-              <button class="btn btn-primary btn-lg big-button-margin" ng-click="createRespondents()">Email Surveys</button>
+              <button class="btn" ng-click="createRespondents()">Add Respondents</button>
             </div>
-            <div ng-show="(respondents|filter:{emailed:true}).length > 0">
-              <h3>Respondents previously sent requests to take survey</h3> 
-              <table class="table table-hover" ng-show="respondents.length">
+            <div ng-show="savedRespondents.length > 0">
+              <h3>Respondents</h3> 
+              <table class="table table-hover" ng-show="savedRespondents.length">
                 <tr>
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email</th>
-                  <th>Date Sent</th>
+                  <th>Emailed?</th>
                   <th>Responded?</th>
                 </tr>
-                <tr ng-repeat="respondent in respondents track by $index | filter:{emailed:true}">
-                  <td>{{respondent.first_name}}</td>
-                  <td>{{respondent.last_name}}</td>
-                  <td>{{respondent.email}}</td>
-                  <td>{{respondent.updated_at}}</td>
-                  <td class="center_icon responded"><i class="fa fa-check-square fa-2x" aria-hidden="true" ng-show="respondent.responded"></i></td>
+                <tr ng-repeat="savedRespondent in savedRespondents track by $index">
+                  <td>{{savedRespondent.first_name}}</td>
+                  <td>{{savedRespondent.last_name}}</td>
+                  <td>{{savedRespondent.email}}</td>
+                  <td>{{savedRespondent.emailed}}</td>
+                  <td class="center_icon responded"><i class="fa fa-check-square fa-2x" aria-hidden="true" ng-show="savedRespondent.responded"></i></td>
                 </tr>
               </table>
+                <button class="btn" ng-click="sendEvaluation()">Email Respondents</button> <span class="error-respondent">{{}}</span>
             </div>
           </div>
         </div>

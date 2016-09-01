@@ -3,75 +3,53 @@
 
   angular.module("app").controller("addRespondentsCtrl", ['$scope', '$http', 'Flash', function($scope, $http, Flash) {
 
+    $scope.unsavedRespondents = [];
+    $scope.savedRespondents = [];
     $scope.respondents = [];
-    $scope.evaluation = "";
+    $scope.evaluation = {subject: "", message: ""};
 
     $scope.setup = function(evaluation_id) {
       $scope.evaluation_id = evaluation_id;
-      $http.get('/api/v1/evaluations/' + evaluation_id).then(function (response) {
+      $http.get('/api/v1/evaluations/' + evaluation_id + ".json").then(function (response) {
         $scope.evaluation = response.data;
       });
       $http.get("/api/v1/respondents?evaluation_id=" + $scope.evaluation_id).then(function (response) {
-        $scope.respondents = response.data;
+        $scope.savedRespondents = response.data;
         $scope.addRespondentInput();
       });
     };
 
-    // $scope.successAlert = function () {
-    //     var message = '<strong>Well done!</strong> You successfully read this important alert message.';
-    //     var id = Flash.create('success', message, 0, {class: 'custom-class', id: 'custom-id'}, true);
-    //     // First argument (string) is the type of the flash alert.
-    //     // Second argument (string) is the message displays in the flash alert (HTML is ok).
-    //     // Third argument (number, optional) is the duration of showing the flash. 0 to not automatically hide flash (user needs to click the cross on top-right corner).
-    //     // Fourth argument (object, optional) is the custom class and id to be added for the flash message created. 
-    //     // Fifth argument (boolean, optional) is the visibility of close button for this flash.
-    //     // Returns the unique id of flash message that can be used to call Flash.dismiss(id); to dismiss the flash message.
-    // }
-
     $scope.addRespondentInput = function() {
-      console.log("hello?");
-      var respondent = {unsaved: true, evaluation_id: $scope.evaluation_id, emailed: false};
-      $scope.respondents.push(respondent);
-      console.log($scope.respondents);
+      var unsavedRespondent = {unsaved: true, evaluation_id: $scope.evaluation_id, emailed: false};
+      $scope.unsavedRespondents.push(unsavedRespondent);
     };
 
     $scope.createRespondents = function() {
-      var unsaved_respondents = $scope.respondents.filter(function (respondent) {
-        return (respondent.unsaved == true);
-      });
-      $http.post('/api/v1/respondents/batch.json', {respondents: unsaved_respondents}).then(function(response) {
-        $scope.respondents = $scope.respondents.filter(function (respondent) {
-          return (respondent.unsaved == false);
-        }); // set $scope.respondents to only have saved respondents, then add respondents from 'batch' to get errors if any
-        $scope.respondents = $scope.respondents.concat(response.data);
-
-
-        var errors = false;
-        for (var i=0; i < response.data.length; i++) {
-          if (response.data[i].error_messages) {
-            errors = true;
+      $http.post('/api/v1/respondents/batch.json', {respondents: $scope.unsavedRespondents}).then(function(response) {
+        var returnedRespondents = response.data;
+        var unsaved = [];
+        for (var i =0; i < returnedRespondents.length; i++) {
+          if (returnedRespondents[i].id) {
+            $scope.savedRespondents.push(returnedRespondents[i]);
+          } else {
+            unsaved.push(returnedRespondents[i]);
           }
         }
-        if (errors === false) {
-          $scope.sendEvaluation();
-        }
+        $scope.unsavedRespondents = unsaved;
       });
     }
 
     $scope.removeRespondent = function(respondent) {
-      if (respondent.id) {
-        $http.delete('/api/v1/respondents/' + respondent.id).then(function(response) {
-          // Flash.create('info', '<strong>Respondents removed.</strong> Success', 0, {class: 'custom-class', id: 'custom-id'}, true);
-        });
-      }
       var index = $scope.respondents.indexOf(respondent);
       $scope.respondents.splice(index, 1);
     };
 
     $scope.sendEvaluation = function () {
-      var emailContents = {subject: $scope.subject, message: $scope.message};
-      $http.patch('/api/v1/evaluations/' + $scope.evaluation_id, {email_contents: emailContents}).then(function(response) {
-        $scope.respondents = response.data;
+      var emailContents = {subject: $scope.evaluation.subject, message: $scope.evaluation.message};
+      $http.patch('/api/v1/evaluations/' + $scope.evaluation_id + ".json", {email_contents: emailContents}).then(function(response) {
+        $scope.savedRespondents = response.data;
+      }, function (error) {
+        $scope.evaluation = error.data;
       });
     }
     

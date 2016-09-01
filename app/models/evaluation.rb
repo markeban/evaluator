@@ -7,6 +7,8 @@ class Evaluation < ActiveRecord::Base
   has_many :answers, :through => :submissions
   has_many :respondents
 
+  validates :subject, :message, presence: true, on: :update
+
   def template_position
     template = self.template
     teacher = self.teacher
@@ -106,55 +108,10 @@ class Evaluation < ActiveRecord::Base
   return @questions_answers
   end
 
-  # def instructor_only_scale_calculations
-  #   averages_of_all_questions_array_scale = []
-  #   @evaluation_start_dates = []
-
-  #   questions_scale = self.first.submissions.first.questions.where(:format_type => "scale1To10").map(&:text)
-  #   self.each do |evaluation|
-  #     @evaluation_start_dates << evaluation.created_at.strftime("%A, %b, %d %Y %l:%M %p")
-  #     averages_for_questions_scale = []
-  #     evaluation.template.questions.where(:format_type => "scale1To10").each do |question| 
-  #         answers_scale = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)
-  #         averages_for_questions_scale << (answers_scale.sum / answers_scale.count.to_f).round(1)
-  #     end
-  #     averages_of_all_questions_array_scale << averages_for_questions_scale  
-  #   end
-  #   averages_of_all_questions_array_scale_trans = averages_of_all_questions_array_scale.transpose
-  #   @averages = {}
-  #   questions_scale.each_with_index do |question, index|
-  #     @averages[question] = averages_of_all_questions_array_scale_trans[index]
-  #   end
-  #   return [@evaluation_start_dates, @averages]
-  # end
-
-  # def instructor_only_boolean_calculations
-  #   questions_boolean = self.last.submissions.first.questions.where(:format_type => "boolean").map(&:text)
-  #   averages_of_all_questions_array_boolean = []
-  #   self.each do |evaluation|
-  #     questions_array_boolean = []
-  #     averages_for_questions_boolean = []
-  #     evaluation.template.questions.where(:format_type => "boolean").each do |question|
-  #       questions_array_boolean << question.text
-  #       answers_boolean = evaluation.answers.where(:question_id => question.id).map(&:answer).map(&:to_i)
-  #       averages_for_questions_boolean << (answers_boolean.sum / answers_boolean.count.to_f).round(2)
-  #     end
-  #     averages_of_all_questions_array_boolean << averages_for_questions_boolean
-     
-
-  #   end
-  #   averages_of_all_questions_array_boolean_trans = averages_of_all_questions_array_boolean.transpose
-  #   @averages_boolean = {}
-  #   questions_boolean.each_with_index do |question, index|
-  #     @averages_boolean[question] = averages_of_all_questions_array_boolean_trans[index]
-  #   end
-  #   return @averages_boolean
-  # end
-
   def email_respondents_for_first_time
     respondents.where(emailed: false).each do |respondent|
       EvaluationMailer.email_respondent(respondent).deliver_now
-      respondent.update(emailed:true)
+      respondent.update_attribute(:emailed, true)
     end
     respondents
   end
