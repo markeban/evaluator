@@ -153,6 +153,9 @@
         chart: {
           type: 'column'
         },
+        credits: {
+          enabled: false
+        },
         title: {
           text: 'Scale of 1 to 10 Questions (Average)'
         },
@@ -189,6 +192,9 @@
       chart: {
         type: 'column'
       },
+      credits: {
+        enabled: false
+      },
       title: {
         text: ''
       },
@@ -224,6 +230,9 @@
       $('#chart-boolean').highcharts({
         chart: {
           type: 'column'
+        },
+        credits: {
+          enabled: false
         },
         title: {
           text: ''
@@ -285,6 +294,9 @@
               },
               title: {
                 text: "<%= question.html_safe %>",
+              },
+              credits: {
+                enabled: false
               },
               tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

@@ -35,14 +35,7 @@ module Evaluator
       g.fixture_replacement :factory_girl, :dir => "spec/factories"  
     end 
     
-    # config.action_mailer.delivery_method = :smtp
-    # config.action_mailer.smtp_settings = {
-    #   :authentication => :plain,
-    #   :address => "smtp.mailgun.org",
-    #   :port => 587,
-    #   :domain => "surveyblend.com",
-    #   :user_name => ENV["MAILGUN_USER_NAME"],
-    #   :password => ENV["MAILGUN_PASSWORD"]
-    # }
+    config.assets.precompile += %w( flat/html5.js )
+    config.assets.precompile += %w( flat/respond.min.js )
   end
 end

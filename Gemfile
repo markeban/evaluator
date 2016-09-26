@@ -34,7 +34,6 @@ gem 'seed_dump'
 gem 'devise'
 gem "highcharts-rails", "~> 3.0.0"
 gem "font-awesome-rails"
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

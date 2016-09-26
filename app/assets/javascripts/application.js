@@ -20,10 +20,8 @@
 //= require flat/jquery.mousewheel-3.0.6.pack
 //= require flat/jquery.placeholder.min
 //= require flat/bootstrap.min
-//= require flat/html5
 //= require flat/isotope.pkgd.min
 //= require flat/parallax.min
-//= require flat/respond.min
 //= require flat/response.min
 //= require flat/script
 //= require flat/slick.min
