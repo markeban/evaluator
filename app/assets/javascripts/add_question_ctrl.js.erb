@@ -57,18 +57,18 @@
           $http.post('/api/v1/questions/batch_destroy.json', {questions: $scope.questionsToDelete }).then(function(response) {
             if ($scope.questionOptionsToDelete[0]) {
               $http.post('/api/v1/question_options/batch_destroy.json', {options: $scope.questionOptionsToDelete }).then(function(response) {
-                window.location.href = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
+                window.location = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
               }, function (error) {
                 $scope.deleteOptionErrors = error.data.errors;
               });
             } else {
-              window.location.href = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
+              window.location = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
             }
           }, function (error) {
             $scope.deleteErrors = error.data.errors;
           }); 
         } else {
-          window.location.href = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
+          window.location = ("<%= ENV['DOMAIN'] %>templates/" + templateId + '/questions');
         }
       }, function (error) {
         $scope.questionErrors = error.data.errors;
