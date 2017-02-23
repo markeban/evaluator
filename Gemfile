@@ -54,6 +54,7 @@ group :development, :test do
   gem 'thematic'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "rails-erd"
 end
 
 group :production do
