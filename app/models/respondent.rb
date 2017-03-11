@@ -3,7 +3,7 @@ class Respondent < ActiveRecord::Base
 
   validates :email, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
-  validate :user_can_only_add_unique_emails
+  # validate :user_can_only_add_unique_emails
 
   def full_name
     "#{first_name} #{last_name}"
