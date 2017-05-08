@@ -61,6 +61,7 @@
       var emailContents = {subject: $scope.evaluation.subject, message: $scope.evaluation.message};
       $http.patch('/api/v1/evaluations/' + $scope.evaluation_id + ".json", {email_contents: emailContents}).then(function(response) {
         $scope.savedRespondents = response.data;
+        $scope.evaluation.error_messages = null;
       }, function(error) {
         $scope.evaluation = error.data;
       });

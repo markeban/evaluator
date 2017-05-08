@@ -20,7 +20,7 @@
         </div>
         <div id="send-emails" class="tab-pane">
           <div ng-controller="addRespondentsCtrl" ng-init="setup(<%= @evaluation.id %>)">
-            <div class="error-respondent" ng-model="setupError">{{setupError}}</div>
+            <div class="error-respondent">{{setupError}}</div>
             <div>
               <form>
                 <div class="form-group">
@@ -56,7 +56,7 @@
                 </form>
               </div>
               <div ng-click="addRespondentInput()">
-                <div class="error-respondent" ng-model="addRespondentError">{{error}}</div>
+                <div class="error-respondent">{{addRespondentError}}</div>
                 <i class="fa fa-plus-square" aria-hidden="true"></i> (Add Another Field)
               </div>
             </div>
