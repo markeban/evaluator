@@ -109,11 +109,12 @@ class Evaluation < ActiveRecord::Base
   end
 
   def email_respondents_for_first_time
-    respondents.where(emailed: false).each do |respondent|
+    first_time_respondents = respondents.where(emailed: false).map do |respondent|
       EvaluationMailer.email_respondent(respondent).deliver_now
       respondent.update_attribute(:emailed, true)
+      respondent
     end
-    respondents
+    first_time_respondents
   end
 
 end

@@ -55,6 +55,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem "rails-erd"
+  gem "faker"
 end
 
 group :production do

@@ -2,22 +2,33 @@
   "use strict";
 
   angular.module("app").controller("addRespondentsCtrl", ['$scope', '$http', 'Flash', function($scope, $http, Flash) {
-
-    $scope.unsavedRespondents = [];
-    $scope.savedRespondents = [];
-    $scope.respondents = [];
+    const GENERAL_ERROR = "Something went wrong; Check your Internet Connection";
+    $scope.evaluation_id, $scope.setupError, $scope.addRespondentError;
+    $scope.respondents = $scope.unsavedRespondents = $scope.savedRespondents = [];
     $scope.evaluation = {subject: "", message: ""};
 
     $scope.setup = function(evaluation_id) {
       $scope.evaluation_id = evaluation_id;
-      $http.get('/api/v1/evaluations/' + evaluation_id + ".json").then(function (response) {
+      $scope.getEvaluation();
+    };
+
+    $scope.getEvaluation = function() {
+      $http.get('/api/v1/evaluations/' + $scope.evaluation_id + ".json").then(function(response) {
         $scope.evaluation = response.data;
+        $scope.getRespondents();
+      }, function(error) {
+        $scope.setupError = GENERAL_ERROR;
       });
-      $http.get("/api/v1/respondents?evaluation_id=" + $scope.evaluation_id).then(function (response) {
+    }
+
+    $scope.getRespondents = function() {
+      $http.get("/api/v1/respondents?evaluation_id=" + $scope.evaluation_id).then(function(response) {
         $scope.savedRespondents = response.data;
         $scope.addRespondentInput();
+      }, function(error) {
+        $scope.setupError = GENERAL_ERROR;
       });
-    };
+    }
 
     $scope.addRespondentInput = function() {
       var unsavedRespondent = {unsaved: true, evaluation_id: $scope.evaluation_id, emailed: false};
@@ -36,6 +47,8 @@
           }
         }
         $scope.unsavedRespondents = unsaved;
+      }, function(error) {
+        $scope.addRespondentError = GENERAL_ERROR;
       });
     }
 
@@ -48,13 +61,12 @@
       var emailContents = {subject: $scope.evaluation.subject, message: $scope.evaluation.message};
       $http.patch('/api/v1/evaluations/' + $scope.evaluation_id + ".json", {email_contents: emailContents}).then(function(response) {
         $scope.savedRespondents = response.data;
-      }, function (error) {
+      }, function(error) {
         $scope.evaluation = error.data;
       });
     }
     
-
-    window.$scope = $scope;
+    //window.$scope = $scope;
 
   }]);
 }());

@@ -5,6 +5,5 @@ FactoryGirl.define do
     f.created_at "2014-04-18 02:23:30"
     f.updated_at "2014-04-18 02:23:30"
     f.user_id 1
-    f.description "This is the description name of the test template"
   end
 end
