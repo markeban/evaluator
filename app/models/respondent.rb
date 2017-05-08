@@ -9,7 +9,6 @@ class Respondent < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-
   def access_token
     Respondent.create_access_token(self)
   end
