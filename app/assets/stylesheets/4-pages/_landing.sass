@@ -142,7 +142,7 @@
 	.plans
 		display: flex
 		justify-content: space-around
-		padding-bottom: 50px
+		padding-bottom: 45px
 		background: white
 		.cta
 			display: flex
@@ -214,12 +214,20 @@ footer
 		justify-content: center
 		align-items: center
 		list-style: none
+		margin: 10px
 		li
-			margin-left: 15px
 			a
 				font-weight: 400
 				letter-spacing: 1.5px
 				color: $whitish
+				+transition(all 300ms)
+				margin-left: 20px
+				// padding: 20px
+
+				&:hover
+					color: white
+					font-weight: 500
+
 	.footer-secondary-links
 		display: flex
 		flex-direction: column

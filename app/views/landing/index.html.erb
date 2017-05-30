@@ -4,12 +4,12 @@
         <img src="assets/landing/logow.png">
         <div class="links">
           <a href="#">How It Works</a>
-          <a href="#">Features</a> 
+          <a data-scroll data-options='{ "easing": "easeInCubic", "speed": 1500 }' href="#features">Features</a> 
           <a href="#">FAQs</a>       
         </div>
         <div class="auth_lockup">
-          <a href="#">Sign In</a> 
-          <a class="sign-up" href="#">Sign Up</a>
+          <a href="/users/sign_in">Sign In</a> 
+          <a class="sign-up" href="/users/sign_up">Sign Up</a>
         </div>
       </div>
 
@@ -26,8 +26,8 @@
           <h4>over time across organizations or even people.</h4>
           </div>
           <div class="cta">
-            <a href="#">Learn More</a>
-            <a class="get-started" href="#">Get Started</a>
+            <a data-scroll href="#features">Learn More</a>
+            <a class="get-started" href="/users/sign_up">Get Started</a>
           </div> <!-- End of Hero Content-->
           </div> <!-- End of Hero -->
         </div>
@@ -59,7 +59,7 @@
         </div>
       </section>
 
-      <section class="pricing">
+      <section id="features" class="pricing">
         <div class="tailored">
           <h3>Pricing</h3>
           <p>If you've sent out more than one survey, SurveyBlend is for you.</p>
@@ -107,9 +107,13 @@
           <img src="assets/landing/logow.png" alt="Logo image">
         </div>
           <ul>
-            <li><a href="javascript:void(0)">How It Works</a></li>
-            <li><a href="javascript:void(0)">Features</a></li>
-            <li><a href="javascript:void(0)">FAQs</a></li>
+            <li><a href="#">How It Works</a></li>
+            <li><a data-scroll data-options='{
+                    "speed": 1500,
+                    "easing": "easeInOutCubic",
+                    "offset": 0
+                }' href="#features">Features</a></li>
+            <li><a href="#">FAQs</a></li>
           </ul>
 
           <div class="footer-secondary-links">
@@ -128,3 +132,7 @@
             </ul>
           </div>
       </footer>
+
+      <script>
+        smoothScroll.init();
+    </script>

@@ -25,8 +25,8 @@
 //= require flat/response.min
 //= require flat/script
 //= require flat/slick.min
-//= require flat/smoothscroll
 //= require flat/waypoints.min
+//= require smoothscroll
 //= require jquery_ujs
 //= require highcharts
 // require highcharts/adapters/standalone-framework
