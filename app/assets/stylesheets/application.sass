@@ -1,0 +1,62 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ * require flat/bootstrap.min
+ * require font-awesome
+ * require flat/animate.min
+ * require flat/jquery.fancybox
+ * require flat/slick-theme
+ * require flat/slick
+ * require flat/style
+ * require animate
+ * require_tree .
+ * require_self
+ */
+
+// This is the single file output by sass. It is intended to ONLY @import other files.
+@import url('https://fonts.googleapis.com/css?family=Caveat|Lato|Raleway:300')
+
+// 1 - TOOLS
+@import '1-tools/bourbon/bourbon'
+@import '1-tools/neat/neat'
+
+// @import '1-tools/fonts'
+@import '1-tools/normalize'
+@import '1-tools/vars'
+
+// 2 - BASICS
+@import '2-basics/body-element'
+@import '2-basics/selection-colors'
+@import '2-basics/links'
+@import '2-basics/typography'
+@import '2-basics/example-buttons'
+
+// 3 - Modules
+
+// 4 - pages
+@import '4-pages/landing'
+@import '4-pages/flex-boxes'
+
+
+.ng-enter, .ng-move
+  -webkit-animation: fadeIn 1s
+  -moz-animation: fadeIn 1s
+  -o-animation: fadeIn 1s
+  animation: fadeIn 1s
+
+.ng-leave
+  -webkit-animation: fadeOut 1s
+  -moz-animation: fadeOut 1s
+  -o-animation: fadeOut 1s
+  animation: fadeOut 1s
+
+

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root 'pages#index'
+  get 'landing/index'
+
+  root 'landing#index'
   get 'account', to: 'pages#account'
   get '/pricing', to: 'pages#pricing'
   get '/how_it_works', to: 'pages#how_it_works'

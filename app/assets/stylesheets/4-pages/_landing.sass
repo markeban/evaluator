@@ -1,0 +1,233 @@
+*
+	box-sizing: border-box
+.page-wrapper
+	background: $whitish
+	font-family: raleway, sans-serif
+	.page-content
+		background: $darkblu
+		height: 85vh
+		overflow: hidden
+		.navbar
+			background: transparent
+			display: flex
+			align-items: center
+			justify-content: space-between
+			padding: 5px 20px
+			letter-spacing: 1.5px
+			img
+				witdh: 50%
+			.links
+				
+				a
+					margin: auto 20px
+					color: $whitish
+					transition: all 300ms ease-in-out
+					font:
+						size: 1.2em
+						weight: 400
+					&:hover
+						font-weight: 700
+			.auth_lockup
+				a
+					color: $whitish
+					margin-left: 15px
+					transition: all 300ms ease-in-out
+					font-weight: 700
+					&:hover
+						border-bottom: 2px solid $whitish
+						padding-bottom: 5px
+					&:last-child
+						border: 2px solid $whitish
+						padding: 5px 15px
+						border-radius: 20px
+						&:hover
+							background: $whitish
+							color: $darkblu
+					
+		.hero
+			padding: 30px
+			img
+				position: absolute
+				bottom: 0
+				right: 0
+				width: 25%
+			.hero-content
+				display: flex
+				flex-direction: column
+				align-items: center
+				margin: 5% 20% 0 0
+				.intro, .details
+					display: flex
+					flex-direction: column
+					align-items: center
+					margin-left: 4%
+					line-height: 1px
+					h2
+						margin: 0
+						color: $whitish
+						text-align: center
+						font:
+							size: 3.3em
+							font-weight: 700
+				.details
+					line-height: 0.65px
+					margin: 40px
+					font-size: 1em
+					h4
+						margin: 4px 
+						color: transparentize($whitish, 0.3)
+						font-size: 2em
+				.cta
+					transition: all 300ms ease-in-out
+					text-transform: uppercase
+					margin-top: 20px
+
+					a
+						margin-right: 10px
+						padding: 7px 12px
+						pointer: cursor
+						font-size: 1.2em
+						transition: all 300ms ease-in-out
+						font-weight: 700
+						&:hover
+							border-bottom: 3px solid $whitish
+							margin-bottom: 0px
+
+					.get-started
+						background: $yellow
+						border: 2px solid $yellow
+						border-radius: 20px
+						color: $darkblu
+						position: relative
+						right: 0px
+						transition: all 300ms ease-in-out
+						&:hover
+							right: -4px
+							border-bottom: 2px solid $yellow
+	a
+		color: $whitish
+	.talk
+		height: 15vh
+		border-top: 1vh solid $navy
+		display: flex
+		align-items: center
+		overflow: hidden	
+		font-family: caveat, cursive
+		font-size: 3em
+		#talk
+			padding-left: 200px		
+		.typed-cursor
+			padding-left: 3px
+			animation: blink 0.7s infinite
+			opacity: 1
+	.about, .pricing
+		.tailored
+			background: $darkblu
+			height: 25vh
+			display: flex
+			justify-content: center
+			align-items: center
+			flex-direction: column
+			color: $whitish
+			p
+				font:
+					size: 1.1em
+					weight: 600
+			h3
+				margin: 15px
+				font-size: 2.5em
+				color: $whitish
+		.flex-boxes 
+			padding: 20px
+	.plans
+		display: flex
+		justify-content: space-around
+		padding-bottom: 50px
+		background: white
+		.cta
+			display: flex
+			justify-content: center
+			a
+				background: $yellow
+				border: 2px solid $yellow
+				border-radius: 20px
+				color: teal
+				position: relative
+				right: 0px
+				font-weight: 700
+				padding: 8px 23px
+				transition: all 300ms ease-in-out
+				&:hover
+					right: -4px
+					border-bottom: 2px solid $yellow
+
+		ul
+			list-style: none
+			display: flex
+			justify-content: center
+			align-items: center
+			flex-direction: column
+			li
+				font-size: 1.4em
+				line-height: 2
+		p
+			text-align: center
+			font-weight: 700
+		h3
+			text-transform: uppercase
+			text-align: center
+			margin-bottom: 10px 
+			font:
+				size: 2.5em
+		.basic
+			h3
+				background: $darkblu
+				color: $whitish
+			.cta
+				a
+					background: $darkblu
+					color: $whitish
+					border: 2px solid $darkblu
+		.pro
+			h3
+				background: $yellow
+				color: teal
+			p
+				color: teal
+
+footer
+	display: flex
+	font-family: sans-serif
+	justify-content: space-between
+	align-items: center
+	padding: 5px 25px
+	background: $darkblu
+
+	h3
+		text-align: center
+		margin: 0
+		color: $whitish
+		margin-left: 40px
+
+	ul
+		display: flex
+		justify-content: center
+		align-items: center
+		list-style: none
+		li
+			margin-left: 15px
+			a
+				font-weight: 400
+				letter-spacing: 1.5px
+				color: $whitish
+	.footer-secondary-links
+		display: flex
+		flex-direction: column
+
+@keyframes blink
+	0%
+		opacity: 1
+	50%
+		opacity: 0
+	100%
+		opacity: .8
