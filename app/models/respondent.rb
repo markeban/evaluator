@@ -1,4 +1,4 @@
-class Respondent < ActiveRecord::Base
+class Respondent < ApplicationRecord
   belongs_to :evaluation
 
   validates :email, presence: true

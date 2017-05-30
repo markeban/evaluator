@@ -1,4 +1,4 @@
-class Evaluation < ActiveRecord::Base
+class Evaluation < ApplicationRecord
   include HumanTime
 
   belongs_to :template

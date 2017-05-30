@@ -1,220 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SurveyBlend.com</title>
-  <!--[if lt IE 7]><html class="ie ie6" lang="en"><![endif]-->
-  <!--[if IE 7]><html class="ie ie7" lang="en"><![endif]-->
-  <!--[if IE 8]><html class="ie ie8" lang="en"><![endif]-->
-  <!--[if IE 9]><html class="ie9" lang="en"><![endif]-->
-  <!--[if (gte IE 10)|!(IE)]><!--><html lang="en"><!--<![endif]-->
-
-  <!--[if lt IE 9]>
-    <%= javascript_include_tag 'flat/html5' %>
-    <%= javascript_include_tag 'flat/respond.min' %>
-  <![endif]-->
-  
-  <!--[if lt IE 8]>
-    <%= stylesheet_link_tag 'flat/ie-older.css.erb' %>
-  <![endif]-->
+  <title>Survey Blend</title>
+  <html lang="en">
 
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
   <%= include_gon %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tags %>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <% flash.each do |name, message| %>
-    <div class="alert alert-<%= name %> alert-dismissible fade in" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <%= message %>
-    </div>
-  <% end %>
-  <div id="content">
+  <div class="container-fluid content-wrapper" ng-app="app">
+      <%= yield %>
+   </div>
 
-	
-    <!-- #header -->
-    <header id="header">
-      
-      <!-- #navigation -->
-      <nav id="navigation" class="navbar">
-        
-        <!-- .container -->
-        <div class="container">
-          
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse-1">
-              <span class="sr-only">Menu</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <div class="navbar-brand"><%= link_to("SurveyBlend.com", "/", class: "main-logo") %></div> <!-- site logo -->
-          </div>
-          
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="menu-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <% if current_user %>
-                <li><%= link_to "Send Survey", "/evaluations/new", class: "smooth-scroll" %></li>
-                <li><%= link_to "Analysis Results", "/analysis", class: "smooth-scroll" %></li>
-                <li><%= link_to "Account", "/account"  %></li>
-                <li><%= link_to "Sign Out", "/users/sign_out", method: :delete  %></li>
-              <% else %>
-                <li><%= link_to "How it Works", "/how_it_works" %></li>
-                <li><%= link_to "Pricing", "/pricing" %></li>
-                <li><%= link_to "Sign Up", "/pricing" %></li>
-                <li><%= link_to "Login", "/users/sign_in" %></li>
-              <% end %>
-            </ul>
-          </div>
-          
-          <div class="navbar-sep-border"></div> <!-- separator -->
-          
-        </div>
-        <!-- .container end -->
-        
-      </nav>
-
-
-    <% if current_page?(root_path)  %>
-    <!-- .header-content -->
-        <div class="header-content">
-            
-            <!-- .container -->
-            <div class="container">
-                
-                <div class="header-text">
-                    <div class="header-heading">
-                        <h1>A Dashboard for Your Survey Results</h1>
-                        <br>
-                        <p>SurveyBlend allows you to easily compare multiple survey results over time, across organizations or even people.</p>
-                    </div>
-                    <p>How do your survey results compare to the last focus group, class, or clients? Maybe you'd like to compare your performance, or the performance of many people or organizations? Or all together? You no longer need to downlaod individual survey results and compile the data yourself. We do that, along with beautiful, inslightful charts and graphs.</p>
-                    <div class="header-button animation" data-animation="animation-fade-in-down">
-                        <a href="/users/sign_up" class="btn-custom smooth-scroll">Sign Up</a>
-                        <a href="/how_it_works" class="btn-custom btn-more-link">How It Works</a>
-                    </div>
-                </div>
-                
-                <div class="header-img">
-                    <div class="carousel-slider header-slider animation" data-animation="animation-fade-in-up" data-delay="400">
-                        <div><img src="assets/flat/content/sliders/1.jpg" alt="Image 1" /></div>
-                        <div><img src="assets/flat/content/sliders/2.jpg" alt="Image 2" /></div>
-                        <div><img src="assets/flat/content/sliders/3.jpg" alt="Image 3" /></div>
-                        <div><img src="assets/flat/content/sliders/4.jpg" alt="Image 4" /></div>
-                    </div>
-                </div>
-                
-            </div>
-            <!-- .container end -->
-            
-        </div>
-        <!-- .header-content end -->
-      <% end %>
-
-
-
- 
-      </header>
-      <!-- #header end -->
-
-
-      <% if current_page?(root_path) %>
-          <!-- <div class="sep-border"></div> --> <!-- separator -->
-          
-        <!-- #teams -->
-          <div id="teams" class="wrap-container8040 bg-dark">
-              
-              <!-- .container -->
-              <div class="container">
-                  
-                  <div class="post-heading-center">
-                      <h2>Who's This For?</h2>
-                      <p>If you've sent out more than one survey, SurveyBlend is for you.</p>
-                  </div>
-                  
-                  <!-- .row -->
-                  <div class="row">
-                      
-                      <div class="col-sm-4"> <!-- 1 -->
-                          <div class="affa-team-profile">
-                              <div class="team-profile-name">
-                                  <h4>Educator / Admin of Educators</h4>
-                              </div>
-                              <p>Wish you could track survey results over time? Maybe by class, cohort, or quarter? See your performace over time with real qualitative data. If you manage educators, you'll be able to compare them immediately without having to aggregate the data yourself.</p>
-                          </div>
-                      </div>
-                      
-                      <div class="col-sm-4"> <!-- 2 -->
-                          <div class="affa-team-profile">
-                              <div class="team-profile-name">
-                                  <h4>Managers / Business Owners</h4>
-                                  
-                              </div>
-                              <p>Do you send out the same customer satifcation survey? Wouldn't you like to see how your performance has changed over time? With SurveyBlend, you can see all the data you need in more place.</p>
-                          </div>
-                      </div>
-                      
-                      <div class="col-sm-4"> <!-- 3 -->
-                          <div class="affa-team-profile">
-                              <div class="team-profile-name">
-                                  <h4>Analysts</h4>
-                              </div>
-                              <p>No need to convert all surveys results to excel sheets, and waste time aggregating the data yourself - let us do that for you! See all the table neatly combined and sorted for you without any extra work.</p>
-                          </div>
-                      </div>
-                      
-                  </div>
-                  <!-- .row end -->
-                  
-              </div>
-              <!-- .container end -->
-              
-          </div>
-
-      <% end %>
-
-
-
-      <% unless current_page?(root_path) %>
-        <!-- #navigation end -->
-        <div class="container-fluid content-wrapper" ng-app="app">
-          <%= yield %>
-        </div>
-      <% end %>
-
-
-      <!-- #footer -->
-      <footer id="footer">
-      
-      
-        
-    
-        <div class="footer-copyright">
-          <div class="container">
-            <p>&copy; <%= Time.now.year %> Copyright. All Rights Reserved. Eban Technologies LLC.</p>
-          </div>
-        </div>
-        
-      </footer>
-      <!-- #footer end -->
-      
-      <!--[if lt IE 8]>
-        <div class="browser-notice">
-              <div class="container">
-              	<div class="text">
-                      <h1>Internet Explorer Out To Date</h1>
-                      <p>Please update your Internet Explorer browser with a newer version (Internet Explorer 8 above) now!</p>
-                      <span>You can download it <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="blank">here....</a></span>
-                  </div>
-              </div>
-          </div>
-          <![endif]-->
-          
-    </div>        
+    <p>&copy; <%= Time.now.year %> Copyright. All Rights Reserved. Eban Technologies LLC.</p>
+         
   </body>
 </html>

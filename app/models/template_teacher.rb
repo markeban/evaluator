@@ -1,3 +1,3 @@
-class TemplateTeacher < ActiveRecord::Base
+class TemplateTeacher < ApplicationRecord
 
 end

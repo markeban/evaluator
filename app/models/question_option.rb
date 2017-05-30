@@ -1,3 +1,3 @@
-class QuestionOption < ActiveRecord::Base
+class QuestionOption < ApplicationRecord
   belongs_to :question
 end

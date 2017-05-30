@@ -1,4 +1,4 @@
-class Submission < ActiveRecord::Base
+class Submission < ApplicationRecord
   belongs_to :evaluation
   has_one :template, through: :evaluation
   has_many :answers

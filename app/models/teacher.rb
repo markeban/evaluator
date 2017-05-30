@@ -1,4 +1,4 @@
-class Teacher < ActiveRecord::Base
+class Teacher < ApplicationRecord
   include HumanTime
   
   has_many :templates, :through => :evaluations

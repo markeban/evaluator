@@ -29,7 +29,7 @@
 //= require flat/waypoints.min
 //= require jquery_ujs
 //= require highcharts
-//= require highcharts/adapters/standalone-framework
+// require highcharts/adapters/standalone-framework
 //= require angular
 //= require app
 //= require angular_animate
